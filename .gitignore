@@ -1,0 +1,122 @@
+# --- ChromaDB (벡터 DB - 서버에서 ingest_knowledge.py로 재생성) ---
+backend/data/chroma_db/
+
+# --- Python (FastAPI) ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyc
+*$py.class
+*.egg-info/
+dist/
+build/
+venv/
+env/
+.env
+.env.production
+*.db
+*.sqlite3
+.pytest_cache/
+.coverage
+htmlcov/
+*.pem
+*.ppk
+*.key
+.mypy_cache/
+.ruff_cache/
+.tox/
+junit.xml
+test-results/
+*.log
+logs/
+uvicorn*.log
+
+# --- React (Frontend) ---
+node_modules/
+/build
+/dist
+coverage/
+.node_repl_history
+.eslintcache
+.stylelintcache
+.prettiercache
+*.local
+.vite/
+
+# --- IDE & OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# --- Docker & Secrets ---
+.env.local
+.env.*.local
+docker-compose.override.yml
+
+# --- Azure / Cloud ---
+.azure/
+*.publishsettings
+azuredeploy.parameters.json
+
+# --- Firebase / GCP 서비스 계정 키 --- 절대 커밋 금지
+firebase_credentials*.json
+firebase-credentials.json
+firebase-adminsdk*.json
+*-firebase-adminsdk-*.json
+serviceAccountKey.json
+serviceAccount*.json
+*_serviceAccount.json
+service-account*.json
+gcp-credentials.json
+
+# --- AI Agents ---
+AGENTS.md
+CLAUDE.md
+.claude
+
+# Firebase service account credentials — 절대 커밋 금지
+firebase_credentials*.json
+serviceAccount*.json
+*_serviceAccount.json
+
+# ==========================================================
+# Android / Capacitor 빌드 자원 (현재 폴더 구조 반영)
+# ==========================================================
+
+# 하위 폴더 어디서든 생성되는 빌드 파일 및 서명 키 제외 (★안전)
+**/#*.jks
+**/*.jks
+**/*.keystore
+**/*.apk
+**/*.aar
+**/*.ap_
+**/*.aab
+**/*.dex
+**/*.class
+**/local.properties
+
+# 안드로이드 스튜디오 및 인텔리제이 설정 파일 제외
+**/.idea/
+**/*.iml
+
+# Gradle 빌드 파일 제외
+**/.gradle/
+**/build/
+**/bin/
+**/gen/
+**/out/
+
+# Capacitor 웹 에셋 복사본 및 자동 생성 설정 파일 제외
+# (frontend 부분을 실제 프론트엔드 폴더명과 일치시켜 주세요)
+frontend/android/app/src/main/assets/public
+frontend/android/app/src/main/assets/capacitor.config.json
+frontend/android/app/src/main/assets/capacitor.plugins.json
+frontend/android/app/src/main/res/xml/config.xml
+
+# Cordova 플러그인 관련
+**/capacitor-cordova-android-plugins
+
+mammacare-key

@@ -1,0 +1,16 @@
+# 빌드 산출물 / 의존성 (이미지 안에서 새로 설치·빌드)
+node_modules/
+dist/
+.vite/
+
+# 로컬 전용 환경 파일 — .env는 VITE_* 빌드 타임 주입에 필요하므로 포함
+# (.env의 값은 모두 클라이언트 공개 키. 진짜 secret은 *.local에만 둘 것)
+.env.local
+.env.*.local
+*.local
+
+# 개발 도구 / 메타
+.git/
+.vscode/
+.idea/
+*.log

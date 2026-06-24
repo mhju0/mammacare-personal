@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "183720164110",
+    "project_id": "mammacare-ce9a5",
+    "storage_bucket": "mammacare-ce9a5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183720164110:android:fa9fb0a0813c9f9738b55f",
+        "android_client_info": {
+          "package_name": "com.mammacare.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHi2OLKA9wI01OnP6YSuRqv2hds5uF8uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

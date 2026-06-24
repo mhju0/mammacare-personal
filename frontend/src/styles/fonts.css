@@ -1,0 +1,302 @@
+/* Cafe24 Ssurround */
+@font-face {
+  font-family: 'Cafe24 Surround';
+  src: url('/fonts/Cafe24Ssurround-v2.0.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Nanum Gothic */
+@font-face {
+  font-family: 'Nanum Gothic';
+  src: url('/fonts/NanumGothicLight.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nanum Gothic';
+  src: url('/fonts/NanumGothic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nanum Gothic';
+  src: url('/fonts/NanumGothicBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Nanum Gothic';
+  src: url('/fonts/NanumGothicExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Paperlogy */
+@font-face {
+  font-family: 'Paperlogic';
+  src: url('/fonts/Paperlogy-1Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Paperlogic';
+  src: url('/fonts/Paperlogy-2ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Paperlogic';
+  src: url('/fonts/Paperlogy-3Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Paperlogic';
+  src: url('/fonts/Paperlogy-4Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Paperlogic';
+  src: url('/fonts/Paperlogy-5Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Paperlogic';
+  src: url('/fonts/Paperlogy-6SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Paperlogic';
+  src: url('/fonts/Paperlogy-7Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Paperlogic';
+  src: url('/fonts/Paperlogy-8ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Paperlogic';
+  src: url('/fonts/Paperlogy-9Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* MaruBuri */
+@font-face {
+  font-family: 'MaruBuri';
+  src: url('/fonts/MaruBuri-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MaruBuri';
+  src: url('/fonts/MaruBuri-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MaruBuri';
+  src: url('/fonts/MaruBuri-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MaruBuri';
+  src: url('/fonts/MaruBuri-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MaruBuri';
+  src: url('/fonts/MaruBuri-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Gabia Gosran */
+@font-face {
+  font-family: 'GabiaGosran';
+  src: url('/fonts/GabiaGosran-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Seoul Namsan */
+@font-face {
+  font-family: 'SeoulNamsan';
+  src: url('/fonts/SeoulNamsanL.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SeoulNamsan';
+  src: url('/fonts/SeoulNamsanM.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SeoulNamsan';
+  src: url('/fonts/SeoulNamsanB.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SeoulNamsan';
+  src: url('/fonts/SeoulNamsanEB.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Seoul Namsan (세로쓰기) */
+@font-face {
+  font-family: 'SeoulNamsanVert';
+  src: url('/fonts/SeoulNamsanvert.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* SCDream */
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream1.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream2.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream3.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream4.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream5.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream6.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream7.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream8.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SCDream';
+  src: url('/fonts/SCDream9.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+}
+
+.font-jua {
+  font-family: 'Jua', sans-serif;
+}
+
+.font-nunito {
+  font-family: 'Nunito', sans-serif;
+}
+
+.font-nanum {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+.font-cafe24 {
+  font-family: 'Cafe24 Surround', sans-serif;
+}
+
+.font-paperlogic {
+  font-family: 'Paperlogic', sans-serif;
+}
+
+.font-gabia {
+  font-family: 'GabiaGosran', sans-serif;
+}
+
+.font-maruburi {
+  font-family: 'MaruBuri', sans-serif;
+}
+
+.font-scdream {
+  font-family: 'SCDream', sans-serif;
+}
+
+.font-seoulnamsan {
+  font-family: 'SeoulNamsan', sans-serif;
+}
+
+.font-seoulnamsan-vert {
+  font-family: 'SeoulNamsanVert', sans-serif;
+}
+
+/* 사용 예시 (tsx 파일에서) */
+/* 이미 Pretendard 적용됨: <p className="text-base">기본 텍스트</p> */
+/* 명시적으로: <p className="font-['Pretendard']">텍스트</p> */
+/* Jua 사용: <p className="font-jua">텍스트</p> */
+/* Nanum Gothic 사용: <p className="font-nanum">텍스트</p> */
+/* Cafe24 사용: <p className="font-cafe24">텍스트</p> */
+/* Paperlogic 사용: <p className="font-paperlogic">텍스트</p> */
+/* SCDream 사용: <p className="font-scdream">텍스트</p> */
+/* GabiaGosran 사용: <p className="font-gabia">텍스트</p> */
+/* MaruBuri 사용: <p className="font-maruburi">텍스트</p> */
+/* SeoulNamsan 사용: <p className="font-seoulnamsan">텍스트</p> */
+/* SeoulNamsan 세로쓰기 사용: <p className="font-seoulnamsan-vert">텍스트</p> */

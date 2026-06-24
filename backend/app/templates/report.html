@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: 'Pretendard';
+      font-size: 14px;
+      color: #333;
+      padding: 40px;
+    }
+
+    h1 { font-size: 20px; margin-bottom: 4px; }
+    h2 { font-size: 16px; margin: 24px 0 8px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+    h3 { font-size: 14px; margin: 16px 0 8px; }
+
+    .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+    th {
+      background: #f5f5f5;
+      text-align: left;
+      vertical-align: middle;
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      word-break: keep-all;
+    }
+    td {
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+      vertical-align: middle;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .symptom-item {
+      display: inline-block;
+      background: #f0f0f0;
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin: 2px;
+      font-size: 12px;
+    }
+    .reaction { background: #ffe0e0; }
+
+    .photo { font-size: 12px; color: #333; margin-top: 4px; }
+    .description { font-size: 13px; color: #333; margin-top: 4px; }
+    .no-data { color: #aaa; font-size: 13px; }
+
+    .section { margin-bottom: 32px; }
+
+    .date-cell { white-space: nowrap; }
+    .date-cell .date-line { display: block; color: #333; }
+    .date-cell .time-line { display: block;  font-size: 12px; }
+  </style>
+</head>
+<body>
+  {% set severity_kr = {'mild': '약함', 'moderate': '보통', 'severe': '심함'} %}
+
+  <!-- 헤더 -->
+  <h1>{{ report.baby_name }}의 알레르기 이상 반응 리포트</h1>
+  <p class="meta">
+    생년월일: {{ report.baby_birth_date }}&nbsp;&nbsp;|&nbsp;&nbsp;
+    조회 기간: {{ report.period_from.strftime('%Y-%m-%d') }} ~ {{ report.period_to.strftime('%Y-%m-%d') }}
+  </p>
+
+  <!-- 1. 확진 알레르기 -->
+  <div class="section">
+    <h2>알레르기 확진 목록</h2>
+    {% if not report.confirmed_allergies %}
+      <p class="no-data">확진된 알레르기가 없습니다.</p>
+    {% else %}
+      <table>
+        <tr>
+          <th style="width: 30%;">재료</th>
+          <th style="width: 38%;">확진일</th>
+        </tr>
+        {% for item in report.confirmed_allergies %}
+        <tr>
+          <td>{{ item.ingredient_name }}</td>
+          <td class="date-cell">{% if item.confirmed_date %}
+            <span class="date-line">{{ item.confirmed_date.strftime('%Y년 %m월 %d일') }}</span>
+          {% else %}-{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% endif %}
+  </div>
+
+  <!-- 2. 반응 있었던 재료 -->
+  <div class="section">
+    <h2>알레르기 반응 목록</h2>
+    {% if not report.reacted_ingredients %}
+      <p class="no-data">반응 기록이 없습니다.</p>
+    {% else %}
+      <table>
+        <tr>
+          <th style="width: 16%;">재료</th>
+          <th style="width: 23%;">반응 확인일시</th>
+          <th style="width: 39%;">증상</th>
+        </tr>
+        {% for item in report.reacted_ingredients %}
+        <tr>
+          <td>{{ item.ingredient_name }}</td>
+          <td class="date-cell">{% if item.test_end_date %}<span class="date-line">{{ item.test_end_date.strftime('%Y년 %m월 %d일') }}</span><span class="time-line">{{ item.test_end_date.strftime('%H시 %M분') }}</span>{% else %}-{% endif %}</td>
+          <td>
+            {% for s in item.symptoms %}
+              <span class="symptom-item reaction">{{ s.symptom_type }}{% if s.severity %} · {{ severity_kr.get(s.severity|lower, s.severity) }}{% endif %}</span>
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% endif %}
+  </div>
+
+  <!-- 3. 일주일 테스트 기록 -->
+  <div class="section">
+    <h2>알레르기 테스트 기록 (최근 7일)</h2>
+    {% if not report.testings %}
+      <p class="no-data">해당 기간 내 테스트 기록이 없습니다.</p>
+    {% else %}
+      <table>
+        <tr>
+          <th style="width: 14%;">재료</th>
+          <th style="width: 23%;">첫 섭취 일시</th>
+          <th style="width: 23%;">증상 확인 일시</th>
+          <th style="width: 18%;">증상</th>
+        </tr>
+        {% for testing in report.testings %}
+          {% if not testing.symptoms %}
+            <tr>
+              <td>{{ testing.ingredient_name }}</td>
+              <td class="date-cell">{% if testing.test_start_date %}<span class="date-line">{{ testing.test_start_date.strftime('%Y년 %m월 %d일') }}</span><span class="time-line">{{ testing.test_start_date.strftime('%H시 %M분') }}</span>{% else %}-{% endif %}</td>
+              <td colspan="2" class="no-data">증상 기록 없음</td>
+            </tr>
+          {% else %}
+            {% for symptom in testing.symptoms %}
+            <tr>
+              {% if loop.first %}
+              <td rowspan="{{ testing.symptoms|length }}">{{ testing.ingredient_name }}</td>
+              <td rowspan="{{ testing.symptoms|length }}" class="date-cell">{% if testing.test_start_date %}<span class="date-line">{{ testing.test_start_date.strftime('%Y년 %m월 %d일') }}</span><span class="time-line">{{ testing.test_start_date.strftime('%H시 %M분') }}</span>{% else %}-{% endif %}</td>
+              {% endif %}
+              <td class="date-cell"><span class="date-line">{{ symptom.checked_at.strftime('%Y년 %m월 %d일') }}</span><span class="time-line">{{ symptom.checked_at.strftime('%H시 %M분') }}</span></td>
+              <td>
+                {% for item in symptom.symptom_items %}
+                  <span class="symptom-item reaction">
+                    {{ item.symptom_type }}{% if item.severity %} · {{ severity_kr.get(item.severity|lower, item.severity) }}{% endif %}
+                  </span>
+                {% else %}
+                  <span class="no-data"></span>
+                {% endfor %}
+              </td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </table>
+
+      <!-- 사진은 별도 표로 분리 -->
+      {% set photo_rows = [] %}
+      {% for testing in report.testings %}
+        {% for symptom in testing.symptoms %}
+          {% if symptom.photos %}{% set _ = photo_rows.append((testing, symptom)) %}{% endif %}
+        {% endfor %}
+      {% endfor %}
+      {% if photo_rows %}
+      <h3>사진 기록</h3>
+      <table>
+        <tr>
+          <th style="width: 18%;">재료</th>
+          <th style="width: 32%;">증상</th>
+          <th>사진</th>
+        </tr>
+        {% for testing, symptom in photo_rows %}
+        <tr>
+          <td>{{ testing.ingredient_name }}</td>
+          <td>
+            {% for item in symptom.symptom_items %}
+              <span class="symptom-item reaction">{{ item.symptom_type }}{% if item.severity %} · {{ severity_kr.get(item.severity|lower, item.severity) }}{% endif %}</span>
+            {% else %}
+              <span class="no-data">-</span>
+            {% endfor %}
+          </td>
+          <td>
+            {% for photo in symptom.photos %}
+              <span class="photo" style="display: inline-block; margin-right: 6px;">
+                <img src="{{ photo.photo_url }}" style="width: 72px; height: 72px; object-fit: cover; display: block;">
+                <span style="font-size: 11px;">{{ photo.taken_at.strftime('%H:%M') }}</span>
+              </span>
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endif %}
+    {% endif %}
+  </div>
+
+</body>
+</html>

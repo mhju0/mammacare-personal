@@ -1,0 +1,25 @@
+# Python
+backend/venv/
+backend/**/__pycache__/
+backend/**/*.pyc
+backend/**/*.pyo
+
+# 민감한 파일 (이미지에 포함 금지)
+backend/.env
+firebase_credentials*.json
+serviceAccount*.json
+
+# ChromaDB 데이터 (볼륨으로 마운트)
+backend/data/
+
+# 프론트엔드 빌드 아티팩트
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# 개발 도구
+.git/
+.vscode/
+.claude/
+AGENTS.md
+CLAUDE.md

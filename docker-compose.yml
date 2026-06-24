@@ -1,0 +1,40 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: mammacare-backend
+    env_file:
+      - backend/.env
+    volumes:
+      - ./backend/data:/app/data
+      # Firebase 서비스 계정 키는 저장소에 커밋하지 않습니다.
+      - ./firebase_credentials.json:/app/firebase_credentials.json:ro
+    restart: unless-stopped
+    # VM 호스트(PostgreSQL)에 접근하기 위한 host.docker.internal 매핑
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL:-}
+        - VITE_KAKAO_MAP_KEY=${VITE_KAKAO_MAP_KEY:-}
+        - VITE_FIREBASE_API_KEY=${VITE_FIREBASE_API_KEY:-}
+        - VITE_FIREBASE_AUTH_DOMAIN=${VITE_FIREBASE_AUTH_DOMAIN:-}
+        - VITE_FIREBASE_PROJECT_ID=${VITE_FIREBASE_PROJECT_ID:-}
+        - VITE_FIREBASE_MESSAGING_SENDER_ID=${VITE_FIREBASE_MESSAGING_SENDER_ID:-}
+        - VITE_FIREBASE_APP_ID=${VITE_FIREBASE_APP_ID:-}
+        - VITE_FIREBASE_VAPID_KEY=${VITE_FIREBASE_VAPID_KEY:-}
+    container_name: mammacare-frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./downloads:/usr/share/nginx/html/downloads:ro
+    depends_on:
+      - backend
+    restart: unless-stopped

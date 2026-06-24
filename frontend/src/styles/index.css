@@ -1,0 +1,72 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+html,
+body,
+#root {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar {
+  display: none;
+}
+
+/* 앱(네이티브)에서 모든 스크롤바 숨김 */
+.app-native * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.app-native *::-webkit-scrollbar {
+  display: none;
+}
+
+/* Native Android safe areas. */
+.app-native {
+  --app-header-content-height: 3rem;
+  --app-safe-area-top: env(safe-area-inset-top, 0px);
+  --app-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--background);
+}
+
+.app-native body,
+.app-native #root {
+  background: var(--background);
+}
+
+.app-native .app-shell {
+  box-sizing: border-box;
+  height: 100dvh;
+}
+
+.app-native .app-header {
+  box-sizing: border-box;
+  padding-top: var(--app-safe-area-top);
+}
+
+.app-native .app-main {
+  padding-bottom: calc(5rem + var(--app-safe-area-bottom));
+}
+
+.app-native .fixed.inset-0 {
+  top: var(--app-safe-area-top);
+  bottom: var(--app-safe-area-bottom);
+}
+
+.app-native .app-bottom-nav {
+  box-sizing: border-box;
+  bottom: 0;
+  height: calc(5rem + var(--app-safe-area-bottom));
+  padding-bottom: var(--app-safe-area-bottom);
+}
+
+.app-native .fixed.inset-0.app-menu-overlay {
+  top: 0;
+  bottom: 0;
+  padding-top: calc(var(--app-header-content-height) + var(--app-safe-area-top));
+  padding-bottom: calc(5rem + var(--app-safe-area-bottom));
+}
+
+
