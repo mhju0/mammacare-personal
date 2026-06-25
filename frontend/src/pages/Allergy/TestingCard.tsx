@@ -3,6 +3,7 @@ import { Trash2 } from "lucide-react";
 import { Capacitor } from "@capacitor/core";
 import { listSymptomChecks, type IngredientTestingResponse, type SymptomCheckResponse } from "../../api/allergy";
 import { IngredientIcon } from "../../components/IngredientIcon";
+import { StatusChip } from "../../components/ui/status-chip";
 import {
   TIME_MILESTONES,
   getElapsedHours,
@@ -87,7 +88,10 @@ export function TestingCard({ item, token, onRefresh }: TestingCardProps) {
         <div className="flex items-center gap-3">
           <IngredientIcon name={item.ingredient_name} emoji={item.ingredient_emoji} className="w-8 h-8 sm:w-9 sm:h-9" />
           <div>
-            <div className="font-bold text-base">{item.ingredient_name}</div>
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-base">{item.ingredient_name}</span>
+              <StatusChip status="testing" />
+            </div>
             {isApp ? (
               <>
                 <div className="text-xs font-semibold text-muted-foreground whitespace-nowrap">진행률: {progress.toFixed(1)}%</div>
