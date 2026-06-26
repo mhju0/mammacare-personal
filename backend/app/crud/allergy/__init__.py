@@ -1,5 +1,4 @@
 from app.crud.allergy.ingredient_testing import (
-    create_ingredient_testing,
     get_ingredient_testing,
     get_ingredient_testings_by_baby,
     update_ingredient_testing,
@@ -33,7 +32,6 @@ from app.crud.allergy.ownership import (
 )
 
 __all__ = [
-    "create_ingredient_testing",
     "get_ingredient_testing",
     "get_ingredient_testings_by_baby",
     "update_ingredient_testing",
