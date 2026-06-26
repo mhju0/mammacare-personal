@@ -6,7 +6,7 @@ from sqlalchemy.orm import selectinload
 
 from app.models.allergy import IngredientTesting, SymptomCheck, SymptomItem
 from app.schemas.allergy import SymptomCheckWithItemsCreate, SymptomItemCreate
-from app.crud.allergy.ingredient_testing import _status_from_dates, _test_end_date
+from app.crud.allergy.ingredient_testing import _test_end_date
 
 
 async def create_symptom_check(
@@ -32,8 +32,8 @@ async def create_symptom_check(
         )
         db.add(db_item)
 
-    # 반응 기록 시 72h 창 기준으로 테스트 상태 재계산.
-    # has_reaction=False는 상태를 변경하지 않는다 (무반응 기록이 confirmed_reaction을 덮으면 안 됨).
+    # 반응 기록 시 테스트를 즉시 completed_reaction으로 확정한다 (decision 11-2).
+    # has_reaction=False는 상태를 변경하지 않는다 (무반응 기록이 completed_reaction을 덮으면 안 됨).
     if data.has_reaction:
         testing_result = await db.execute(
             select(IngredientTesting).where(IngredientTesting.id == testing_id)
@@ -43,12 +43,10 @@ async def create_symptom_check(
             now = datetime.now(timezone.utc)
             test_end = testing.test_end_date or _test_end_date(testing.test_start_date)
             testing.test_end_date = test_end
-            testing.test_status = _status_from_dates(
-                testing.test_start_date,
-                test_end,
-                now,
-                has_reaction=True,
-            )
+            # 72h 창 종료를 기다리지 않고 즉시 확정한다.
+            # 단, 미래 예약 테스트(start>now)는 아직 관찰 전이므로 기존 상태를 유지한다.
+            if testing.test_start_date <= now:
+                testing.test_status = "completed_reaction"
 
     await db.flush()
     result = await db.execute(
