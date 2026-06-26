@@ -54,6 +54,7 @@
 3. **신호등 디자인 시스템.** Clinic(의료 신뢰) 블루 + 자연 세이지 베이스에 시맨틱 상태색(safe/testing/reaction)을 토큰화. 색만으로 의미 전달하지 않도록 아이콘+텍스트 병행(`StatusChip`).
 4. **Alembic 대신 수동 SQL.** 구조 변경은 `backend/manual_sql/`의 검증형 SQL(`BEGIN/COMMIT` + pre/post `SELECT`)로 관리. `create_all()`이 제약/타입을 자동 변경하지 않는 한계를 명시적으로 다룸.
 5. **재테스트를 막던 잔재 UNIQUE 제약 제거.** `uq_ingredient_testing_baby_ingredient`(한 아기+한 재료 전체 기간 1회)가 "완료한 재료의 재테스트"를 영구히 막고 있었음 → [`001_drop_ingredient_testing_full_unique.sql`](backend/manual_sql/001_drop_ingredient_testing_full_unique.sql)로 제거. **동시 1개 테스트**를 강제하는 `ex_ingredient_testing_no_overlap`(EXCLUDE)은 그대로 유지.
+6. **교차반응 경고는 이름 기반 휴리스틱(보조 기능).** 재료명 문자열 매칭(`CROSS_REACTIVITY_MAP`)으로 경고. 메인 알레르기 판정은 `ingredient_id` 기반으로 분리. 표기 불일치 시 경고 누락 가능(한계).
 
 ---
 
