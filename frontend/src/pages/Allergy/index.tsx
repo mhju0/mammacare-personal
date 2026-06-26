@@ -273,6 +273,7 @@ function AllergyInner() {
 
   const [showConflictModal, setShowConflictModal] = useState(false);
   const [conflictMessage, setConflictMessage] = useState("");
+  const [showReactionRetestConfirm, setShowReactionRetestConfirm] = useState(false);
   const [showAddSuccessInfo, setShowAddSuccessInfo] = useState(false);
   const [addSuccessInfoMessage, setAddSuccessInfoMessage] = useState("");
 
@@ -308,7 +309,8 @@ function AllergyInner() {
   const anyModalOpen = !!(
     showAddModal || addTestingTarget || editingConfirmed || showAddConfirmedModal ||
     showConflictModal || showAddSuccessInfo || reportPreviewUrl || activeDatePicker ||
-    historyTarget || showTutorial || editConfirmedDatePicker || suspectedPopup
+    historyTarget || showTutorial || editConfirmedDatePicker || suspectedPopup ||
+    showReactionRetestConfirm
   );
     useBodyScrollLock(anyModalOpen);
 
@@ -561,6 +563,19 @@ function AllergyInner() {
     setConfirmedModalPage(0);
   }, [confirmedModalStageFilter]);
 
+
+  // Consent gate: re-testing a previously reacted (red) ingredient is medically
+  // risky and wipes prior reaction records, so require explicit confirmation
+  // before running the unchanged submission logic. Green re-tests and genuinely
+  // new ingredients skip the gate.
+  const handleAddIngredientClick = () => {
+    if (!selectedIngredient || !activeBaby || !token) return;
+    if (reactionIngredientIds.has(selectedIngredient.id)) {
+      setShowReactionRetestConfirm(true);
+      return;
+    }
+    handleAddIngredient();
+  };
 
   const handleAddIngredient = async () => {
     if (!selectedIngredient || !activeBaby || !token) return;
@@ -2606,6 +2621,47 @@ function AllergyInner() {
         </div>
       )}
 
+      {/* 반응 이력 재료 재테스트 동의 게이트 */}
+      {showReactionRetestConfirm && selectedIngredient && (
+        <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center px-4">
+          <div className="bg-card border border-border rounded-3xl p-6 w-[340px] shadow-2xl flex flex-col gap-4">
+            <div className="flex items-center gap-2 rounded-2xl bg-reaction-bg text-reaction-fg px-3 py-2 font-bold text-base">
+              <AlertTriangle size={18} className="shrink-0" />
+              이전에 알레르기 반응이 있던 재료예요
+            </div>
+            <div className="flex flex-col gap-3 text-sm text-foreground leading-relaxed">
+              <p>
+                다시 도입하기 전에 소아과 전문의와 상담하시길 권해요. 확정된 알레르겐을 집에서 다시 먹이는 건 위험할 수 있어요.
+              </p>
+              <p>
+                다시 테스트를 시작하면{" "}
+                <span className="font-bold text-reaction-fg">이전 반응 기록(증상·사진)은 삭제되고</span>, 새 관찰이 처음부터 시작돼요.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => setShowReactionRetestConfirm(false)}
+                className="w-full py-3 rounded-full bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
+                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)]
+                text-primary-foreground font-bold text-base transition-opacity"
+              >
+                취소
+              </button>
+              <button
+                onClick={() => {
+                  setShowReactionRetestConfirm(false);
+                  handleAddIngredient();
+                }}
+                className="w-full py-3 rounded-full bg-reaction-bg text-reaction-fg border border-reaction-fg/30
+                font-bold text-base hover:bg-reaction-bg/80 transition-opacity"
+              >
+                다시 테스트 시작
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 재료 추가 성공 안내 팝업 */}
       {showAddSuccessInfo && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
@@ -2775,7 +2831,7 @@ function AllergyInner() {
                 취소
               </button>
               <button
-                onClick={handleAddIngredient}
+                onClick={handleAddIngredientClick}
                 disabled={!selectedIngredient || adding}
                 className="flex-1 py-3 rounded-full text-primary-foreground text-base font-bold 
                 bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)] 
