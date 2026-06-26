@@ -15,6 +15,7 @@ from app.schemas.allergy.ingredient_testing import IngredientTestingCreate
 from app.crud.allergy.ingredient_testing import (
     _assert_no_active_overlap,
     _is_active_testing_unique_violation,
+    purge_symptom_checks_for_testing,
 )
 
 logger = logging.getLogger("mammacare.allergy")
@@ -81,7 +82,7 @@ async def _find_existing_testing(
             IngredientTesting.baby_id == baby_id,
             IngredientTesting.ingredient_id == ingredient_id,
         )
-        .order_by(IngredientTesting.test_start_date.asc())
+        .order_by(IngredientTesting.test_start_date.desc())
         .limit(1)
     )
     return result.scalar_one_or_none()
@@ -136,12 +137,30 @@ async def create_testing_with_end_date(
         existing_start = existing.test_start_date
         if existing_start.tzinfo is None:
             existing_start = existing_start.replace(tzinfo=timezone.utc)
+        existing_end = existing.test_end_date
+        if existing_end is not None and existing_end.tzinfo is None:
+            existing_end = existing_end.replace(tzinfo=timezone.utc)
+
+        # 재테스트 판정: 완료된 테스트를 같은 재료로 '새 72시간 관찰'로 다시 시작하는 경우만.
+        # 옛 관찰 창이 완전히 끝난 뒤(requested_start >= existing_end) testing 상태로
+        # 요청할 때로 한정한다. testing 행 재제출이나 날짜 당기기는 재테스트가 아니다.
+        # (선례 없어 경계는 existing_end 기준으로 둠 — [Inferred])
+        is_retest = (
+            existing.test_status in ("completed_safe", "completed_reaction")
+            and requested_status == "testing"
+            and existing_end is not None
+            and requested_start >= existing_end
+        )
 
         # 갱신 후 적용될 기간/상태를 mutation 전에 먼저 계산한다.
         # existing을 먼저 더럽히면 아래 _has_reaction_record/_assert 의 SELECT가
         # autoflush로 그 UPDATE를 선반영해 EXCLUDE 위반이 깨끗한 409 매핑 밖에서
         # 500으로 새어나간다. INSERT 경로처럼 "선검사 → mutation → flush 가드" 순서를 지킨다.
-        if requested_start < existing_start:
+        if is_retest:
+            # 창 전진: 새 관찰을 요청 시점부터 다시 72시간 잡는다.
+            new_start = requested_start
+            new_end = _test_end_date(requested_start)
+        elif requested_start < existing_start:
             new_start = requested_start
             new_end = _test_end_date(requested_start)
         elif existing.test_end_date is None:
@@ -151,10 +170,14 @@ async def create_testing_with_end_date(
             new_start = existing_start
             new_end = existing.test_end_date
 
-        has_reaction = (
-            existing.test_status == "completed_reaction"
-            or await _has_reaction_record(db, existing.id)
-        )
+        if is_retest:
+            # 직전 라운드의 SymptomCheck를 곧 삭제하므로 반응 플래그를 리셋한다.
+            has_reaction = False
+        else:
+            has_reaction = (
+                existing.test_status == "completed_reaction"
+                or await _has_reaction_record(db, existing.id)
+            )
         new_status = _status_from_dates(
             new_start,
             new_end,
@@ -178,7 +201,13 @@ async def create_testing_with_end_date(
             existing.memo = data.memo
 
         try:
-            await db.flush()
+            if is_retest:
+                # 옛 SymptomCheck 물리 삭제. 내부 첫 SELECT/DELETE가 위 UPDATE를
+                # autoflush하므로, 날짜 전진 + 삭제가 한 트랜잭션으로 묶이고
+                # EXCLUDE 경합도 여기서 IntegrityError로 잡혀 409로 매핑된다.
+                await purge_symptom_checks_for_testing(db, existing.id)
+            else:
+                await db.flush()
         except IntegrityError as exc:
             await db.rollback()
             # 선검사를 통과했어도 동시 요청 경합으로 EXCLUDE에 걸릴 수 있어 409로 매핑

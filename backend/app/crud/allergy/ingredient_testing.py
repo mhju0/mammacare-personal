@@ -4,7 +4,7 @@ import logging
 from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, or_, func
+from sqlalchemy import select, or_, func, delete
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
@@ -13,7 +13,7 @@ from app.crud.crud_notification import delete_notifications_for_ingredient_testi
 from app.models.allergy.confirmed_allergy import ConfirmedAllergy
 from app.models.allergy import IngredientTesting
 from app.models.allergy.symptom_check import SymptomCheck
-from app.models.allergy.symptom_photo import SymptomPhoto
+from app.models.allergy.symptom_photo import SymptomItem, SymptomPhoto
 from app.models.ingredient import Ingredient
 from app.models.schedule import Schedule
 from app.models.recipe_ingredient import RecipeIngredient
@@ -271,6 +271,48 @@ async def delete_ingredient_testing(
     if blob_paths:
         await asyncio.gather(*[delete_image_from_blob(p) for p in blob_paths])
     return True
+
+
+async def purge_symptom_checks_for_testing(
+    db: AsyncSession, testing_id: uuid.UUID
+) -> None:
+    """testing 행은 보존한 채, 그 행에 달린 옛 SymptomCheck(및 증상·사진)를 물리 삭제한다.
+
+    완료된 재료를 다시 테스트할 때 직전 라운드의 반응 기록이 새 72시간 관찰로 새지
+    않도록 비운다. symptom_item·symptom_photo에는 DB 레벨 ON DELETE CASCADE가 없어
+    (ORM cascade 전용) symptom_check만 일괄 삭제하면 FK를 위반하므로 자식부터 명시적으로
+    지운다. 연결된 로컬 이미지 파일은 delete_ingredient_testing과 동일하게
+    flush 후 정리한다.
+    """
+    # cascade로 함께 삭제되는 증상 사진의 로컬 파일도 정리 (flush 후)
+    photo_urls = (await db.execute(
+        select(SymptomPhoto.photo_url)
+        .join(SymptomCheck, SymptomPhoto.check_id == SymptomCheck.id)
+        .where(SymptomCheck.testing_id == testing_id)
+    )).scalars().all()
+
+    check_ids = select(SymptomCheck.id).where(SymptomCheck.testing_id == testing_id)
+    # DB 레벨 cascade가 없으므로 자식(photo·item) → 부모(check) 순서로 명시 삭제
+    await db.execute(
+        delete(SymptomPhoto)
+        .where(SymptomPhoto.check_id.in_(check_ids))
+        .execution_options(synchronize_session=False)
+    )
+    await db.execute(
+        delete(SymptomItem)
+        .where(SymptomItem.check_id.in_(check_ids))
+        .execution_options(synchronize_session=False)
+    )
+    await db.execute(
+        delete(SymptomCheck)
+        .where(SymptomCheck.testing_id == testing_id)
+        .execution_options(synchronize_session=False)
+    )
+    await db.flush()
+
+    blob_paths = [p for p in photo_urls if is_blob_path(p)]
+    if blob_paths:
+        await asyncio.gather(*[delete_image_from_blob(p) for p in blob_paths])
 
 
 async def auto_create_testing_from_names(
