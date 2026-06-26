@@ -124,8 +124,8 @@ function CheckRecord({ check, onDelete }: { check: SymptomCheckResponse; onDelet
         </>
       ) : (
         <div className="flex items-center gap-2 px-3 py-2 bg-[#A8D5BA]/20 border border-[#A8D5BA]/50 rounded-xl">
-          <CheckCircle size={14} className="text-[#2D5F3F] flex-shrink-0" />
-          <span className="text-sm font-semibold text-[#2D5F3F]">이상 없음</span>
+          <CheckCircle size={14} className="text-safe-fg flex-shrink-0" />
+          <span className="text-sm font-semibold text-safe-fg">이상 없음</span>
         </div>
       )}
     </div>

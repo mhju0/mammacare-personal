@@ -1173,7 +1173,8 @@ function AllergyInner() {
         ) : testing.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
             <div className="text-4xl mb-3">🍽️</div>
-            <p className="text-xl">테스트 중인 재료가 없습니다</p>
+            <p className="text-xl">아직 테스트 중인 재료가 없어요</p>
+            <p className="mt-2 text-sm">새로운 재료를 추가하면 여기에서 관찰을 시작할 수 있어요.</p>
           </div>
         ) : (
           <div className="space-y-5">
@@ -1351,10 +1352,10 @@ function AllergyInner() {
                       const isConfirmedBased = group.confirmed.length > 0;
                       const severityStyle =
                         group.severity === "high"
-                          ? { badge: "bg-red-100 text-red-700", label: "높음" }
+                          ? { badge: "bg-reaction-bg text-reaction-fg", label: "높음" }
                           : group.severity === "medium"
-                            ? { badge: "bg-[#FEF5CC] text-amber-700", label: "중간" }
-                            : { badge: "bg-[#E3FFF1] text-[#3E8260]", label: "낮음" };
+                            ? { badge: "bg-testing-bg text-testing-fg", label: "중간" }
+                            : { badge: "bg-safe-bg text-safe-fg", label: "낮음" };
                       const cardStyle = isConfirmedBased
                         ? "bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFEEE8_100%)] border-[#FF8763]/30"
                         : "bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFF5D4_100%)] border-[#FF8763]/30";
@@ -2629,10 +2630,10 @@ function AllergyInner() {
       {suspectedPopup && (() => {
         const severityStyle =
           suspectedPopup.severity === "high"
-            ? { badge: "bg-red-100 text-red-700 border-red-200", label: "높음" }
+            ? { badge: "bg-reaction-bg text-reaction-fg border-red-200", label: "높음" }
             : suspectedPopup.severity === "medium"
-              ? { badge: "bg-[#FEF5CC] text-amber-700 border-amber-200", label: "중간" }
-              : { badge: "bg-[#E3FFF1] text-[#3E8260] border-[#9AC6AF]", label: "낮음" };
+              ? { badge: "bg-testing-bg text-testing-fg border-amber-200", label: "중간" }
+              : { badge: "bg-safe-bg text-safe-fg border-[#9AC6AF]", label: "낮음" };
         return (
           <div
             className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4"
