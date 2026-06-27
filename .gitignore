@@ -1,118 +1,138 @@
 # ==========================================================
 # MammaCare (personal) — .gitignore
+# 원칙: 비밀값/PII/빌드 아티팩트/로컬 캐시는 절대 커밋 금지.
+#       공유 문서(CLAUDE.md, AGENTS.md, .claude/rules/)는 커밋한다.
+# 주의: gitignore는 인라인 주석 불가 (# 은 줄 맨 앞에만).
+#       패턴 뒤 '# comment' 는 주석이 아니라 패턴의 일부로 처리된다.
 # ==========================================================
 
-# --- 업로드 이미지 (로컬 파일 저장 - 커밋 금지) ---
-backend/uploads/
+# ----------------------------------------------------------
+# 1. 비밀값 & 민감 데이터 (절대 커밋 금지)
+# ----------------------------------------------------------
 
-# --- DB 덤프 / 데이터 사본 (PII - 절대 커밋 금지) ---
-*.dump
-
-# --- ChromaDB (AI 잔재 - 폴더 없으면 추후 제거 가능) ---
-backend/data/chroma_db/
-
-# --- Python (FastAPI) ---
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyc
-*$py.class
-*.egg-info/
-dist/
-build/
-venv/
-env/
+# env — 템플릿 .env.example 만 예외 허용
 .env
-.env.production
-*.db
-*.sqlite3
-.pytest_cache/
-.coverage
-htmlcov/
+.env.*
+!.env.example
+
+# 키 / 인증서 / 서명
 *.pem
 *.ppk
 *.key
+*.p12
+*.cer
+# iOS 서명 프로파일
+*.mobileprovision
+*.jks
+*.keystore
+
+# Firebase / GCP 서비스 계정 키
+firebase_credentials*.json
+firebase-credentials.json
+firebase-adminsdk*.json
+*-firebase-adminsdk-*.json
+serviceAccount*.json
+*_serviceAccount.json
+service-account*.json
+gcp-credentials.json
+GoogleService-Info.plist
+**/GoogleService-Info.plist
+
+# DB 덤프 / 데이터 사본 (PII)
+*.dump
+
+# ----------------------------------------------------------
+# 2. 앱 로컬 데이터 (커밋 금지)
+# ----------------------------------------------------------
+
+# 로컬 이미지 저장소 — 현재 디렉토리 미생성이나 방어용 유지
+backend/uploads/
+
+# AI 잔재 (chroma_db) — 제거됨이나 방어용 유지
+backend/data/chroma_db/
+
+# downloads/ 는 .gitkeep 만 추적 — 실제 파일 누출 방지
+downloads/*
+!downloads/.gitkeep
+
+# ----------------------------------------------------------
+# 3. Python / Backend (FastAPI)
+# ----------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
 .mypy_cache/
 .ruff_cache/
 .tox/
 junit.xml
 test-results/
+*.db
+*.sqlite3
+
+# ----------------------------------------------------------
+# 4. Node / Frontend (React + Vite)
+# ----------------------------------------------------------
+node_modules/
+# dist/ 는 frontend/dist/ 포함 — 임의 깊이 매칭
+dist/
+build/
+coverage/
+.vite/
+.eslintcache
+.stylelintcache
+.prettiercache
+.node_repl_history
+*.local
+
+# ----------------------------------------------------------
+# 5. Capacitor / iOS (시뮬레이터 타깃)
+# ----------------------------------------------------------
+# capacitor.config.ts 가 frontend/ 하위에 있으므로
+# iOS 네이티브 프로젝트는 npx cap add ios 실행 시 frontend/ios/ 에 생성됨.
+# [Unknown] frontend/ios/ 는 아직 미생성 — 아래는 선제 방어 경로
+
+frontend/ios/App/Pods/
+frontend/ios/App/build/
+frontend/ios/App/output/
+# 웹 빌드에서 sync됨
+frontend/ios/App/App/public/
+# sync 시 자동 생성
+frontend/ios/App/App/capacitor.config.json
+frontend/ios/capacitor-cordova-ios-plugins/
+DerivedData/
+*.xcuserstate
+**/xcuserdata/
+
+# ----------------------------------------------------------
+# 6. 로그
+# ----------------------------------------------------------
 *.log
 logs/
 uvicorn*.log
 
-# --- React (Frontend) ---
-node_modules/
-/build
-/dist
-coverage/
-.node_repl_history
-.eslintcache
-.stylelintcache
-.prettiercache
-*.local
-.vite/
-
-# --- IDE & OS ---
+# ----------------------------------------------------------
+# 7. 에디터 & OS
+# ----------------------------------------------------------
 .vscode/
 .idea/
+**/*.iml
 .DS_Store
 Thumbs.db
 *.swp
 *.swo
 
-# --- Docker & Secrets ---
-.env.local
-.env.*.local
-docker-compose.override.y.json
-
-# --- Firebase / GCP 서비스 계정 키 (절대 커밋 금지) ---
-firebase_credentials*.json
-firebase-credentials.json
-firebase-adminsdk*.json
-*-firebase-adminsdk-*.json
-serviceAccountKey.json
-serviceAccount*.json
-*_serviceAccount.json
-service-account*.json
-gcp-credentials.json
-
-# --- AI Agents ---
-# 주의: START_HERE.md는 AGENTS.md를 repo에 두라고 함(Claude Code가 읽음).
-# AGENTS.md를 ignore하면 Claude Code가 못 읽는다. 의도적으로 뺄 때만 주석 해제.
-# AGENTS.md
-CLAUDE.md
-.claude
-
-# ==========================================================
-# Android / Capacitor (현재 iOS 시뮬레이터 단독 - Android는 범위 밖)
-# ==========================================================
-**/#*.jks
-**/*.jks
-**/*.keystore
-**/*.apk
-**/*.aar
-**/*.ap_
-**/*.aab
-**/*.dex
-**/*.class
-**/local.properties
-
-**/.idea/
-**/*.iml
-
-**/.gradle/
-**/build/
-**/bin/
-**/gen/
-**/out/
-
-frontend/android/app/src/main/assets/public
-frontend/android/app/src/main/assets/capacitor.config.json
-frontend/anrdova-android-plugins
-
-frontend/android/app/google-services.json
-
-# --- Firebase 설정 (커밋 금지) ---
-GoogleService-Info.plist
-**/GoogleService-Info.plist
+# ----------------------------------------------------------
+# 8. 에이전트 / 툴링 (로컬만 무시 — 공유 설정은 커밋)
+# ----------------------------------------------------------
+# CLAUDE.md / AGENTS.md / .claude/rules/ 는 커밋한다 (무시 X).
+# CLAUDE.local.md 와 settings.local.json 만 무시.
+CLAUDE.local.md
+.claude/settings.local.json
+# Serena MCP 로컬 캐시 전체 무시
+.serena/
