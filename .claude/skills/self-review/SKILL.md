@@ -16,9 +16,13 @@ If either fails, fix the failure first (it is part of the current task), then re
 
 ## 2. Adversarial review
 ```bash
-git diff --stat
-git diff
+rtk proxy git diff --stat
+rtk proxy git diff
 ```
+Use `rtk proxy` (unfiltered), not plain `git diff` — the PreToolUse hook rewrites
+bash through rtk, which compresses/filters output; the reviewer input must be the
+full unfiltered diff, not a compressed one.
+
 Invoke the `code-reviewer` subagent (Agent tool, subagent_type `code-reviewer`)
 with the diff summary and the task description. Wait for its verdict.
 
