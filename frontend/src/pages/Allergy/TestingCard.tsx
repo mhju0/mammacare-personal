@@ -69,17 +69,17 @@ export function TestingCard({ item, token, onRefresh }: TestingCardProps) {
   };
 
   const getMilestoneDotColor = (idx: number) => {
-    if (idx > currentMilestone) return "bg-[#D4D4D4]";
+    if (idx > currentMilestone) return "bg-muted-foreground/30";
     const assigned = milestoneMap.get(idx) ?? [];
-    if (assigned.length === 0) return "bg-[#FFE461]";
-    return assigned.some((c) => c.has_reaction) ? "bg-destructive" : "bg-[#9AC6AF]";
+    if (assigned.length === 0) return "bg-testing-fg";
+    return assigned.some((c) => c.has_reaction) ? "bg-destructive" : "bg-safe-fg";
   };
 
   const getMilestoneLabelColor = (idx: number) => {
-    if (idx > currentMilestone) return "text-[#BABABA]";
+    if (idx > currentMilestone) return "text-muted-foreground";
     const assigned = milestoneMap.get(idx) ?? [];
-    if (assigned.length === 0) return "text-[#6B644E]";
-    return assigned.some((c) => c.has_reaction) ? "text-destructive" : "text-[#2D5F3F]";
+    if (assigned.length === 0) return "text-testing-fg";
+    return assigned.some((c) => c.has_reaction) ? "text-destructive" : "text-safe-fg";
   };
 
   return (
@@ -188,7 +188,7 @@ export function TestingCard({ item, token, onRefresh }: TestingCardProps) {
       {/* 범례 */}
       <div className="flex items-center gap-3 mt-3 text-[0.89rem] text-muted-foreground">
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded-full bg-[#2D5F3F]" />
+          <div className="w-3 h-3 rounded-full bg-safe-fg" />
           <span>이상 없음</span>
         </div>
         <div className="flex items-center gap-1">
@@ -196,7 +196,7 @@ export function TestingCard({ item, token, onRefresh }: TestingCardProps) {
           <span>반응 있음</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded-full bg-[#D4D4D4]" />
+          <div className="w-3 h-3 rounded-full bg-muted-foreground/30" />
           <span>미기록</span>
         </div>
       </div>
