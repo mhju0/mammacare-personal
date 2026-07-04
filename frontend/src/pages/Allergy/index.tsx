@@ -1725,8 +1725,8 @@ function AllergyInner() {
                   <button
                     onClick={handleDownloadReportPdfApp}
                     disabled={pdfDownloading}
-                    className="flex items-center gap-2 px-4 py-2 bg-[#FEF5CC] text-primary-foreground
-                    rounded-3xl font-bold text-sm hover:bg-[#FFEFAB] transition-opacity disabled:opacity-50"
+                    className="flex items-center gap-2 px-4 py-2 bg-muted text-primary-foreground
+                    rounded-3xl font-bold text-sm hover:opacity-70 transition-opacity disabled:opacity-50"
                   >
                     <Download size={15} />
                     {pdfDownloading ? "생성 중" : "PDF 다운로드"}
@@ -1734,8 +1734,8 @@ function AllergyInner() {
                   <button
                     onClick={handleDownloadReportJpg}
                     disabled={jpgDownloading}
-                    className="flex items-center gap-2 px-4 py-2 bg-[#FEF5CC] text-primary-foreground
-                    rounded-3xl font-bold text-sm hover:bg-[#FFEFAB] transition-opacity disabled:opacity-50"
+                    className="flex items-center gap-2 px-4 py-2 bg-muted text-primary-foreground
+                    rounded-3xl font-bold text-sm hover:opacity-70 transition-opacity disabled:opacity-50"
                   >
                     <Download size={15} />
                     {jpgDownloading ? "생성 중" : "JPG 다운로드"}
@@ -1760,8 +1760,8 @@ function AllergyInner() {
                   <button
                     onClick={handleDownloadReport}
                     disabled={pdfDownloading}
-                    className="flex items-center gap-2 px-4 py-2 bg-[#FEF5CC] text-primary-foreground
-                    rounded-3xl font-bold text-sm hover:bg-[#FFEFAB] transition-opacity disabled:opacity-50"
+                    className="flex items-center gap-2 px-4 py-2 bg-muted text-primary-foreground
+                    rounded-3xl font-bold text-sm hover:opacity-70 transition-opacity disabled:opacity-50"
                   >
                     <Download size={15} />
                     {pdfDownloading ? "생성 중" : "PDF 다운로드"}
@@ -1769,8 +1769,8 @@ function AllergyInner() {
                   <button
                     onClick={handleDownloadReportJpg}
                     disabled={jpgDownloading}
-                    className="flex items-center gap-2 px-4 py-2 bg-[#FEF5CC] text-primary-foreground
-                    rounded-3xl font-bold text-sm hover:bg-[#FFEFAB] transition-opacity disabled:opacity-50"
+                    className="flex items-center gap-2 px-4 py-2 bg-muted text-primary-foreground
+                    rounded-3xl font-bold text-sm hover:opacity-70 transition-opacity disabled:opacity-50"
                   >
                     <Download size={15} />
                     {jpgDownloading ? "생성 중" : "JPG 다운로드"}
