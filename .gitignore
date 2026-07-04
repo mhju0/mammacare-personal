@@ -136,3 +136,5 @@ CLAUDE.local.md
 .claude/settings.local.json
 # Serena MCP 로컬 캐시 전체 무시
 .serena/
+
+.tokensave/
