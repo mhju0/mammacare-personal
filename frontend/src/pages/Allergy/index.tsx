@@ -1272,7 +1272,7 @@ function AllergyInner() {
                     {confirmedAllergenNames.map((name) => (
                       <span
                         key={`confirmed-${name}`}
-                        className="flex items-center gap-1 px-2.5 bg-[#FFEEE8] border border-[#FF8763]/50 rounded-full 
+                        className="flex items-center gap-1 px-2.5 bg-reaction-bg border border-reaction-fg rounded-full
                         text-sm font-bold text-destructive"
                       >
                         <AlertTriangle size={18} /> {name}
@@ -1289,8 +1289,8 @@ function AllergyInner() {
                     {reactionIngredientNames.map((name) => (
                       <span
                         key={`reaction-${name}`}
-                        className="flex items-center gap-1 px-2.5 bg-[#FFF5D4] 
-                        border border-[#FF8763]/30 rounded-full text-sm font-bold text-destructive"
+                        className="flex items-center gap-1 px-2.5 bg-reaction-bg
+                        border border-reaction-fg rounded-full text-sm font-bold text-destructive"
                       >
                         <AlertTriangle size={18} /> {name}
                       </span>
