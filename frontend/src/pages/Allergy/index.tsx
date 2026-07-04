@@ -2680,8 +2680,8 @@ function AllergyInner() {
             <div className="flex flex-col gap-2">
               <button
                 onClick={() => setShowReactionRetestConfirm(false)}
-                className="w-full py-3 rounded-full bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)]
+                className="w-full py-3 rounded-full bg-[image:var(--action-soft-bg)]
+                hover:bg-[image:var(--action-soft-bg-hover)]
                 text-primary-foreground font-bold text-base transition-opacity"
               >
                 취소
