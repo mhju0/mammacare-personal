@@ -97,10 +97,21 @@ def build_report(
                 for check in testing.symptom_checks
                 for item in check.symptom_items
             ]
+            # 반응 확인일시 = has_reaction=True로 기록된 가장 이른 증상 체크 시각.
+            # (해당 체크가 test_status를 completed_reaction으로 확정시킨 시점 — crud/allergy/symptom_check.py)
+            # has_reaction 체크가 하나도 없는 예외 경로(예: 수동 PATCH로 상태만 강제 설정된 경우)는
+            # test_end_date로 폴백해 빈 값 대신 항상 날짜를 표시한다.
+            reaction_checks = [c for c in testing.symptom_checks if c.has_reaction]
+            reaction_checked_at = (
+                _to_kst(min(reaction_checks, key=lambda c: c.checked_at).checked_at)
+                if reaction_checks
+                else _to_kst(testing.test_end_date)
+            )
             reacted_items.append(
                 ReportReactedItem(
                     ingredient_name=testing.ingredient.name,
                     test_end_date=_to_kst(testing.test_end_date),
+                    reaction_checked_at=reaction_checked_at,
                     memo=testing.memo,
                     symptoms=all_symptoms,
                 )

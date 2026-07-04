@@ -109,7 +109,7 @@
         {% for item in report.reacted_ingredients %}
         <tr>
           <td>{{ item.ingredient_name }}</td>
-          <td class="date-cell">{% if item.test_end_date %}<span class="date-line">{{ item.test_end_date.strftime('%Y년 %m월 %d일') }}</span><span class="time-line">{{ item.test_end_date.strftime('%H시 %M분') }}</span>{% else %}-{% endif %}</td>
+          <td class="date-cell">{% if item.reaction_checked_at %}<span class="date-line">{{ item.reaction_checked_at.strftime('%Y년 %m월 %d일') }}</span><span class="time-line">{{ item.reaction_checked_at.strftime('%H시 %M분') }}</span>{% else %}-{% endif %}</td>
           <td>
             {% for s in item.symptoms %}
               <span class="symptom-item reaction">{{ s.symptom_type }}{% if s.severity %} · {{ severity_kr.get(s.severity|lower, s.severity) }}{% endif %}</span>

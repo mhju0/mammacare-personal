@@ -32,6 +32,7 @@ class ReportAllergyItem(BaseModel):
 class ReportReactedItem(BaseModel):
     ingredient_name: str
     test_end_date: Optional[datetime] = None
+    reaction_checked_at: Optional[datetime] = None
     memo: Optional[str] = None
     symptoms: list[ReportSymptomDetail]
 
