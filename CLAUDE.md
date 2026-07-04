@@ -42,7 +42,9 @@ Claude Code가 **세션 시작 시 자동으로 읽는** 파일이다.
 - **Alembic 금지** · API prefix `/api`(**`/api/v1` 금지**) · **RefreshToken 부활 금지**
 - **pnpm만** 사용(npm 금지) · async SQLAlchemy만 · `httpx`만(`requests` 금지) · `logging`만(`print()` 금지)
 - 알레르기 비교는 **`ingredient_id`** 기준(이름 문자열 아님) · 본인 리소스 아니면 **404** · 사용자 노출 에러 메시지 **한국어**
-- 비밀값/`.env`/`*.dump`(PII) **커밋 금지** · `git add [filepath]`만(전체 `.` 금지) · **명시적 지시 없이 commit/push/branch 전환 금지**
+- 비밀값/`.env`/`*.dump`(PII) **커밋 금지** · 
+- git add / commit / push / branch 금지 (버전 관리는 Michael이 직접).
+- git diff / status / log 등 read-only git 명령은 허용 — 자기 변경 검증에 사용 가능.
 
 ## Workflow
 - 기본 루프: **`/ship <task>` → 구현 → self-review(빌드 게이트 + `code-reviewer` 서브에이전트) → 최종 보고.** 조사만 할 땐 `/readonly-audit`.
