@@ -57,6 +57,8 @@
   --testing-fg: #B26A00;
   --reaction-bg: #FBE6E5;
   --reaction-fg: #C0392B;
+  --action-soft-bg: radial-gradient(ellipse at center, #EBF7FF 0%, #DBF2FF 50%, #D1EDFF 100%);
+  --action-soft-bg-hover: radial-gradient(ellipse at center, #D4EEFF 0%, #DBF2FF 100%);
 }
 
 .dark {
