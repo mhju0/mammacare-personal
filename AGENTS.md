@@ -50,7 +50,7 @@ frontend/src/context/      AppContext (auth/baby state)
 - **Auth**: JWT access token만. RefreshToken 부활 금지. OAuth는 fragment(`#`) 토큰 전달, HMAC state, last-login-method 보존.
 - **코드**: async만, `httpx`만, `logging`만. 라우터 얇게. 에러 메시지 한국어. 본인 리소스 아니면 404.
 - **보안**: 비밀값/데이터 커밋 금지. `.env`, secret, key, `.pem` 절대 출력/커밋 안 함. DB 덤프(`*.dump`)는 PII이므로 gitignore 처리(로컬/외장 보관만).
-- **Git**: 명시적 지시 없이 commit/push/branch 전환 금지. `git add [filepath]`(전체 `.` 지양). 솔로지만 의미 단위 커밋.
+- **Git**: Claude Code는 필요하면 스스로 `git add`/`commit`을 실행해도 된다(`git add [filepath]`로 대상 지정, 전체 `.` 지양). 사람이 직접 실행할 명령을 줄 때는 git add + git commit을 하나의 bash 코드블록에 넣는다(placeholder 금지, professional English commit message). 솔로지만 의미 단위 커밋.
 
 ## 알레르기 규칙 (최우선)
 

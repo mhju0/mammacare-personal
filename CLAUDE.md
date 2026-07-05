@@ -43,15 +43,59 @@ Claude Code가 **세션 시작 시 자동으로 읽는** 파일이다.
 - **pnpm만** 사용(npm 금지) · async SQLAlchemy만 · `httpx`만(`requests` 금지) · `logging`만(`print()` 금지)
 - 알레르기 비교는 **`ingredient_id`** 기준(이름 문자열 아님) · 본인 리소스 아니면 **404** · 사용자 노출 에러 메시지 **한국어**
 - 비밀값/`.env`/`*.dump`(PII) **커밋 금지** · 
-- git add / commit / push / branch 금지 (버전 관리는 Michael이 직접).
-- git diff / status / log 등 read-only git 명령은 허용 — 자기 변경 검증에 사용 가능.
+- Claude Code는 필요하면 스스로 git add / commit을 실행해도 된다 — 모든 git 작업을 사람에게 넘길 필요는 없다. 사람이 직접 실행할 명령을 제시할 때는 git add + git commit을 하나의 bash 코드블록에 넣는다(placeholder 금지, 실제 파일 경로 + professional English commit message).
+- git diff / status / log 등 read-only git 명령은 자기 변경 검증에 사용 가능.
 
 ## Workflow
 - 기본 루프: **`/ship <task>` → 구현 → self-review(빌드 게이트 + `code-reviewer` 서브에이전트) → 최종 보고.** 조사만 할 땐 `/readonly-audit`.
-- **커밋은 항상 사람이 실행** — 에이전트는 `git add/commit/push` 절대 금지. 보고서에 파일 목록(git add용) + 제안 커밋 메시지까지만.
+- **커밋**: 에이전트가 필요하면 스스로 `git add/commit`을 실행해도 된다. 사람이 직접 실행할 때는 파일 목록(git add용) + 하나의 bash 코드블록(placeholder 금지, professional English commit message)으로 제시한다.
 - 에스컬레이션(리뷰어 PASS여도 자동 통과 금지): manual_sql/스키마 · 알레르기 상태 전이 · auth/보안 · 삭제 경로 · 두 제출 핸들러 또는 `_status_from_dates`(2벌) 관련 → 최종 라인 `NEEDS SENIOR REVIEW`.
 - 알레르기/DB 작업은 `/ship` 런당 **1슬라이스**만.
 - 스킬 목록: `ship`(구현 루프) · `self-review`(구현 후 필수 게이트) · `readonly-audit`(조사) · `e2e-check`(데모 스파인 E2E) · `manual-sql`(스키마 변경 절차) · `design-polish`(UI, 화면당 1런).
 - 리뷰어: `.claude/agents/code-reviewer.md` — read-only 적대적 리뷰, 판정 PASS / PASS WITH NOTES / FAIL.
 
 <!-- 유지보수 메모(이 주석은 컨텍스트에 로드되지 않음): 이 파일은 매 세션 로드되므로 짧게 유지(<200줄, 가능하면 <100). 규칙은 AGENTS.md에서만 관리하고 여기선 중복하지 말 것. -->
+
+## Claude conventions
+
+<!-- `_reference_instructions.md`에서 그대로 복사한 공통 규칙 (Models · Effort · Prompt 형식 · Git commit 형식). 프로젝트 간 byte-identical로 유지 — 여기서 직접 고치지 말고 `_reference_instructions.md`에서 관리한다. -->
+
+## Claude Code Prompts
+Claude Code 프롬프트를 요청하면 항상:
+- 추천 model + effort
+- command 코드블록 1개, 그리고 별도의 prompt body 코드블록 1개
+- 프롬프트는 간결하게 (불필요하게 길게 쓰지 마)
+
+Format: claude --model <model> --effort <effort>
+
+(prompt body는 별도 코드블록)
+
+Models
+- haiku / claude-haiku-4-5 — 소소한 수정, 오타, 포맷팅, 저위험 단일 파일
+- sonnet / claude-sonnet-5 — 기본값. 일반 버그 수정, 기능, 소규모 refactor, 테스트
+- opus / claude-opus-4-8 — 복잡/cross-file, 어려운 디버깅, DB/auth/security/scheduling/notification 로직
+- fable / claude-fable-5 — 가장 어려운 작업: 깊은 audit, 대규모 refactor, 긴 multi-step 조사
+
+Effort
+- low — 단순, 저위험
+- medium — 일반 기본값
+- high — 대부분의 실제 버그 수정·기능 작업
+- xhigh — 깊은 추론, multi-file 조사, 신중한 audit
+- max — 매우 어렵거나 high-stakes
+- ultracode — 대규모 multi-step agentic 작업용 Claude Code 전용 모드
+
+기본: 애매하면 sonnet medium. data integrity/auth/DB/schema/security/scheduling/notification은 최소 sonnet high.
+
+## Git Commits
+내가 직접 실행할 git add/commit을 줄 때는 항상:
+- git add와 git commit을 하나의 "bash" 코드블록에 함께 넣어라 (한 번 클릭으로 전체 복사 가능하게).
+- 별도 편집 없이 그대로 paste해서 실행 가능해야 한다. placeholder 금지, 실제 파일 경로와 실제 commit message를 넣어라.
+- commit message는 professional English로.
+- 형식:
+
+  git add path/to/fileA path/to/fileB
+  git commit -m "Professional English commit message here"
+
+Claude Code는 필요하면 스스로 git add / git commit을 실행해도 된다.
+모든 git 작업을 나에게 넘길 필요는 없다. 다만 위 포맷 규칙은
+"내가 직접 실행하도록 명령을 제시할 때" 적용된다.
