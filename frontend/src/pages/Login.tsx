@@ -147,21 +147,15 @@ export default function Login() {
     }
   };
 
-const handleSocial = (provider: string) => {
-  const providerMap: Record<string, string> = {
+const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
+  const providerMap: Record<"카카오" | "네이버" | "구글", string> = {
     "카카오": "kakao",
     "네이버": "naver",
     "구글": "google",
   };
 
-  const key = providerMap[provider];
-  if (key) {
-    const apiBase = (import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "");
-    window.location.href = `${apiBase}/api/auth/${key}/login`;
-    return;
-  }
-
-  alert(`${provider} 로그인은 현재 준비 중입니다.`);
+  const apiBase = (import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "");
+  window.location.href = `${apiBase}/api/auth/${providerMap[provider]}/login`;
 };
 
   return (
