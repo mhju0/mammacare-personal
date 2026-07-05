@@ -1208,11 +1208,11 @@ function AllergyInner() {
         )}
       </div>
 
-      {/* 2. AI 의심 재료 분석 */}
+      {/* 2. 교차반응 의심 분석 */}
       <div className="bg-[image:var(--card-wash-bg)] border border-border rounded-3xl py-3 mb-6">
         <div className="flex items-center gap-1.5 mb-1 px-5">
           <Sparkles size={18} />
-          <h2 className={`font-bold ${isApp ? "text-base" : "text-lg"}`}>AI 의심 재료 분석</h2>
+          <h2 className={`font-bold ${isApp ? "text-base" : "text-lg"}`}>교차반응 의심 분석</h2>
         </div>
 
         {reactionIngredientNames.length === 0 && confirmedAllergenNames.length === 0 ? (
