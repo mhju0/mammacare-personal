@@ -1,4 +1,5 @@
 import { apiFetch } from "./client";
+import { getApiBase } from "./base";
 
 export type TestStatus = "testing" | "completed_safe" | "completed_reaction";
 
@@ -149,7 +150,7 @@ export async function fetchReportFile(
   days: number = 7,
   format: "pdf" | "jpeg" = "pdf",
 ): Promise<Blob> {
-  const BASE = `${(import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "")}/api`;
+  const BASE = `${getApiBase()}/api`;
   const res = await fetch(`${BASE}/babies/${babyId}/report?days=${days}&format=${format}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -259,7 +260,7 @@ export async function uploadSymptomPhoto(
   const formData = new FormData();
   formData.append("file", file);
   const res = await fetch(
-    `${(import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "")}/api/allergy/symptoms/${checkId}/photos?sort_order=${sortOrder}`,
+    `${getApiBase()}/api/allergy/symptoms/${checkId}/photos?sort_order=${sortOrder}`,
     {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },

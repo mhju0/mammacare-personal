@@ -6,8 +6,9 @@ import { useApp } from "../context/AppContext";
 import { IngredientIcon } from "./IngredientIcon";
 import { SelectTestingModal } from "../pages/Schedule/Modals";
 import { TimeDropdown } from "../pages/Schedule/TimeDropdown";
+import { getApiBase } from "../api/base";
 
-const BASE = `${(import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "")}/api`;
+const BASE = `${getApiBase()}/api`;
 
 type RecipeStage = "early" | "middle" | "late" | "complete" | "toddler" | "general" | null;
 

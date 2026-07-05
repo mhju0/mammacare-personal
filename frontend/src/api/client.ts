@@ -1,6 +1,7 @@
 import { Capacitor } from "@capacitor/core";
+import { getApiBase } from "./base";
 
-const BASE = `${(import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "")}/api`;
+const BASE = `${getApiBase()}/api`;
 
 export class ApiError extends Error {
   constructor(public status: number, message: string, public code?: string) {

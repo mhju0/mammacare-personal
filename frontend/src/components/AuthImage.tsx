@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import type { ImgHTMLAttributes } from "react";
+import { getApiBase } from "../api/base";
 
-const API_ORIGIN = (import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "");
+const API_ORIGIN = getApiBase();
 
 /**
  * src를 해석한다.

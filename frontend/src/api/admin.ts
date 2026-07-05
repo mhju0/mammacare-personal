@@ -1,6 +1,7 @@
 import { apiFetch } from "./client";
+import { getApiBase } from "./base";
 
-const API_BASE = `${(import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "")}/api`;
+const API_BASE = `${getApiBase()}/api`;
 
 export interface AdminUserOut {
   id: string;

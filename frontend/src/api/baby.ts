@@ -1,4 +1,5 @@
 import { apiFetch } from "./client";
+import { getApiBase } from "./base";
 import type { BabyProfile } from "../types";
 
 interface BabyApiOut {
@@ -113,7 +114,7 @@ export async function uploadBabyPhotoApi(
 ): Promise<BabyProfile> {
   const formData = new FormData();
   formData.append("file", file);
-  const BASE = `${(import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "")}/api`;
+  const BASE = `${getApiBase()}/api`;
   const res = await fetch(`${BASE}/babies/${babyId}/photo`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },

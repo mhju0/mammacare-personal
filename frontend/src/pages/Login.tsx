@@ -3,6 +3,7 @@ import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
 import { useNavigate, useSearchParams } from "react-router";
 import { useApp } from "../context/AppContext";
 import { findUsernameApi, resetPasswordApi } from "../api/auth";
+import { getApiBase } from "../api/base";
 import { Eye, EyeOff, X } from "lucide-react";
 import { motion } from "framer-motion";
 import kakaoLoginIcon from "../asset/kakao_login_circle.webp";
@@ -154,7 +155,7 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
     "구글": "google",
   };
 
-  const apiBase = (import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "");
+  const apiBase = getApiBase();
   window.location.href = `${apiBase}/api/auth/${providerMap[provider]}/login`;
 };
 

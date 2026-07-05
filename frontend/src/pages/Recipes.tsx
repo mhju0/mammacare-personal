@@ -6,8 +6,9 @@ import { useApp } from "../context/AppContext";
 import { IngredientIcon } from "../components/IngredientIcon";
 import { RecipeScheduleModal } from "../components/RecipeScheduleModal";
 import { dedupeRequest, readSessionCache, writeSessionCache } from "../utils/sessionCache";
+import { getApiBase } from "../api/base";
 
-const BASE = `${(import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "")}/api`;
+const BASE = `${getApiBase()}/api`;
 
 const stages = ["전체", "초기", "중기", "후기", "완료기"];
 const stageMap: Record<string, string> = {
