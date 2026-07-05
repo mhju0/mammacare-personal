@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api import auth, babies, inquiries, hospitals, media, notifications, ingredients, nutrition, oauth, parents, recipes, schedules, users
+from app.api import auth, babies, inquiries, hospitals, media, notifications, ingredients, nutrition, oauth, parents, recipes, recommendations, schedules, users
 from app.api.admin import admin_router
 from app.api.allergy import confirmed_allergy, ingredient_testing, symptom_check, symptom_photo, report
 from app.api.community import community_router
@@ -33,3 +33,6 @@ api_router.include_router(ingredient_testing.router, prefix="/allergy", tags=["a
 api_router.include_router(symptom_check.router, prefix="/allergy", tags=["allergy"])
 api_router.include_router(symptom_photo.router, prefix="/allergy", tags=["allergy"])
 api_router.include_router(report.router, prefix="/babies", tags=["allergy"])
+
+# recommendation router (아기 월령 기반 다음 도입 추천)
+api_router.include_router(recommendations.router, prefix="/babies", tags=["recommendations"])
