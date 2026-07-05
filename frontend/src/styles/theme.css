@@ -62,6 +62,8 @@
   --card-wash-bg: radial-gradient(ellipse at center, #FFFAF0 0%, #FFFBE8 100%);
   --card-wash-yellow-bg: radial-gradient(ellipse at center, #FFFAF0 0%, #FFF5D4 100%);
   --testing-track-bg: #FEF5CC;
+  --card-wash-green-bg: radial-gradient(ellipse at center, #FFFAF0 0%, #E3FFF1 100%);
+  --card-wash-red-bg: radial-gradient(ellipse at center, #FFFAF0 0%, #FFEEE8 100%);
 }
 
 .dark {

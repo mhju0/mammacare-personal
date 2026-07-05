@@ -549,7 +549,7 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
               onClick={() => { setHasReaction(false); setReactionOpen(false); setSelectedSymptoms([]); }}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-3xl text-sm font-bold border-2 transition-all ${
                 hasReaction === false
-                  ? "bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#E3FFF1_100%)] border-[#A8D5BA] text-[#2D5F3F]"
+                  ? "bg-[image:var(--card-wash-green-bg)] border-[#A8D5BA] text-[#2D5F3F]"
                   : "bg-muted/50 border-border text-muted-foreground hover:border-[#9AC6AF]/50"
               }`}
             >
@@ -559,7 +559,7 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
               onClick={() => { setHasReaction(true); setReactionOpen(true); }}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-3xl text-sm font-bold border-2 transition-all ${
                 hasReaction === true
-                  ? "bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFEEE8_100%)] border-[#F8AC95] text-destructive"
+                  ? "bg-[image:var(--card-wash-red-bg)] border-[#F8AC95] text-destructive"
                   : "bg-muted/50 border-border text-muted-foreground hover:border-[#F8AC95]/50"
               }`}
             >
@@ -577,7 +577,7 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
                 key={preset.type}
                 className={`w-full flex items-center gap-2 px-3 py-1.5 rounded-full border-2 text-sm font-semibold transition-all ${
                   selected
-                    ? "bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFEEE8_100%)] border-[#F8AC95] text-destructive"
+                    ? "bg-[image:var(--card-wash-red-bg)] border-[#F8AC95] text-destructive"
                     : "border-border text-muted-foreground hover:border-[#F8AC95]/50"
                 }`}
               >
