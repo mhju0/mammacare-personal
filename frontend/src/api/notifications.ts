@@ -17,7 +17,7 @@ export function emitPushToast(payload: PushToastPayload): void {
 export interface NotificationItem {
   id: string;
   parent_id: string;
-  baby_id: string;
+  baby_id: string | null;
   type: string;
   title: string;
   body: string | null;

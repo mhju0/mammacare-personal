@@ -5,12 +5,10 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any
 
-from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud import crud_notification
-from app.models.baby_user import BabyUser
 from app.models.community.community_comment import CommunityComment
 from app.models.community.community_like import CommunityLike
 from app.models.community.community_post import CommunityPost
@@ -42,21 +40,11 @@ def _is_dedup_unique_violation(exc: IntegrityError) -> bool:
     return _DEDUP_INDEX_NAME in str(exc)
 
 
-async def _get_first_baby_id(db: AsyncSession, parent_id: uuid.UUID) -> uuid.UUID | None:
-    result = await db.execute(
-        select(BabyUser.id)
-        .where(BabyUser.parent_id == parent_id)
-        .order_by(BabyUser.created_at.asc())
-        .limit(1)
-    )
-    return result.scalar_one_or_none()
-
-
 async def persist_and_push_notification(
     db: AsyncSession,
     *,
     parent: ParentUser,
-    baby_id: uuid.UUID,
+    baby_id: uuid.UUID | None,
     type_: str,
     title: str,
     body: str,
@@ -151,14 +139,6 @@ async def create_comment_notification(
     if not parent.notify_community:
         return
 
-    baby_id = await _get_first_baby_id(db, post.parent_id)
-    if baby_id is None:
-        # TODO: 커뮤니티 알림은 baby와 무관하게 발송돼야 한다. 현재 notification.baby_id가
-        #       NOT NULL이라 baby 없는 수신자는 알림을 못 받는다. 근본 해결은
-        #       notification.baby_id를 nullable로 바꾸는 스키마 결정사항이라 여기선 로깅만 한다.
-        logger.warning("커뮤니티 댓글 알림 생략: 수신자에게 baby가 없음 parent_id=%s", post.parent_id)
-        return
-
     comment_id = str(comment.id)
     dedup_key = f"community_comment:{comment_id}"
     already = await crud_notification.exists_by_type_and_data_key(
@@ -171,7 +151,7 @@ async def create_comment_notification(
     await persist_and_push_notification(
         db,
         parent=parent,
-        baby_id=baby_id,
+        baby_id=None,
         type_="community_comment",
         title=message.title,
         body=message.body,
@@ -196,16 +176,11 @@ async def create_report_post_notification(
     if not parent.notify_community:
         return
 
-    baby_id = await _get_first_baby_id(db, post.parent_id)
-    if baby_id is None:
-        logger.warning("게시글 신고 알림 생략: 수신자에게 baby가 없음 parent_id=%s", post.parent_id)
-        return
-
     message = notification_templates.community_report_post_message()
     await persist_and_push_notification(
         db,
         parent=parent,
-        baby_id=baby_id,
+        baby_id=None,
         type_="community_report_post",
         title=message.title,
         body=message.body,
@@ -229,16 +204,11 @@ async def create_report_comment_notification(
     if not parent.notify_community:
         return
 
-    baby_id = await _get_first_baby_id(db, comment.parent_id)
-    if baby_id is None:
-        logger.warning("댓글 신고 알림 생략: 수신자에게 baby가 없음 parent_id=%s", comment.parent_id)
-        return
-
     message = notification_templates.community_report_comment_message()
     await persist_and_push_notification(
         db,
         parent=parent,
-        baby_id=baby_id,
+        baby_id=None,
         type_="community_report_comment",
         title=message.title,
         body=message.body,
@@ -267,14 +237,6 @@ async def create_like_notification(
     if not parent.notify_community:
         return
 
-    baby_id = await _get_first_baby_id(db, post.parent_id)
-    if baby_id is None:
-        # TODO: 커뮤니티 알림은 baby와 무관하게 발송돼야 한다. 현재 notification.baby_id가
-        #       NOT NULL이라 baby 없는 수신자는 알림을 못 받는다. 근본 해결은
-        #       notification.baby_id를 nullable로 바꾸는 스키마 결정사항이라 여기선 로깅만 한다.
-        logger.warning("커뮤니티 좋아요 알림 생략: 수신자에게 baby가 없음 parent_id=%s", post.parent_id)
-        return
-
     dedup_key = f"community_like:{post.id}:{actor_id}"
     already = await crud_notification.exists_by_type_and_data_key(
         db, post.parent_id, "community_like", "dedup_key", dedup_key
@@ -286,7 +248,7 @@ async def create_like_notification(
     await persist_and_push_notification(
         db,
         parent=parent,
-        baby_id=baby_id,
+        baby_id=None,
         type_="community_like",
         title=message.title,
         body=message.body,

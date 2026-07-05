@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field, computed_field
 
 class NotificationCreate(BaseModel):
     parent_id: UUID
-    baby_id: UUID
+    baby_id: Optional[UUID] = None
     type: str = Field(min_length=1, max_length=50)
     title: str = Field(min_length=1, max_length=255)
     body: Optional[str] = None
@@ -31,7 +31,7 @@ class FcmTokenUpdate(BaseModel):
 class NotificationResponse(BaseModel):
     id: UUID
     parent_id: UUID
-    baby_id: UUID
+    baby_id: Optional[UUID] = None
     type: str
     title: str
     body: Optional[str] = None

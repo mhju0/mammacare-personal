@@ -15,7 +15,7 @@ from app.models.notification import Notification
 async def create_notification(
     db: AsyncSession,
     parent_id: uuid.UUID,
-    baby_id: uuid.UUID,
+    baby_id: uuid.UUID | None,
     type: str,
     title: str,
     body: str | None = None,

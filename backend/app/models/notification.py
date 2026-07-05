@@ -25,7 +25,7 @@ class Notification(Base):
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     parent_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("parent_user.id", ondelete="CASCADE"), nullable=False, index=True)
-    baby_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("baby_user.id", ondelete="CASCADE"), nullable=False, index=True)
+    baby_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("baby_user.id", ondelete="CASCADE"), nullable=True, index=True)
     type: Mapped[str] = mapped_column(String(50), nullable=False)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     body: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -38,4 +38,4 @@ class Notification(Base):
     data: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
 
     parent: Mapped["ParentUser"] = relationship("ParentUser", back_populates="notifications")  # noqa: F821
-    baby: Mapped["BabyUser"] = relationship("BabyUser", back_populates="notifications")  # noqa: F821
+    baby: Mapped["BabyUser | None"] = relationship("BabyUser", back_populates="notifications")  # noqa: F821
