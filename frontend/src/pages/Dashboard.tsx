@@ -12,33 +12,21 @@ import {
 import { useApp } from "../context/AppContext";
 import {
   listTestings,
-  listConfirmedAllergies,
   type IngredientTestingResponse,
   type TestStatus,
 } from "../api/allergy";
-import { listIngredients, type IngredientResponse } from "../api/ingredients";
+import { getRecommendations } from "../api/recommendations";
+import type { IngredientResponse } from "../api/ingredients";
 import { getElapsedHours } from "./Allergy/types";
 import { Card } from "../components/ui/card";
 import { Skeleton } from "../components/ui/skeleton";
 import { StatusChip, statusFromTestStatus } from "../components/ui/status-chip";
 import { IngredientIcon } from "../components/IngredientIcon";
 import { cn } from "../components/ui/utils";
-import type { BabyProfile } from "../types";
 
 // 관찰 기간: 알레르기 테스트 타임라인(TIME_MILESTONES)이 72시간까지이므로 3일을 한 주기로 본다.
 const OBSERVATION_DAYS = 3;
 const RECENT_LIMIT = 5;
-const RECOMMENDATION_LIMIT = 3;
-
-function ageInMonths(baby: BabyProfile): number {
-  const birth = new Date(baby.birthYear, baby.birthMonth - 1, baby.birthDay);
-  const now = new Date();
-  let months =
-    (now.getFullYear() - birth.getFullYear()) * 12 +
-    (now.getMonth() - birth.getMonth());
-  if (now.getDate() < birth.getDate()) months -= 1;
-  return Math.max(0, months);
-}
 
 function observationDay(startDate: string): number {
   const day = Math.ceil(getElapsedHours(startDate) / 24);
@@ -114,7 +102,6 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   const [testings, setTestings] = useState<IngredientTestingResponse[]>([]);
-  const [confirmedIds, setConfirmedIds] = useState<Set<number>>(new Set());
   const [coreLoading, setCoreLoading] = useState(true);
   const [coreError, setCoreError] = useState<string | null>(null);
 
@@ -127,12 +114,8 @@ export default function Dashboard() {
     setCoreLoading(true);
     setCoreError(null);
     try {
-      const [testList, confirmedList] = await Promise.all([
-        listTestings(activeBaby.id, token),
-        listConfirmedAllergies(activeBaby.id, token),
-      ]);
+      const testList = await listTestings(activeBaby.id, token);
       setTestings(testList);
-      setConfirmedIds(new Set(confirmedList.map((c) => c.ingredient_id)));
     } catch {
       setCoreError("대시보드 정보를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.");
     } finally {
@@ -144,32 +127,19 @@ export default function Dashboard() {
     loadCore();
   }, [loadCore]);
 
-  // 규칙 기반 "다음 도입 추천": 월령에 맞는 재료 중 아직 도입하지 않은 것.
-  // TODO(M3): 영양 균형·교차반응까지 고려한 추천을 백엔드 엔드포인트로 이관.
   const loadRecommendations = useCallback(async () => {
-    if (!activeBaby) return;
+    if (!token || !activeBaby) return;
     setRecLoading(true);
     setRecError(null);
     try {
-      const maxMonth = Math.max(ageInMonths(activeBaby), 4);
-      const pool = await listIngredients({ max_month: maxMonth });
-      const excluded = new Set<number>([
-        ...testings.map((t) => t.ingredient_id),
-        ...confirmedIds,
-        ...activeBaby.allergens.map((a) => a.id),
-        ...activeBaby.safeIngredients.map((s) => s.id),
-      ]);
-      const suggestions = pool
-        .filter((ing) => !excluded.has(ing.id))
-        .sort((a, b) => (a.recommended_month ?? 99) - (b.recommended_month ?? 99))
-        .slice(0, RECOMMENDATION_LIMIT);
+      const suggestions = await getRecommendations(activeBaby.id, token);
       setRecs(suggestions);
     } catch {
       setRecError("추천을 불러오지 못했어요.");
     } finally {
       setRecLoading(false);
     }
-  }, [activeBaby, testings, confirmedIds]);
+  }, [activeBaby, token]);
 
   useEffect(() => {
     // 핵심 데이터 로딩이 끝나고 에러가 없을 때만 추천 계산
