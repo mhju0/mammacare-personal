@@ -26,6 +26,9 @@ importers:
       '@capacitor/geolocation':
         specifier: ^8.2.0
         version: 8.2.0(@capacitor/core@8.4.0)
+      '@capacitor/ios':
+        specifier: 8.4.0
+        version: 8.4.0(@capacitor/core@8.4.0)
       '@capacitor/push-notifications':
         specifier: ^8.1.1
         version: 8.1.1(@capacitor/core@8.4.0)
@@ -368,6 +371,11 @@ packages:
     resolution: {integrity: sha512-N29QcoIPmme0xSxRkm7+3hjoHp6mBAOarxecvtCCZKyOBeKiJsFUq981cezg2XWBa6fhCXJMCCjQPngKK/dIag==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
+
+  '@capacitor/ios@8.4.0':
+    resolution: {integrity: sha512-tnwstEdbTJ2nHAfoAwnurXgYRscWeLY+IIGdz69o24gN2Crfj9Xc0TWo8L5uFLF1LmpbUywH1IT0U1oHV8c+CA==}
+    peerDependencies:
+      '@capacitor/core': ^8.4.0
 
   '@capacitor/push-notifications@8.1.1':
     resolution: {integrity: sha512-WqzjPKIbYbARMN+GC0XMAJcxJpUUzqgzS/Ny8RODLrro38pQhm3GXYwX2Mwd+LZlLY39rGImkCkrKyQSNfuikA==}
@@ -3519,6 +3527,10 @@ snapshots:
     dependencies:
       '@capacitor/core': 8.4.0
       '@capacitor/synapse': 1.0.4
+
+  '@capacitor/ios@8.4.0(@capacitor/core@8.4.0)':
+    dependencies:
+      '@capacitor/core': 8.4.0
 
   '@capacitor/push-notifications@8.1.1(@capacitor/core@8.4.0)':
     dependencies:
