@@ -18,7 +18,7 @@
   --muted-foreground: #7A7A7A;
   --accent: #F8AC95;
   --accent-foreground: ;
-  --destructive: #E05D4B;
+  --destructive: var(--reaction-fg); /* unified: single source of truth = --reaction-fg (#C0392B) */
   --destructive-foreground: #fafafa;
   --border: #FEF5CC;
   --input: #FFFAF0;
@@ -64,6 +64,28 @@
   --testing-track-bg: #FEF5CC;
   --card-wash-green-bg: radial-gradient(ellipse at center, #FFFAF0 0%, #E3FFF1 100%);
   --card-wash-red-bg: radial-gradient(ellipse at center, #FFFAF0 0%, #FFEEE8 100%);
+
+  /* ── warm-kr theme (rose/coral UI overhaul) — ADDITIVE, S0 foundation. ──
+     Exact hex sampled from docs/mocks/warm-kr/*.png. Separate namespace from the
+     legacy + clinical tokens above; no .dark overrides (project precedent: wash tokens). */
+  --warm-bg: #FFF8F7;            /* page background — pale warm rose (home.png bg) */
+  --warm-surface: #FFFFFF;       /* white cards on rose bg */
+  --warm-surface-soft: #FFF0EE;  /* soft-rose tint — status pill / "진행 중인 테스트" & "TESTING NOW" badge bg */
+  --warm-border: #F3E1DD;        /* hairline border for cards/inputs on rose bg (cards are near-borderless + soft shadow) */
+  --warm-brand: #9E4037;         /* deep terracotta — brand text, FAB, solid "시작하기" button, progress ring (FAB/시작하기 sampled) */
+  --warm-brand-fg: #FFFFFF;      /* text/icon on --warm-brand */
+  --warm-brand-hover: #8A382F;   /* darker terracotta — hover/active on brand-solid */
+  --warm-cta: #FF8B7D;           /* coral — CTA ONLY (primary record buttons); sampled from home/observe CTA pill */
+  --warm-cta-hover: #F5735A;     /* deeper coral — hover/active on CTA */
+  --warm-cta-fg: #FFFFFF;        /* text/icon on coral CTA */
+  --warm-fg: #3D3C38;            /* primary text on warm surfaces — fixed (warm system is light-only, no .dark) */
+  --warm-fg-muted: #8A7F7B;      /* muted secondary text on warm surfaces (e.g. "초기 (4m+)") */
+
+  /* StatusChip 5-variant expansion — additive status tokens (family: safe/testing/reaction above) */
+  --caution-bg: #FCEBDD;         /* peach — chosen between testing(#FBEFD6) and reaction(#FBE6E5) bg */
+  --caution-fg: #C2410C;         /* burnt orange — chosen hue between amber testing(#B26A00) and red reaction(#C0392B) */
+  --not-started-bg: #EEF1F4;     /* neutral slate-100 — deliberately off the traffic-light scale */
+  --not-started-fg: #64748B;     /* neutral slate-500 */
 }
 
 .dark {
@@ -81,7 +103,7 @@
   --muted-foreground: #B0A8D0;
   --accent: #FFB7A5;
   --accent-foreground: #262440;
-  --destructive: #E05D4B;
+  --destructive: var(--reaction-fg); /* unified: single source of truth = --reaction-fg (#C0392B) */
   --destructive-foreground: #F0EDF8;
   --border: rgba(200, 190, 255, 0.15);
   --input: transparent;
@@ -159,6 +181,27 @@
   --color-testing-fg: var(--testing-fg);
   --color-reaction-bg: var(--reaction-bg);
   --color-reaction-fg: var(--reaction-fg);
+
+  /* ── warm-kr additive Tailwind color tokens: enable warm-namespaced bg/text/border utilities ── */
+  --color-warm-bg: var(--warm-bg);
+  --color-warm-surface: var(--warm-surface);
+  --color-warm-surface-soft: var(--warm-surface-soft);
+  --color-warm-border: var(--warm-border);
+  --color-warm-brand: var(--warm-brand);
+  --color-warm-brand-fg: var(--warm-brand-fg);
+  --color-warm-brand-hover: var(--warm-brand-hover);
+  --color-warm-cta: var(--warm-cta);
+  --color-warm-cta-hover: var(--warm-cta-hover);
+  --color-warm-cta-fg: var(--warm-cta-fg);
+  --color-warm-fg: var(--warm-fg);
+  --color-warm-fg-muted: var(--warm-fg-muted);
+  --color-caution-bg: var(--caution-bg);
+  --color-caution-fg: var(--caution-fg);
+  --color-not-started-bg: var(--not-started-bg);
+  --color-not-started-fg: var(--not-started-fg);
+
+  /* soft terracotta-tinted card shadow for warm-kr surfaces → `shadow-warm` utility */
+  --shadow-warm: 0 2px 16px rgba(158, 64, 55, 0.05);
 }
 
 @layer base {
