@@ -19,6 +19,17 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        // ── warm-kr variants (S0 definitions; NOT yet adopted by any screen). ──
+        // Pill language + coral CTA per docs/mocks/warm-kr. `warm*`-namespaced so they
+        // never shadow the existing variants above.
+        warmPrimary:
+          "rounded-full bg-warm-cta text-warm-cta-fg shadow-sm hover:bg-warm-cta-hover", // coral CTA — primary action only
+        warmBrand:
+          "rounded-full bg-warm-brand text-warm-brand-fg hover:bg-warm-brand-hover", // deep terracotta solid ("시작하기" / FAB)
+        warmSecondary:
+          "rounded-full bg-warm-surface-soft text-warm-brand hover:bg-warm-surface-soft/70", // soft-rose secondary
+        warmGhost:
+          "rounded-full text-warm-brand hover:bg-warm-surface-soft", // low-emphasis ghost on warm bg
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

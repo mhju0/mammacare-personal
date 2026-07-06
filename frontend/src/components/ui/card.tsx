@@ -11,6 +11,10 @@ const cardVariants = cva("flex flex-col", {
       // Design-system clinical card: white surface, #E2E9E5 border, radius 14, padding ~14.
       clinical:
         "bg-surface text-text border border-surface-border rounded-[14px] gap-4 p-[14px]",
+      // warm-kr card (S0 definition; NOT yet adopted): white surface floating on the rose
+      // page bg — big radius, hairline warm border + soft terracotta-tinted shadow per mocks.
+      warm:
+        "bg-warm-surface text-warm-fg border border-warm-border/60 rounded-3xl gap-4 p-5 shadow-warm",
     },
   },
   defaultVariants: {
