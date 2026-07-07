@@ -88,7 +88,15 @@ const SYMPTOM_CARDS: { icon: typeof CircleDot; ko: string; en: string }[] = [
 
 // warm-kr 화면 셸: 배경 + 헤더(아기 아바타 · 제목 · 알림). 모듈 스코프에 두어 Observe가
 // 리렌더될 때마다 새 컴포넌트 타입으로 인식되어 하위 트리(링/스테퍼/모달)가 리마운트되는 걸 막는다.
-function ObserveShell({ babyPhoto, children }: { babyPhoto: string | null; children: ReactNode }) {
+function ObserveShell({
+  babyPhoto,
+  title = "72시간 관찰 중",
+  children,
+}: {
+  babyPhoto: string | null;
+  title?: string;
+  children: ReactNode;
+}) {
   const navigate = useNavigate();
   return (
     <div className="min-h-full bg-warm-bg px-4 py-5">
@@ -103,7 +111,7 @@ function ObserveShell({ babyPhoto, children }: { babyPhoto: string | null; child
           ) : (
             <div className="size-10 shrink-0 rounded-full bg-warm-surface-soft" aria-hidden="true" />
           )}
-          <h1 className="flex-1 text-xl font-bold text-warm-brand">72시간 관찰 중</h1>
+          <h1 className="flex-1 text-xl font-bold text-warm-brand">{title}</h1>
           <button
             onClick={() => navigate("/notifications")}
             aria-label="알림"
@@ -187,6 +195,15 @@ export default function Observe() {
   const isActivelyTesting = !!testing
     && (testing.test_status === null || testing.test_status === "testing")
     && !testing.has_reaction;
+  // 종료된 테스트를 반응/완료로 세분화. statusFromTestStatus의 반응 판정 조건과 동일하게 맞춰
+  // 배지(StatusChip)와 링/스테퍼가 서로 다른 상태를 보여주는 일이 없도록 한다.
+  const isReactionEnded = !isActivelyTesting
+    && (testing?.test_status === "completed_reaction" || !!testing?.has_reaction);
+  const headerTitle = isActivelyTesting
+    ? "72시간 관찰 중"
+    : isReactionEnded
+      ? "반응으로 종료된 테스트"
+      : "관찰이 완료된 테스트";
 
   const milestoneMap = useMemo(
     () => (testing ? buildMilestoneMap(checks, testing.test_start_date) : new Map<number, SymptomCheckResponse[]>()),
@@ -283,7 +300,7 @@ export default function Observe() {
   if (!testing) return null; // 타입 가드 (위 분기로 도달하지 않음)
 
   return (
-    <ObserveShell babyPhoto={babyPhoto}>
+    <ObserveShell babyPhoto={babyPhoto} title={headerTitle}>
       {/* stale 데이터 위 재조회 실패 배너 (4a4affb 패턴) */}
       {error && (
         <div className="flex items-center justify-between gap-3 rounded-2xl bg-reaction-bg px-4 py-2.5 text-sm text-reaction-fg">
@@ -331,26 +348,52 @@ export default function Observe() {
         </div>
 
         <div className="flex justify-center">
-          <ProgressRing
-            value={percent}
-            size={148}
-            strokeWidth={12}
-            color="var(--testing-fg)"
-            trackColor="var(--testing-bg)"
-            aria-label="관찰 진행률"
-          >
-            <span className="text-3xl font-bold text-testing-fg">{percent}%</span>
-            <span className="mt-0.5 text-xs font-semibold text-warm-fg-muted">Day {day}</span>
-          </ProgressRing>
+          {isActivelyTesting ? (
+            <ProgressRing
+              value={percent}
+              size={148}
+              strokeWidth={12}
+              color="var(--testing-fg)"
+              trackColor="var(--testing-bg)"
+              aria-label="관찰 진행률"
+            >
+              <span className="text-3xl font-bold text-testing-fg">{percent}%</span>
+              <span className="mt-0.5 text-xs font-semibold text-warm-fg-muted">Day {day}</span>
+            </ProgressRing>
+          ) : isReactionEnded ? (
+            <ProgressRing
+              value={100}
+              size={148}
+              strokeWidth={12}
+              color="var(--reaction-fg)"
+              trackColor="var(--reaction-bg)"
+              aria-label="관찰 진행률"
+            >
+              <span className="text-3xl font-bold text-reaction-fg">반응</span>
+            </ProgressRing>
+          ) : (
+            <ProgressRing
+              value={100}
+              size={148}
+              strokeWidth={12}
+              color="var(--safe-fg)"
+              trackColor="var(--safe-bg)"
+              aria-label="관찰 진행률"
+            >
+              <span className="text-3xl font-bold text-safe-fg">완료</span>
+            </ProgressRing>
+          )}
         </div>
 
-        <DayStepper
-          steps={OBSERVATION_DAYS}
-          current={day}
-          labels={["Day 1", "Day 2", "Day 3"]}
-          color="var(--testing-fg)"
-          aria-label="관찰 진행 단계"
-        />
+        {!isReactionEnded && (
+          <DayStepper
+            steps={OBSERVATION_DAYS}
+            current={isActivelyTesting ? day : OBSERVATION_DAYS}
+            labels={["Day 1", "Day 2", "Day 3"]}
+            color={isActivelyTesting ? "var(--testing-fg)" : "var(--safe-fg)"}
+            aria-label="관찰 진행 단계"
+          />
+        )}
       </Card>
 
       {/* 2) 안내 문구 */}
@@ -360,23 +403,25 @@ export default function Observe() {
         변화가 있다면 아래 항목을 선택해 기록해 주세요.
       </p>
 
-      {/* 3) 증상 빠른 기록 카드 (2x2) — 모두 기존 기록 모달을 연다 */}
-      <div className="grid grid-cols-2 gap-3">
-        {SYMPTOM_CARDS.map(({ icon: Icon, ko, en }) => (
-          <button
-            key={en}
-            onClick={() => setShowRecord(true)}
-            className="flex flex-col items-center gap-3 rounded-3xl bg-warm-surface p-5 shadow-warm transition-colors hover:bg-warm-surface-soft/50"
-          >
-            <span className="grid size-14 place-items-center rounded-full bg-testing-bg text-testing-fg">
-              <Icon className="size-7" />
-            </span>
-            <span className="text-center text-sm font-bold text-warm-fg">
-              {ko} ({en})
-            </span>
-          </button>
-        ))}
-      </div>
+      {/* 3) 증상 빠른 기록 카드 (2x2) — 모두 기존 기록 모달을 연다. 종료된 테스트는 새 기록 진입점을 숨긴다 */}
+      {isActivelyTesting && (
+        <div className="grid grid-cols-2 gap-3">
+          {SYMPTOM_CARDS.map(({ icon: Icon, ko, en }) => (
+            <button
+              key={en}
+              onClick={() => setShowRecord(true)}
+              className="flex flex-col items-center gap-3 rounded-3xl bg-warm-surface p-5 shadow-warm transition-colors hover:bg-warm-surface-soft/50"
+            >
+              <span className="grid size-14 place-items-center rounded-full bg-testing-bg text-testing-fg">
+                <Icon className="size-7" />
+              </span>
+              <span className="text-center text-sm font-bold text-warm-fg">
+                {ko} ({en})
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* 4) 최근 기록 */}
       <section>
@@ -445,14 +490,16 @@ export default function Observe() {
         </Card>
       </section>
 
-      {/* 5) 기록 CTA (코랄) */}
-      <button
-        onClick={() => setShowRecord(true)}
-        className="flex h-14 w-full items-center justify-center gap-2 rounded-full bg-warm-cta text-base font-bold text-warm-cta-fg shadow-warm transition-colors hover:bg-warm-cta-hover"
-      >
-        <ClipboardPen className="size-5" />
-        증상 또는 상태 기록하기
-      </button>
+      {/* 5) 기록 CTA (코랄) — 종료된 테스트는 새 기록 진입점을 숨긴다 */}
+      {isActivelyTesting && (
+        <button
+          onClick={() => setShowRecord(true)}
+          className="flex h-14 w-full items-center justify-center gap-2 rounded-full bg-warm-cta text-base font-bold text-warm-cta-fg shadow-warm transition-colors hover:bg-warm-cta-hover"
+        >
+          <ClipboardPen className="size-5" />
+          증상 또는 상태 기록하기
+        </button>
+      )}
 
       {/* 모달 — 기존 write/read 경로 그대로 재사용 */}
       {showRecord && (

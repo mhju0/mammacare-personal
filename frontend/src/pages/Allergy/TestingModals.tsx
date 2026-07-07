@@ -375,6 +375,7 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
   const [photos, setPhotos] = useState<File[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [showReactionConfirm, setShowReactionConfirm] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const [pickerStep, setPickerStep] = useState<"month" | "day" | null>(null);
 
@@ -446,6 +447,19 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleSaveClick = () => {
+    if (hasReaction === true) {
+      if (selectedSymptoms.length === 0) {
+        setError("반응 기록 시 증상을 하나 이상 선택해주세요.");
+        return;
+      }
+      setError("");
+      setShowReactionConfirm(true);
+      return;
+    }
+    handleSave();
   };
 
   return (
@@ -696,7 +710,7 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
             취소
           </button>
           <button
-            onClick={handleSave}
+            onClick={handleSaveClick}
             disabled={saving || hasReaction === null}
             className="flex-1 py-3 rounded-full text-primary-foreground text-base font-bold
                 bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
@@ -706,6 +720,52 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
           </button>
         </div>
       </div>
+
+      {showReactionConfirm && (
+        <div
+          className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center px-4"
+          onClick={() => setShowReactionConfirm(false)}
+        >
+          <div
+            className="bg-card border border-border rounded-3xl px-5 py-3 w-full max-w-sm shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-bold text-base">반응으로 기록할까요?</h3>
+              <button
+                onClick={() => setShowReactionConfirm(false)}
+                className="p-1.5 rounded-full hover:bg-muted"
+              >
+                <X className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
+              </button>
+            </div>
+            <p className="text-sm mb-8 leading-relaxed">
+              반응을 기록하면 이 재료의 테스트가 즉시 종료되고 '반응' 재료로 분류돼요.
+              호흡곤란, 반복 구토, 전신 두드러기, 축 처짐이 있다면 즉시 진료를 받아 주세요.
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowReactionConfirm(false)}
+                className="flex-1 py-3 rounded-full border border-border text-base
+                  font-semibold hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-colors"
+              >
+                취소
+              </button>
+              <button
+                onClick={() => {
+                  setShowReactionConfirm(false);
+                  handleSave();
+                }}
+                disabled={saving}
+                className="flex-1 py-3 rounded-full bg-destructive text-white text-base font-bold
+                    hover:opacity-90 transition-opacity disabled:opacity-40"
+              >
+                {saving ? "저장 중" : "반응 기록하기"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
