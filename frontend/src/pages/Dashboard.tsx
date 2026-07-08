@@ -20,6 +20,7 @@ import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { Skeleton } from "../components/ui/skeleton";
 import { StatusChip, statusFromTestStatus } from "../components/ui/status-chip";
+import { deriveIngredientStatuses, toDashboardCounts } from "../utils/allergyStatus";
 import { IngredientIcon } from "../components/IngredientIcon";
 import { cn } from "../components/ui/utils";
 
@@ -132,17 +133,11 @@ export default function Dashboard() {
     if (!coreLoading && !coreError) loadRecommendations();
   }, [coreLoading, coreError, loadRecommendations]);
 
-  const counts = useMemo(() => {
-    let safe = 0;
-    let testing = 0;
-    let reaction = 0;
-    for (const t of testings) {
-      if (t.test_status === "completed_reaction" || t.has_reaction) reaction += 1;
-      else if (t.test_status === "completed_safe") safe += 1;
-      else testing += 1;
-    }
-    return { safe, testing, reaction };
-  }, [testings]);
+  // Dashboard never fetches confirmed allergies; counts tally raw testing rows.
+  const counts = useMemo(
+    () => toDashboardCounts(deriveIngredientStatuses(testings)),
+    [testings],
+  );
 
   const inProgress = useMemo(
     () =>
