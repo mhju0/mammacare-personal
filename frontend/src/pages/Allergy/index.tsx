@@ -50,6 +50,7 @@ import { IngredientHistoryPopup } from "./TestingModals";
 import { HospitalFinder } from "./HospitalFinder";
 import { TimeDropdown } from "../Schedule/TimeDropdown";
 import { dedupeRequest, readSessionCache, writeSessionCache } from "../../utils/sessionCache";
+import { deriveIngredientStatuses, toAllergyBuckets } from "../../utils/allergyStatus";
 import TutorialModal from "../../components/TutorialModal";
 import { allergySlides } from "./tutorialSlides";
 
@@ -1011,41 +1012,14 @@ function AllergyInner() {
     }
   };
 
-  const testing = testings.filter(
-    (t) => t.test_status === "testing" && !existingConfirmedIdSet.has(t.ingredient_id),
+  const statusRecords = useMemo(
+    () => deriveIngredientStatuses(testings, confirmedAllergies),
+    [testings, confirmedAllergies],
   );
-
-  const deduplicateByIngredient = (list: IngredientTestingResponse[]) => {
-    const map = new Map<number, IngredientTestingResponse>();
-    for (const item of list) {
-      const existing = map.get(item.ingredient_id);
-      if (!existing || item.test_start_date > existing.test_start_date) {
-        map.set(item.ingredient_id, item);
-      }
-    }
-    return Array.from(map.values());
-  };
-
-  const reactionIngredientIds = new Set(
-    testings
-      .filter((t) => t.test_status === "completed_reaction" || t.has_reaction)
-      .map((t) => t.ingredient_id),
+  const { testing, safe, reaction, reactionIngredientIds } = useMemo(
+    () => toAllergyBuckets(statusRecords, existingConfirmedIdSet),
+    [statusRecords, existingConfirmedIdSet],
   );
-
-  const safe = deduplicateByIngredient(
-    testings.filter(
-      (t) =>
-        t.test_status === "completed_safe" &&
-        !reactionIngredientIds.has(t.ingredient_id),
-    ),
-  ).sort((a, b) => a.ingredient_name.localeCompare(b.ingredient_name, "ko"));
-  const reaction = deduplicateByIngredient(
-    testings.filter(
-      (t) =>
-        (t.test_status === "completed_reaction" || t.has_reaction) &&
-        !existingConfirmedIdSet.has(t.ingredient_id),
-    ),
-  ).sort((a, b) => a.ingredient_name.localeCompare(b.ingredient_name, "ko"));
 
   const reactionIngredientNames = reaction.map((r) => r.ingredient_name);
   const confirmedAllergenNames = confirmedAllergies.map((c) => c.ingredient_name).filter((n): n is string => n !== null);
