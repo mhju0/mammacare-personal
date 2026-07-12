@@ -17,6 +17,17 @@
 - **미커밋 WIP 슬라이스 1개** — 식재료 도감(`pages/Ingredients/` 신규 + `/ingredients` 라우트 + 대시보드 진입 링크) + 반응 재테스트 동의 게이트를 `components/ReactionRetestConfirm.tsx`로 추출(Allergy·Ingredients 공유, 카피 verbatim). `pnpm build` 통과 [Verified 2026-07-13]. **동의 게이트 접점 → 커밋 전 NEEDS SENIOR REVIEW.**
 - 다음 한 걸음: ① WIP 슬라이스 리뷰 → 커밋, ② **P1 브라우저 E2E 1회차** (`/e2e-check` 스킬 사용). P1이 M3의 done gate.
 
+## 실행 계획 (2026-07-13 grill 확정 — 순서 = 검증 슬라이스마다 push)
+> 리포지토리는 이미 public(`github.com/mhju0/mammacare-personal`). 리노베이션 상태가 그대로 노출되므로 **검증된 슬라이스마다 커밋+push**(에이전트 위임 승인). 브랜치는 `main` 유지(솔로 의미 단위 커밋, PR theater 없음).
+1. **WIP 슬라이스** — code-reviewer 통과(동의 게이트 접점 → 에스컬레이션 노트) → 커밋 → push. 도감은 **현행 카드 그리드**로 커밋(스탬프는 P3에서 재작업).
+2. **P1 E2E** — 에이전트 구동, **신규 테스트 계정+아기**로 데모 스파인+동의 게이트 5체크(**현행 nav** 위에서). 스크린샷 증거 리포트, 심각도 랭크.
+3. **P2** — P1 결함 심각도순 수정, 알레르기/DB는 런당 1슬라이스.
+4. **Nav 재구성 슬라이스** — mock nav(홈/도감/관찰/리포트/프로필). 관찰 독립 랜딩 + 리포트 전용 라우트 추출 + 일정/커뮤니티/식단/레시피 **detab만(삭제는 P5)**.
+5. **P3 폴리시(hybrid, token-only, 런당 1화면)** — 도감 스탬프 그리드 **CSS `StampBadge`(이미지 에셋 없음)**, 알레르기 타임라인, 리포트/음식여권, 동의 다이얼로그 블루 그라디언트 교정, 대시보드 안심문구/큰숫자 타일. **추가 mock 생성 안 함**(hybrid 2장에서 추정).
+6. **P4** — iOS 시뮬 스파인 재검증(Capacitor 부팅 실패 시 브라우저 뷰포트 폴백, 폴백 전 보고). 1분 녹화 → GitHub release asset, ~15초 머니모먼트 GIF + 스크린샷 3컷 → README, 케이스 스터디 정량 지표 측정·기입(개인 동기 📌는 오너 몫).
+7. **P5** — 데드코드 퍼지(read-only 인벤토리 → delete-only), `_status_from_dates` 단일화, `.npmrc`/`package.json` 불일치, `@capacitor/android`+speech-recognition 의존성 제거. `[PROPOSED CUT]`은 손대지 않음.
+8. **R** — 최소 GitHub Actions CI(backend import + `pnpm build`), README 히어로+영어 TL;DR, mermaid 아키텍처, 케이스 스터디 마감, 신규 클론 재현 게이트. About/topics는 오너가 GitHub UI에서.
+
 ---
 
 ## 완료 (terse history)
