@@ -396,12 +396,14 @@ export default function Observe() {
         )}
       </Card>
 
-      {/* 2) 안내 문구 */}
-      <p className="px-1 text-center text-sm leading-relaxed text-warm-fg-muted">
-        아이를 차분하게 관찰해 주세요.
-        <br />
-        변화가 있다면 아래 항목을 선택해 기록해 주세요.
-      </p>
+      {/* 2) 안내 문구 — 증상 카드가 숨겨지는 종료된 테스트에서는 함께 숨긴다 */}
+      {isActivelyTesting && (
+        <p className="px-1 text-center text-sm leading-relaxed text-warm-fg-muted">
+          아이를 차분하게 관찰해 주세요.
+          <br />
+          변화가 있다면 아래 항목을 선택해 기록해 주세요.
+        </p>
+      )}
 
       {/* 3) 증상 빠른 기록 카드 (2x2) — 모두 기존 기록 모달을 연다. 종료된 테스트는 새 기록 진입점을 숨긴다 */}
       {isActivelyTesting && (

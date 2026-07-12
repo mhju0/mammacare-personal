@@ -88,7 +88,7 @@ export interface AllergyBuckets {
 }
 
 /** Keep the row with the latest `test_start_date` per ingredient. */
-function dedupeByIngredientLatest(
+export function dedupeByIngredientLatest(
   list: IngredientTestingResponse[],
 ): IngredientTestingResponse[] {
   const map = new Map<number, IngredientTestingResponse>();

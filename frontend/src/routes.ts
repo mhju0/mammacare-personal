@@ -8,6 +8,7 @@ import Schedule from "./pages/Schedule";
 import Nutrition from "./pages/Nutrition";
 import Recipes from "./pages/Recipes";
 import Allergy from "./pages/Allergy";
+import Ingredients from "./pages/Ingredients";
 import Observe from "./pages/Observe";
 import Community from "./pages/Community";
 import Profile from "./pages/Profile";
@@ -47,6 +48,7 @@ export const router = createRouter([
       { path: "nutrition", Component: Nutrition },
       { path: "recipes", Component: Recipes },
       { path: "allergy", Component: Allergy },
+      { path: "ingredients", Component: Ingredients },
       { path: "observe/:testingId", Component: Observe },
       { path: "community", Component: Community },
       { path: "community/posts/:postId", Component: Community },

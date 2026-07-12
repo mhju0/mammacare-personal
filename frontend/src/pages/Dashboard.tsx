@@ -196,7 +196,16 @@ export default function Dashboard() {
 
         {/* 2) 다음 도입 추천 */}
         <section>
-          <SectionTitle>다음 도입 추천</SectionTitle>
+          <div className="mb-2 flex items-center justify-between px-1">
+            <h2 className="text-sm font-bold text-warm-fg">다음 도입 추천</h2>
+            {/* TEMP: X-cut 시 탭으로 대체 */}
+            <button
+              onClick={() => navigate("/ingredients")}
+              className="text-xs font-bold text-warm-brand hover:text-warm-brand-hover"
+            >
+              식재료 도감 →
+            </button>
+          </div>
           <Card variant="warm" className="gap-3">
             {recLoading || coreLoading ? (
               <div className="flex flex-col gap-2">
