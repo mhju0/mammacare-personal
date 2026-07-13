@@ -1,9 +1,13 @@
 # MammaCare — 이유식 알레르기 안전 추적 도구
 
+[![CI](https://github.com/mhju0/mammacare-personal/actions/workflows/ci.yml/badge.svg)](https://github.com/mhju0/mammacare-personal/actions/workflows/ci.yml)
+
 > 아기가 처음 먹는 재료 하나하나를, **안전하게 도입하고 반응을 놓치지 않도록** 돕는 모바일 우선 웹앱.
 > 알레르기 상태를 **신호등(초록·노랑·빨강)** 으로 보여 주는 것이 제품의 핵심이다.
 
 `FastAPI(async) · PostgreSQL 16 · React + TypeScript · Vite · Tailwind v4 · Capacitor(iOS)`
+
+**TL;DR (English).** MammaCare is a mobile-first app that helps parents introduce solid foods to their baby safely: start one new ingredient at a time, observe for 72 hours, and log any allergic reaction. Allergy status is always shown as a traffic light (green = safe, amber = testing, red = reaction), reactions are matched by `ingredient_id` rather than name strings, and re-testing a previously-reacted ingredient requires an explicit safety confirmation. Solo portfolio project: async FastAPI + PostgreSQL backend, React/TypeScript frontend, packaged for iOS with Capacitor, fully self-contained on localhost (no cloud keys needed). 145 seeded ingredients, 112 API endpoints, doctor-shareable PDF/JPG reports.
 
 ---
 
@@ -31,10 +35,11 @@
 
 | 화면 | 설명 |
 |---|---|
-| **대시보드(히어로)** | 신호등 요약(안전/테스트중/반응 카운트) → 다음 도입 추천 → 진행 중 테스트 관찰 진행바 → 최근 기록 |
-| **알레르기** | 테스트 시작·관찰 타임라인(72시간) 증상 기록, 안전/반응/확정 재료 관리, 의심 재료 분석, 리포트(PDF/JPG) |
-| **식단/레시피/영양** | 재료·레시피 탐색과 식단 구성. 확정 알레르겐이 포함된 식단은 추가 차단·경고 |
-| **커뮤니티/프로필/설정** | 보조 기능 |
+| **홈(대시보드 히어로)** | 신호등 요약(안전/테스트중/반응 카운트) → 다음 도입 추천 → 진행 중 테스트 진행바 → 최근 기록 |
+| **도감** | 145종 식재료 잉크-스탬프 그리드(상태별 잉크색), 검색·단계 필터, 테스트 시작. 반응 이력 재료는 **재테스트 동의 게이트** |
+| **관찰** | 진행 중 테스트의 72시간 관찰 타임라인 — 마일스톤별 증상 기록 |
+| **리포트** | 알레르기 기록 종합 리포트 미리보기 + PDF/JPG 다운로드(진료 공유용) |
+| **알레르기 관리** | 안전/반응/확정 재료 관리, 교차반응 의심 분석, 주변 병원 안내 |
 
 <!-- iOS 시뮬레이터(iPhone 17 · iOS 26.1) 실캡처 -->
 | 대시보드 (신호등 히어로) | 도감 (잉크 스탬프) | 72시간 관찰 | 리포트 |
@@ -95,6 +100,29 @@ cd frontend && pnpm build                               # 프론트 빌드 OK
 
 ## 아키텍처 요약
 
+```mermaid
+flowchart LR
+    subgraph Client
+        IOS["iOS 앱 (Capacitor WKWebView)"]
+        WEB["웹 브라우저"]
+    end
+    SPA["React + TS SPA<br/>(Vite · Tailwind v4 토큰)"]
+    subgraph Backend["FastAPI (async)"]
+        API["/api 라우터"]
+        SVC["services · crud<br/>(알레르기 상태 판정 단일 정의)"]
+        SCHED["알림 스케줄러"]
+    end
+    DB[("PostgreSQL 16<br/>EXCLUDE 제약: 동시 테스트 1개")]
+    MEDIA["로컬 uploads/ + 보호 엔드포인트 /api/media"]
+
+    IOS --> SPA
+    WEB --> SPA
+    SPA -- "JWT (access only)" --> API
+    API --> SVC --> DB
+    SCHED --> DB
+    API --> MEDIA
+```
+
 ```
 backend/app/main.py        FastAPI entry / lifespan(create_all) / scheduler
 backend/app/api/           라우터 (/api 아래 mount, /api/v1 미사용)
@@ -116,8 +144,8 @@ frontend/src/styles/theme.css 색 토큰(:root) + Tailwind @theme 매핑
 
 1. 이메일로 로그인하고 아기 프로필을 선택한다 → 홈이 **알레르기 대시보드**로 전환.
 2. 상단 **신호등 요약**에서 안전/테스트중/반응 개수를 한눈에 본다.
-3. **"다음 도입 추천"** 에서 월령에 맞는 새 재료를 고른다.
-4. 알레르기 탭에서 그 재료의 **테스트를 시작** → 72시간 관찰 타임라인이 생긴다.
+3. **"다음 도입 추천"** 또는 **도감 스탬프 그리드**에서 월령에 맞는 새 재료를 고른다.
+4. 재료의 **테스트를 시작** → 관찰 탭에 72시간 관찰 타임라인이 생긴다. (반응 이력이 있는 재료면 **동의 게이트**가 먼저 뜬다.)
 5. 시간 경과 마일스톤마다 **증상을 기록**한다. 이상 없으면 안전(초록), 반응이 있으면 빨강으로 표시.
 6. 결과가 쌓이면 **리포트(PDF/JPG)** 로 내려받아 진료 때 공유한다.
 
