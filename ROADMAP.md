@@ -81,10 +81,10 @@
 - 데모 경로 밖 화면(Community/Nutrition/Recipes/Schedule 등)은 **폴리시 금지** — P5 퍼지에서 삭제 여부부터 결정한다(삭제할 화면을 재도색하지 않는다).
 
 ### P4 — iOS 시뮬레이터 E2E + 패키징
-- [ ] iOS 시뮬레이터에서 데모 스파인 1회 재검증
-- [ ] 1분 데모 녹화
-- [ ] 스크린샷 3컷(`docs/screenshots/`: 대시보드·알레르기 타임라인·리포트) → README 주석 해제
-- [ ] `docs/CASE_STUDY.draft.md` 정량 지표(📌) 채우고 마감
+- [x] iOS 시뮬레이터 데모 스파인 재검증 — iPhone 17(iOS 26.1), 로그인→대시보드→도감 스탬프→반응 재료 동의 게이트→관찰→리포트 전부 통과 [Verified 2026-07-13]. 발견 결함 1건 즉시 수정: `viewport-fit=cover` 누락으로 safe-area 미적용(헤더가 Dynamic Island 아래 깔리고 탭바 클리핑) → 4010a62
+- [x] 1분 데모 녹화 — `simctl recordVideo` 69.9초, `~/Desktop/mammacare-demo-1min.mp4`. **GitHub release asset 업로드는 오너 몫**(gh CLI 미설치): Releases → new release(tag 예: `v0.9-demo`) → asset 첨부
+- [x] 스크린샷 4컷(`docs/screenshots/`: dashboard·ingredients·observe·reports) + 동의 게이트 GIF(~10초) → README 반영 (c0863ca)
+- [x] `docs/CASE_STUDY.draft.md` 정량 지표 기입(엔드포인트 112 · 라우트 34 · 재료 145종 등). 개인 동기 📌는 오너 몫, CI 줄은 R 단계에서 갱신 후 `CASE_STUDY.md`로 마감
 
 ### P5 — 잔여 위생 (데모 이후, 포트폴리오 저장소 품질)
 - [ ] `_status_from_dates` 이중 정의 단일화 — `services/allergy_service.py:28` / `crud/allergy/ingredient_testing.py:96` (그 전까지 둘 다 수정 필수, reviewer가 강제)
