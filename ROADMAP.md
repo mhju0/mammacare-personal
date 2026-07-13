@@ -87,9 +87,9 @@
 - [x] `docs/CASE_STUDY.draft.md` 정량 지표 기입(엔드포인트 112 · 라우트 34 · 재료 145종 등). 개인 동기 📌는 오너 몫, CI 줄은 R 단계에서 갱신 후 `CASE_STUDY.md`로 마감
 
 ### P5 — 잔여 위생 (데모 이후, 포트폴리오 저장소 품질)
-- [ ] `_status_from_dates` 이중 정의 단일화 — `services/allergy_service.py:28` / `crud/allergy/ingredient_testing.py:96` (그 전까지 둘 다 수정 필수, reviewer가 강제)
-- [ ] `.npmrc` ↔ `package.json` `onlyBuiltDependencies` 불일치 정리 — 현재 완전 disjoint(`.npmrc`: tailwind-oxide/esbuild vs pkg: firebase-util/protobufjs). 신규 클론 재현성 문제.
-- [ ] 잔존 의존성 제거: `@capacitor/android`(package.json:13), `@capacitor-community/speech-recognition`(:12) — "android/STT 제거" 케이스 스터디 서사와 모순
+- [x] `_status_from_dates` 이중 정의 단일화 — services의 사본(+동일 중복이던 `_test_end_date`/`_has_reaction_record`) 삭제, `crud/allergy/ingredient_testing.py` 단일 정의를 import. 두 사본 semantic 동일성 reviewer 검증, 판정 스팟체크 통과 [Verified 2026-07-13]
+- [x] `.npmrc` ↔ `package.json` `onlyBuiltDependencies` 불일치 정리 — pnpm 11이 더 이상 읽지 않는 package.json `pnpm` 필드 삭제, `.npmrc`가 단일 진실 (8c05277)
+- [x] 잔존 의존성 제거: `@capacitor/android` + `@capacitor-community/speech-recognition` 삭제 — 소스 참조 0건 확인, cap sync 플러그인 5개·SPM 경고 해소 (8c05277)
 - [PROPOSED CUT] 대시보드 카운트 dedup 방어 코드 — A안 단일 행으로 구조적 해소, 데모·케이스 스터디 무관
 - [PROPOSED CUT] P3 3화면 밖 소소한 UI 폴리시 — 데모에 안 보이는 화면 폴리시는 scope creep
 - [PROPOSED CUT] 활성 아기 없을 때 빈 상태 "아기 등록 유도" 보강 — 데모는 아기 등록부터 시작하므로 현행 빈 상태로 충분(P1에서 반증되면 P2로 승격)

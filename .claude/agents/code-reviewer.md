@@ -35,9 +35,9 @@ that looks fine in isolation may violate an invariant three functions away.
 - The retest consent gate lives ONLY on `handleAddIngredient` (via
   `handleAddIngredientClick`, frontend/src/pages/Allergy/index.tsx). Flag any diff
   that moves it, duplicates it onto `handleAddTestingWithStatus`, or bypasses it.
-- `_status_from_dates` exists as TWO copies: `backend/app/services/allergy_service.py`
-  and `backend/app/crud/allergy/ingredient_testing.py`. If the diff changes one copy
-  and not the other, FAIL and say so explicitly.
+- `_status_from_dates` has a SINGLE definition in
+  `backend/app/crud/allergy/ingredient_testing.py` (services imports it — unified
+  2026-07-13). If a diff re-introduces a second copy anywhere, FAIL and say so.
 - Concurrent tests must not overlap (`ex_ingredient_testing_no_overlap` EXCLUDE
   constraint) — check insert/update paths respect it and surface 409 on conflict.
 
@@ -55,5 +55,5 @@ that looks fine in isolation may violate an invariant three functions away.
 3. `## Escalate to human` — list anything that must not be auto-passed regardless
    of verdict: manual_sql/schema changes, allergy status-transition logic,
    auth/security, deletion paths, changes touching both submission handlers or
-   either `_status_from_dates` copy, product/UX decisions without precedent in
+   `_status_from_dates`, product/UX decisions without precedent in
    repo docs. If empty, say "None."

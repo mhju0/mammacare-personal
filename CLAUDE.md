@@ -49,7 +49,7 @@ Claude Code가 **세션 시작 시 자동으로 읽는** 파일이다.
 ## Workflow
 - 기본 루프: **`/ship <task>` → 구현 → self-review(빌드 게이트 + `code-reviewer` 서브에이전트) → 최종 보고.** 조사만 할 땐 `/readonly-audit`.
 - **커밋**: 에이전트가 필요하면 스스로 `git add/commit`을 실행해도 된다. 사람이 직접 실행할 때는 파일 목록(git add용) + 하나의 bash 코드블록(placeholder 금지, professional English commit message)으로 제시한다.
-- 에스컬레이션(리뷰어 PASS여도 자동 통과 금지): manual_sql/스키마 · 알레르기 상태 전이 · auth/보안 · 삭제 경로 · 두 제출 핸들러 또는 `_status_from_dates`(2벌) 관련 → 최종 라인 `NEEDS SENIOR REVIEW`.
+- 에스컬레이션(리뷰어 PASS여도 자동 통과 금지): manual_sql/스키마 · 알레르기 상태 전이 · auth/보안 · 삭제 경로 · 두 제출 핸들러 또는 `_status_from_dates`(단일 정의: `crud/allergy/ingredient_testing.py`) 관련 → 최종 라인 `NEEDS SENIOR REVIEW`.
 - 알레르기/DB 작업은 `/ship` 런당 **1슬라이스**만.
 - 스킬 목록: `ship`(구현 루프) · `self-review`(구현 후 필수 게이트) · `readonly-audit`(조사) · `e2e-check`(데모 스파인 E2E) · `manual-sql`(스키마 변경 절차) · `design-polish`(UI, 화면당 1런).
 - 리뷰어: `.claude/agents/code-reviewer.md` — read-only 적대적 리뷰, 판정 PASS / PASS WITH NOTES / FAIL.

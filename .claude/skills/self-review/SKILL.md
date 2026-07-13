@@ -46,7 +46,8 @@ with the diff summary and the task description. Wait for its verdict.
 - Auth/security changes
 - Deletion paths (SymptomCheck, images, cascade-like behavior)
 - Changes touching BOTH submission handlers (`handleAddIngredient` /
-  `handleAddTestingWithStatus`) or EITHER `_status_from_dates` copy
+  `handleAddTestingWithStatus`) or `_status_from_dates`
+  (single definition in `crud/allergy/ingredient_testing.py`)
 - Product/UX decisions without precedent in repo docs
 
 ## Hard limits

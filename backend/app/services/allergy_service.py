@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 import logging
 
 from sqlalchemy import select
@@ -9,52 +9,22 @@ from sqlalchemy.orm import selectinload
 from fastapi import HTTPException, status
 
 from app.models.allergy.ingredient_testing import IngredientTesting
-from app.models.allergy.symptom_check import SymptomCheck
 from app.models.allergy.confirmed_allergy import ConfirmedAllergy
 from app.schemas.allergy.ingredient_testing import IngredientTestingCreate
 from app.crud.allergy.ingredient_testing import (
     _assert_no_active_overlap,
+    _has_reaction_record,
     _is_active_testing_unique_violation,
+    _status_from_dates,
+    _test_end_date,
     purge_symptom_checks_for_testing,
 )
 
 logger = logging.getLogger("mammacare.allergy")
 
 
-def _test_end_date(test_start_date: datetime) -> datetime:
-    return test_start_date + timedelta(hours=72)
-
-
-def _status_from_dates(
-    test_start_date: datetime,
-    test_end_date: datetime,
-    now: datetime,
-    requested_status: str | None = None,
-    has_reaction: bool = False,
-) -> str | None:
-    if requested_status == "completed_reaction":
-        return "completed_reaction"
-    if requested_status == "completed_safe":
-        return "completed_safe"
-    if test_start_date > now:
-        return None
-    if test_end_date <= now:
-        if has_reaction:
-            return "completed_reaction"
-        return "completed_safe"
-    return "testing"
-
-
-async def _has_reaction_record(db: AsyncSession, testing_id) -> bool:
-    result = await db.execute(
-        select(SymptomCheck.id)
-        .where(
-            SymptomCheck.testing_id == testing_id,
-            SymptomCheck.has_reaction.is_(True),
-        )
-        .limit(1)
-    )
-    return result.scalar_one_or_none() is not None
+# _test_end_date / _status_from_dates / _has_reaction_record는
+# crud.allergy.ingredient_testing의 단일 정의를 import해 쓴다(이중 정의 금지).
 
 
 async def _load_testing_with_ingredient(
