@@ -9,6 +9,11 @@
 
 **TL;DR (English).** MammaCare is a mobile-first app that helps parents introduce solid foods to their baby safely: start one new ingredient at a time, observe for 72 hours, and log any allergic reaction. Allergy status is always shown as a traffic light (green = safe, amber = testing, red = reaction), reactions are matched by `ingredient_id` rather than name strings, and re-testing a previously-reacted ingredient requires an explicit safety confirmation. Solo portfolio project: async FastAPI + PostgreSQL backend, React/TypeScript frontend, packaged for iOS with Capacitor, fully self-contained on localhost (no cloud keys needed). 145 seeded ingredients, 112 API endpoints, doctor-shareable PDF/JPG reports.
 
+<!-- iOS 시뮬레이터(iPhone 17 · iOS 26.1) 실캡처 -->
+| 대시보드 (신호등 히어로) | 도감 (잉크 스탬프) | 72시간 관찰 | 재테스트 동의 게이트 |
+|---|---|---|---|
+| ![대시보드 신호등 히어로](docs/screenshots/dashboard.png) | ![식재료 도감 스탬프 그리드](docs/screenshots/ingredients.png) | ![72시간 관찰 타임라인](docs/screenshots/observe.png) | ![반응 재료 재테스트 동의 게이트 데모](docs/screenshots/demo-moment.gif) |
+
 ---
 
 ## 한 줄 정의
@@ -41,14 +46,7 @@
 | **리포트** | 알레르기 기록 종합 리포트 미리보기 + PDF/JPG 다운로드(진료 공유용) |
 | **알레르기 관리** | 안전/반응/확정 재료 관리, 교차반응 의심 분석, 주변 병원 안내 |
 
-<!-- iOS 시뮬레이터(iPhone 17 · iOS 26.1) 실캡처 -->
-| 대시보드 (신호등 히어로) | 도감 (잉크 스탬프) | 72시간 관찰 | 리포트 |
-|---|---|---|---|
-| ![대시보드 신호등 히어로](docs/screenshots/dashboard.png) | ![식재료 도감 스탬프 그리드](docs/screenshots/ingredients.png) | ![72시간 관찰 타임라인](docs/screenshots/observe.png) | ![알레르기 리포트](docs/screenshots/reports.png) |
-
-**머니 모먼트 — 반응 이력 재료 재테스트 동의 게이트** (반응 재료를 다시 테스트하려면 명시적 확인을 거친다):
-
-<img src="docs/screenshots/demo-moment.gif" width="300" alt="반응 재료 재테스트 동의 게이트 데모" />
+리포트 화면 캡처: ![알레르기 리포트](docs/screenshots/reports.png)
 
 ---
 
