@@ -1,6 +1,5 @@
 # 파일명: auth_service.py
 import logging
-from datetime import date
 
 from fastapi import HTTPException, status
 from sqlalchemy import func, select
@@ -14,8 +13,6 @@ from app.core.security import (
     hash_password,
     verify_password,
 )
-from app.models.baby_growth import BabyGrowth
-from app.models.baby_user import BabyUser
 from app.models.oauth_account import OAuthAccount
 from app.models.parent_user import ParentUser
 from app.schemas.auth import ResetPasswordRequest, SignupRequest, normalize_email
@@ -32,15 +29,6 @@ def _raise_auth_error(status_code: int, code: str, message: str) -> None:
         status_code=status_code,
         detail={"code": code, "message": message},
     )
-
-
-def _parse_float(s: str | None) -> float | None:
-    if not s:
-        return None
-    try:
-        return float(s)
-    except ValueError:
-        return None
 
 
 # [_exists]
@@ -161,8 +149,6 @@ async def signup(db: AsyncSession, payload: SignupRequest) -> ParentUser:
                 "OAUTH_ACCOUNT_ALREADY_LINKED",
                 "이미 다른 계정에 연결된 소셜 계정입니다.",
             )
-    baby_payload = payload.baby_profile
-
     # ── 1) 중복 검사 — DB 유니크 제약 위반 전에 친절한 한국어 에러 반환 ──
     if not await username_available(db, payload.username):
         _raise_auth_error(
@@ -213,50 +199,6 @@ async def signup(db: AsyncSession, payload: SignupRequest) -> ParentUser:
                     provider_email=oauth_payload.get("email"),
                 )
             )
-
-        if baby_payload:
-            birth_date = date(
-                baby_payload.birth_year,
-                baby_payload.birth_month,
-                baby_payload.birth_day,
-            )
-            feeding_date = (
-                date(
-                    baby_payload.feeding_year,
-                    baby_payload.feeding_month,
-                    baby_payload.feeding_day,
-                )
-                if baby_payload.feeding_status != "undecided"
-                else None
-            )
-            baby = BabyUser(
-                parent_id=user.id,
-                name=baby_payload.name,
-                birth_type=baby_payload.birth_type,
-                birth_date=birth_date,
-                gender=baby_payload.gender,
-                baby_food_start_date=feeding_date,
-                photo_profile_baby=baby_payload.photo,
-            )
-            db.add(baby)
-            await db.flush()
-
-            height_cm = _parse_float(baby_payload.height)
-            weight_kg = _parse_float(baby_payload.weight)
-            if height_cm is not None:
-                db.add(BabyGrowth(
-                    baby_id=baby.id,
-                    height_cm=height_cm,
-                    weight_kg=None,
-                    log_date=baby_payload.height_date or date.today(),
-                ))
-            if weight_kg is not None:
-                db.add(BabyGrowth(
-                    baby_id=baby.id,
-                    height_cm=None,
-                    weight_kg=weight_kg,
-                    log_date=baby_payload.weight_date or date.today(),
-                ))
 
         await db.commit()
         await db.refresh(user)              # DB가 채운 created_at 등을 객체에 반영

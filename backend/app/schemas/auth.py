@@ -4,7 +4,6 @@ from typing import Any
 from email_validator import EmailNotValidError, validate_email
 from pydantic import BaseModel, EmailStr, Field, field_validator
 
-from app.schemas.baby_user import BabyCreate
 from app.core.constants import _normalize_phone, _validate_nickname
 from app.schemas.parent_user import ParentUserOut
 
@@ -46,7 +45,6 @@ class SignupRequest(BaseModel):
     phone: str | None = None
     address: str | None = None
     oauth_signup_token: str | None = None
-    baby_profile: BabyCreate | None = None
 
     _v_user = field_validator("username")(lambda cls, v: _validate_username(v))
     _v_pw = field_validator("password")(lambda cls, v: _validate_password(v))
