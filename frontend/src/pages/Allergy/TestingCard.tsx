@@ -83,7 +83,7 @@ export function TestingCard({ item, token, onRefresh }: TestingCardProps) {
   };
 
   return (
-    <div className="p-5 bg-background border border-border rounded-3xl">
+    <div className="p-5 bg-warm-surface border border-warm-border rounded-3xl">
       <div className={`flex justify-between gap-3 mb-4 ${isApp ? "items-start" : "items-center"}`}>
         <div className="flex items-center gap-3">
           <IngredientIcon name={item.ingredient_name} emoji={item.ingredient_emoji} className="w-8 h-8 sm:w-9 sm:h-9" />
@@ -114,8 +114,8 @@ export function TestingCard({ item, token, onRefresh }: TestingCardProps) {
           </button>
           <button
             onClick={() => setShowRecord(true)}
-            className={`flex items-center gap-1 px-3 py-1 rounded-3xl ${isApp ? "text-sm" : "text-base"} text-primary-foreground
-            bg-[var(--testing-track-bg)] hover:opacity-70 font-semibold transition-colors`}
+            className={`flex items-center gap-1 px-3 py-1 rounded-3xl ${isApp ? "text-sm" : "text-base"} text-warm-cta-fg
+            bg-warm-cta hover:bg-warm-cta-hover font-semibold transition-colors`}
           >
             반응 기록하기
           </button>

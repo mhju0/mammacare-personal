@@ -137,7 +137,7 @@ function EntryDatePicker({
                   key={m}
                   type="button"
                   onClick={() => { setSelMonth(m); setStep("day"); }}
-                  className={`py-2 rounded-xl text-sm font-semibold transition-colors ${m === parts[1] ? "bg-[#C5E5FA] text-primary-foreground" : "hover:bg-[#C5E5FA]/20 text-foreground"
+                  className={`py-2 rounded-xl text-sm font-semibold transition-colors ${m === parts[1] ? "bg-warm-brand text-warm-brand-fg" : "hover:bg-warm-surface-soft text-foreground"
                     }`}
                 >
                   {m}월
@@ -165,8 +165,8 @@ function EntryDatePicker({
                   type="button"
                   onClick={() => { onUpdate(entry.id, FIXED_YEAR, selMonth, d); onClose(); }}
                   className={`aspect-square text-xs rounded-lg transition-colors flex items-center justify-center ${d === parts[2] && selMonth === parts[1]
-                    ? "bg-[#C5E5FA] text-primary-foreground font-bold"
-                    : "hover:bg-[#C5E5FA]/20 text-foreground"
+                    ? "bg-warm-brand text-warm-brand-fg font-bold"
+                    : "hover:bg-warm-surface-soft text-foreground"
                     }`}
                 >
                   {d}
@@ -1049,20 +1049,18 @@ function AllergyInner() {
     const useImagePreview = isApp || isMobileWeb;
 
   return (
+    <div className="min-h-full bg-warm-bg">
     <div className={isApp ? "px-3 py-4" : "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-5"}>
       {isApp ? (
         <div className="flex items-center justify-between mb-4">
-          <h1
-            className="text-xl font-bold flex items-center gap-2"
-            style={{ fontFamily: "'Paperlogic'", fontWeight: 600 }}>
+          <h1 className="text-xl font-bold text-warm-brand flex items-center gap-2">
             <CircleAlert className="w-4 h-4" />
             알레르기 관리
           </h1>
           <button
             onClick={() => setShowTutorial(true)}
             className="text-sm px-3 py-1.5 rounded-full font-bold whitespace-nowrap
-              bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#C7E9FF_100%)]
-              hover:bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#B8E2FF_100%)]
+              bg-warm-surface-soft hover:bg-warm-border/60 text-warm-brand
               shadow-sm transition-all duration-300"
           >
             사용법
@@ -1071,9 +1069,7 @@ function AllergyInner() {
       ) : (
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1
-              className="text-2xl font-bold flex items-center gap-2"
-              style={{ fontFamily: "'Paperlogic'", fontWeight: 600 }}>
+            <h1 className="text-2xl font-bold text-warm-brand flex items-center gap-2">
               <CircleAlert className="w-5 h-5 sm:w-6 sm:h-6" />
               알레르기 관리
             </h1>
@@ -1082,8 +1078,7 @@ function AllergyInner() {
           <button
             onClick={() => setShowTutorial(true)}
             className="px-4 py-2 rounded-full font-bold whitespace-nowrap
-              bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#C7E9FF_100%)]
-              hover:bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#B8E2FF_100%)]
+              bg-warm-surface-soft hover:bg-warm-border/60 text-warm-brand
               shadow-sm transition-all duration-300"
           >
             사용법
@@ -1093,7 +1088,7 @@ function AllergyInner() {
 
       {/* 1. 현재 테스트 중인 재료 */}
       <div
-        className={`bg-[image:var(--card-wash-bg)] border border-border rounded-3xl py-3 mb-6 ${
+        className={`bg-warm-surface shadow-warm rounded-3xl py-3 mb-6 ${
           isApp ? "px-3" : "px-5"
         }`}
       >
@@ -1111,9 +1106,8 @@ function AllergyInner() {
             <button
               onClick={() => setShowAddModal(true)}
               className="flex items-center gap-1.5 px-4 py-2
-              bg-[image:var(--action-soft-bg)]
-              hover:bg-[image:var(--action-soft-bg-hover)]
-              text-primary-foreground shadow-sm text-base font-bold rounded-full"
+              bg-warm-cta hover:bg-warm-cta-hover
+              text-warm-cta-fg shadow-sm text-base font-bold rounded-full"
             >
               <Plus className="w-4 h-4 sm:w-[18px] sm:h-[18px]" /> 새 재료 추가
             </button>
@@ -1125,7 +1119,7 @@ function AllergyInner() {
             <span>{testingsFetchError}</span>
             <button
               onClick={fetchTestings}
-              className="shrink-0 px-4 py-1.5 bg-[image:var(--action-soft-bg)] hover:bg-[image:var(--action-soft-bg-hover)] text-primary-foreground shadow-sm text-sm font-bold rounded-full"
+              className="shrink-0 px-4 py-1.5 bg-warm-brand hover:bg-warm-brand-hover text-warm-brand-fg shadow-sm text-sm font-bold rounded-full"
             >
               다시 시도
             </button>
@@ -1156,7 +1150,7 @@ function AllergyInner() {
       </div>
 
       {/* 2. 교차반응 의심 분석 */}
-      <div className="bg-[image:var(--card-wash-bg)] border border-border rounded-3xl py-3 mb-6">
+      <div className="bg-warm-surface shadow-warm rounded-3xl py-3 mb-6">
         <div className="flex items-center gap-1.5 mb-1 px-5">
           <Sparkles size={18} />
           <h2 className={`font-bold ${isApp ? "text-base" : "text-lg"}`}>교차반응 의심 분석</h2>
@@ -1173,13 +1167,13 @@ function AllergyInner() {
             </p>
               <div className="overflow-x-auto pb-4 
                 [&::-webkit-scrollbar]:h-3 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar-track]:mx-4             
-                [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#D9F0FF] [&::-webkit-scrollbar-thumb]:rounded-full">
+                [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-warm-border [&::-webkit-scrollbar-thumb]:rounded-full">
                 <div className="grid grid-flow-col grid-rows-2 gap-3 px-5 w-max">
                 {STANDARD_KOREAN_ALLERGENS.map((allergen) => (
                   <div
                     key={allergen.name}
                     className={`shrink-0 flex flex-col items-center gap-1.5 ${isApp ? "px-2 py-2 w-[68px]" : "px-4 py-3 w-24"}
-                    bg-white border border-border rounded-2xl text-center`}
+                    bg-white border border-warm-border rounded-2xl text-center`}
                   >
                     <IngredientIcon
                       name={allergen.name}
@@ -1194,7 +1188,7 @@ function AllergyInner() {
                 ))}
               </div>
             </div>
-            <p className="text-xs text-[#7A7A7A]/30 -mb-2 text-right px-5">
+            <p className="text-xs text-warm-fg-muted/50 -mb-2 text-right px-5">
               출처: 식품의약품안전처 표시대상 알레르기 유발물질 (2023)
             </p>
           </>
@@ -1214,7 +1208,7 @@ function AllergyInner() {
                 {/* 확정 알레르기 행 */}
                 {confirmedAllergenNames.length > 0 && (
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <span className={`flex items-center ${isApp ? "text-sm" : "text-base"} font-medium text-[#5C5B58] mr-1`}>
+                    <span className={`flex items-center ${isApp ? "text-sm" : "text-base"} font-medium text-warm-fg-muted mr-1`}>
                       <Check size={16} className="mr-1" />알레르기 확정</span>
                     {confirmedAllergenNames.map((name) => (
                       <span
@@ -1231,7 +1225,7 @@ function AllergyInner() {
                 {/* 반응 재료 행 */}
                 {reactionIngredientNames.length > 0 && (
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <span className={`flex items-center ${isApp ? "text-sm" : "text-base"} font-medium text-[#5C5B58] mr-1`}>
+                    <span className={`flex items-center ${isApp ? "text-sm" : "text-base"} font-medium text-warm-fg-muted mr-1`}>
                       <Check size={16} className="mr-1" />알레르기 반응</span>
                     {reactionIngredientNames.map((name) => (
                       <span
@@ -1253,7 +1247,7 @@ function AllergyInner() {
                   교차반응 재료를 찾지 못했어요. 표시 대상 알레르기 유발물질 리스트 정보입니다.
                 </p>
                 <div className="overflow-x-auto pb-2 [&::-webkit-scrollbar]:h-3 [&::-webkit-scrollbar-track]:bg-white 
-                [&::-webkit-scrollbar-thumb]:bg-[#D9F0FF] [&::-webkit-scrollbar-thumb]:rounded-full">
+                [&::-webkit-scrollbar-thumb]:bg-warm-border [&::-webkit-scrollbar-thumb]:rounded-full">
                   <div className="grid grid-flow-col grid-rows-2 gap-3 px-5 w-max">
                     {STANDARD_KOREAN_ALLERGENS.map((allergen) => (
                       <div
@@ -1274,14 +1268,14 @@ function AllergyInner() {
                     ))}
                   </div>
                 </div>
-                <p className="text-xs text-[#7A7A7A]/30 -mb-2 text-right px-5">
+                <p className="text-xs text-warm-fg-muted/50 -mb-2 text-right px-5">
                   출처: 식품의약품안전처 표시대상 알레르기 유발물질 (2023)
                 </p>
               </>
             ) : (
               <div className="overflow-x-auto pb-4 
                 [&::-webkit-scrollbar]:h-3 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar-track]:mx-4             
-                [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#D9F0FF] [&::-webkit-scrollbar-thumb]:rounded-full">
+                [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-warm-border [&::-webkit-scrollbar-thumb]:rounded-full">
                 <div className="grid grid-flow-col grid-rows-2 gap-3 px-5 w-max">
                   {(() => {
                     // suspectedName 기준으로 그룹화 — 확정·반응 출처를 각각 수집
@@ -1322,8 +1316,8 @@ function AllergyInner() {
                             ? { badge: "bg-testing-bg text-testing-fg", label: "중간" }
                             : { badge: "bg-safe-bg text-safe-fg", label: "낮음" };
                       const cardStyle = isConfirmedBased
-                        ? "bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFEEE8_100%)] border-[#FF8763]/30"
-                        : "bg-[image:var(--card-wash-yellow-bg)] border-[#FF8763]/30";
+                        ? "bg-reaction-bg/60 border-reaction-fg/30"
+                        : "bg-testing-bg/60 border-testing-fg/30";
 
                       if (isApp) {
                         return (
@@ -1370,14 +1364,14 @@ function AllergyInner() {
                             <div className="flex flex-col items-start">
                               {group.confirmed.map((source) => (
                                 <p key={`c-${source}`} className="text-xs text-left font-medium -mb-0.3">
-                                  <span className="font-bold text-primary-foreground">{source}</span>
-                                  <span className="text-[#5C5B58]"> 확정</span>
+                                  <span className="font-bold text-foreground">{source}</span>
+                                  <span className="text-warm-fg-muted"> 확정</span>
                                 </p>
                               ))}
                               {group.reaction.map((source) => (
                                 <p key={`r-${source}`} className="text-xs text-left font-medium">
-                                  <span className="font-bold text-primary-foreground">{source}</span>
-                                  <span className="text-[#5C5B58]"> 반응</span>
+                                  <span className="font-bold text-foreground">{source}</span>
+                                  <span className="text-warm-fg-muted"> 반응</span>
                                 </p>
                               ))}
                             </div>
@@ -1390,7 +1384,7 @@ function AllergyInner() {
               </div>
             )}
             {suspectedIngredients.length > 0 && (
-              <p className="text-xs text-[#7A7A7A]/30 -mb-2 text-right px-5">
+              <p className="text-xs text-warm-fg-muted/50 -mb-2 text-right px-5">
                 출처: SDAP 2.0 · WHO/IUIS Allergen Nomenclature DB
               </p>
             )}
@@ -1400,7 +1394,7 @@ function AllergyInner() {
 
       {/* 3·4. 안전하게 통과한 재료 / 알레르기 반응 재료 */}
       <div className={isApp ? "flex flex-col" : "grid md:grid-cols-2 gap-6"}>
-        <div className="bg-[image:var(--card-wash-bg)] border border-border rounded-3xl py-3 px-5 mb-6">
+        <div className="bg-warm-surface shadow-warm rounded-3xl py-3 px-5 mb-6">
           <div className="flex items-center justify-between mb-3">
             <h2 className={`font-bold ${isApp ? "text-base" : "text-lg"} flex items-center gap-1.5`}>
               <CheckCircle size={18} />
@@ -1408,8 +1402,8 @@ function AllergyInner() {
             </h2>
             <button
               onClick={() => openAddTestingModal("safe")}
-              className={`flex items-center gap-1 px-3 py-1 rounded-3xl ${isApp ? "text-sm" : "text-base"} text-primary-foreground
-              bg-[#FEF5CC] hover:opacity-70 font-semibold transition-colors`}
+              className={`flex items-center gap-1 px-3 py-1 rounded-3xl ${isApp ? "text-sm" : "text-base"} text-warm-brand
+              bg-warm-surface-soft hover:opacity-70 font-semibold transition-colors`}
             >
               <Plus className="w-4 h-4 sm:w-[18px] sm:h-[18px]" /> 추가
             </button>
@@ -1423,8 +1417,8 @@ function AllergyInner() {
               {safe.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-1 pl-1.5 pr-0.5 py-1 rounded-full bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#E3FFF1_100%)] 
-                  border border-[#9AC6AF]">
+                  className="flex items-center gap-1 pl-1.5 pr-0.5 py-1 rounded-full bg-safe-bg
+                  border border-safe-fg/30">
                   <div className="flex items-center gap-2">
                     <IngredientIcon name={item.ingredient_name} emoji={item.ingredient_emoji} size={17} />
                     <span className="text-sm font-semibold">{item.ingredient_name}</span>
@@ -1449,7 +1443,7 @@ function AllergyInner() {
                   ) : (
                     <button
                       onClick={() => setConfirmDeleteTestingId(item.id)}
-                      className="px-1 py-1 rounded-full hover:bg-[#9AC6AF]/40 text-muted-foreground"
+                      className="px-1 py-1 rounded-full hover:bg-safe-fg/15 text-muted-foreground"
                     >
                       <X size={10} />
                     </button>
@@ -1460,7 +1454,7 @@ function AllergyInner() {
           )}
         </div>
 
-        <div className="bg-[image:var(--card-wash-bg)] border border-border rounded-3xl py-3 px-5 mb-6">
+        <div className="bg-warm-surface shadow-warm rounded-3xl py-3 px-5 mb-6">
           <div className="flex items-center justify-between mb-3">
             <h2 className={`font-bold ${isApp ? "text-base" : "text-lg"} flex items-center gap-1.5`}>
               <AlertTriangle size={18} />
@@ -1468,8 +1462,8 @@ function AllergyInner() {
             </h2>
             <button
               onClick={() => openAddTestingModal("reaction")}
-              className={`flex items-center gap-1 px-3 py-1 rounded-3xl ${isApp ? "text-sm" : "text-base"} text-primary-foreground
-              bg-[#FEF5CC] hover:opacity-70 font-semibold transition-colors`}
+              className={`flex items-center gap-1 px-3 py-1 rounded-3xl ${isApp ? "text-sm" : "text-base"} text-warm-brand
+              bg-warm-surface-soft hover:opacity-70 font-semibold transition-colors`}
             >
               <Plus className="w-4 h-4 sm:w-[18px] sm:h-[18px]" /> 추가
             </button>
@@ -1488,8 +1482,8 @@ function AllergyInner() {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center gap-1 pr-0.5 py-1 rounded-full bg-[image:var(--card-wash-yellow-bg)]
-                      border border-[#FF8763]/50"
+                      className="flex items-center gap-1 pr-0.5 py-1 rounded-full bg-reaction-bg
+                      border border-reaction-fg/30"
                     >
                       {alreadyConfirmed ? null : (
                         <button
@@ -1534,7 +1528,7 @@ function AllergyInner() {
                       ) : (
                         <button
                           onClick={() => setConfirmDeleteTestingId(item.id)}
-                          className="px-1 py-1 rounded-full hover:bg-[#FF8763]/20 text-muted-foreground"
+                          className="px-1 py-1 rounded-full hover:bg-reaction-fg/10 text-muted-foreground"
                         >
                           <X size={10} />
                         </button>
@@ -1553,8 +1547,7 @@ function AllergyInner() {
       </div>
 
       {/* 4. 알레르기 확정 재료 */}
-      <div className="bg-[image:var(--card-wash-bg)] 
-      border border-border rounded-3xl py-3 px-5 mb-6">
+      <div className="bg-warm-surface shadow-warm rounded-3xl py-3 px-5 mb-6">
         <div className="flex items-center justify-between mb-3">
           <h2 className={`font-bold ${isApp ? "text-base" : "text-lg"} flex items-center gap-1.5`}>
             <ShieldAlert size={18} className="text-destructive" />
@@ -1562,8 +1555,8 @@ function AllergyInner() {
           </h2>
           <button
             onClick={() => setShowAddConfirmedModal(true)}
-            className={`flex items-center gap-1 px-3 py-1 rounded-3xl ${isApp ? "text-sm" : "text-base"} text-primary-foreground
-            bg-[#FEF5CC] hover:opacity-70 font-semibold transition-colors`}
+            className={`flex items-center gap-1 px-3 py-1 rounded-3xl ${isApp ? "text-sm" : "text-base"} text-warm-brand
+            bg-warm-surface-soft hover:opacity-70 font-semibold transition-colors`}
           >
             <Plus className="w-4 h-4 sm:w-[18px] sm:h-[18px]" /> 추가
           </button>
@@ -1573,7 +1566,7 @@ function AllergyInner() {
             <span>{confirmedAllergiesFetchError}</span>
             <button
               onClick={fetchConfirmedAllergies}
-              className="shrink-0 px-4 py-1.5 bg-[image:var(--action-soft-bg)] hover:bg-[image:var(--action-soft-bg-hover)] text-primary-foreground shadow-sm text-sm font-bold rounded-full"
+              className="shrink-0 px-4 py-1.5 bg-warm-brand hover:bg-warm-brand-hover text-warm-brand-fg shadow-sm text-sm font-bold rounded-full"
             >
               다시 시도
             </button>
@@ -1590,8 +1583,8 @@ function AllergyInner() {
             {[...confirmedAllergies].sort((a, b) => (a.ingredient_name ?? "").localeCompare(b.ingredient_name ?? "", "ko")).map((item) => (
               <div
                 key={item.id}
-                className="flex flex-nowrap items-center gap-1 pl-3 py-1 bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFEEE8_100%)]
-                border border-[#FF8763]/50 rounded-xl"
+                className="flex flex-nowrap items-center gap-1 pl-3 py-1 bg-reaction-bg
+                border border-reaction-fg/30 rounded-xl"
               >
                 <div className="flex shrink-0 items-center gap-2">
                   <IngredientIcon name={item.ingredient_name ?? ""} emoji={item.ingredient_emoji} size={17} />
@@ -1601,7 +1594,7 @@ function AllergyInner() {
                 <button
                   onClick={() => handleDeleteConfirmed(item.id)}
                   disabled={deletingConfirmedId === item.id}
-                  className="px-1 py-1 mr-2 rounded-full hover:bg-[#FF8763]/20 text-muted-foreground disabled:opacity-40"
+                  className="px-1 py-1 mr-2 rounded-full hover:bg-reaction-fg/10 text-muted-foreground disabled:opacity-40"
                 >
                   <X size={12} />
                 </button>
@@ -1612,7 +1605,7 @@ function AllergyInner() {
       </div>
 
       {/* 5. 이상 반응 자동 리포트 생성 */}
-      <div className="bg-[image:var(--card-wash-bg)] border border-border rounded-3xl py-3 px-5 mb-6">
+      <div className="bg-warm-surface shadow-warm rounded-3xl py-3 px-5 mb-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className={`font-bold ${isApp ? "text-base" : "text-lg"} flex items-center gap-1.5`}>
             <FileText size={18} />
@@ -1622,9 +1615,9 @@ function AllergyInner() {
             onClick={handleOpenReportModal}
             disabled={reportLoading || !activeBaby}
             className={`flex items-center gap-1.5 px-4 py-2 whitespace-nowrap
-            bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
-            hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)]
-            text-primary-foreground shadow-sm ${isApp ? "text-sm" : "text-base"} font-bold rounded-full`}
+            bg-warm-brand
+            hover:bg-warm-brand-hover
+            text-warm-brand-fg shadow-sm ${isApp ? "text-sm" : "text-base"} font-bold rounded-full`}
           >
             {reportLoading ? "생성 중" : "리포트 생성하기"}
           </button>
@@ -1680,7 +1673,7 @@ function AllergyInner() {
             </div>
 
             {isApp ? (
-              <div className="flex-1 min-h-0 overflow-y-auto [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#D9F0FF] [&::-webkit-scrollbar-thumb]:rounded-full">
+              <div className="flex-1 min-h-0 overflow-y-auto [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-warm-border [&::-webkit-scrollbar-thumb]:rounded-full">
                 <div className="px-5 pb-3 flex flex-wrap items-center justify-end gap-3">
                   <button
                     onClick={handleDownloadReportPdfApp}
@@ -1800,8 +1793,8 @@ function AllergyInner() {
                 onFocus={() => setSafeModalDropdownOpen(true)}
                 onBlur={() => setTimeout(() => setSafeModalDropdownOpen(false), 150)}
                 placeholder="재료를 검색하세요."
-                className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm
-                focus:outline-none focus:ring-2 focus:ring-[#E3FFF1] placeholder:text-muted-foreground"
+                className="w-full px-4 py-2 rounded-3xl border border-warm-border bg-card text-sm
+                focus:outline-none focus:ring-2 focus:ring-safe-fg/30 placeholder:text-muted-foreground"
               />
               <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
 
@@ -1822,12 +1815,12 @@ function AllergyInner() {
                           setSafeModalDropdownOpen(false);
                         }}
                         className={`px-4 py-2 text-sm cursor-pointer flex items-center gap-2 ${
-                          alreadySelected ? "bg-[#E3FFF1] text-foreground" : "hover:bg-primary/10"
+                          alreadySelected ? "bg-safe-bg text-foreground" : "hover:bg-primary/10"
                         }`}
                       >
                         <IngredientIcon name={ing.name} emoji={ing.emoji} size={17} />
                         <span className="flex-1">{ing.name}</span>
-                        {alreadySelected && <Check size={13} className="text-[#3E8260] shrink-0" />}
+                        {alreadySelected && <Check size={13} className="text-safe-fg shrink-0" />}
                       </div>
                     );
                   })}
@@ -1842,7 +1835,7 @@ function AllergyInner() {
                   <span
                     key={ing.id}
                     className="flex items-center gap-1 pl-3 pr-2 py-1 rounded-full
-                    bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#E3FFF1_100%)] border border-[#9AC6AF]/70
+                    bg-safe-bg border border-safe-fg/40
                     text-xs font-semibold text-foreground"
                   >
                     <IngredientIcon name={ing.name} emoji={ing.emoji} size={15} />
@@ -1869,7 +1862,7 @@ function AllergyInner() {
                   className={`flex-1 py-1 text-xs font-semibold rounded-t-sm border border-b-0 transition-all ${
                     safeModalStageFilter === tab.key
                       ? "bg-muted/80 text-primary-foreground"
-                      : "border-border text-muted-foreground hover:border-[#9AC6AF]/50"
+                      : "border-warm-border text-muted-foreground hover:border-safe-fg/40"
                   }`}
                 >
                   {tab.label}
@@ -1898,8 +1891,8 @@ function AllergyInner() {
                         }}
                         className={`flex flex-row items-center gap-1 px-1.5 py-1 rounded-xl border text-xs font-semibold transition-all ${
                           selected
-                            ? "border border-[#9AC6AF]/20 bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#E3FFF1_100%)] text-foreground"
-                            : "border-border bg-card text-muted-foreground hover:border-[#9AC6AF]/60 hover:bg-[#F0FFF8]"
+                            ? "border border-safe-fg/30 bg-safe-bg text-foreground"
+                            : "border-warm-border bg-card text-muted-foreground hover:border-safe-fg/40 hover:bg-safe-bg/50"
                         }`}
                       >
                         <IngredientIcon name={ing.name} emoji={ing.emoji} size={17} />
@@ -1964,17 +1957,17 @@ function AllergyInner() {
             <div className="flex gap-2">
               <button
                 onClick={closeAddTestingModal}
-                className="flex-1 py-3 rounded-full border border-border text-sm font-semibold
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-opacity"
+                className="flex-1 py-3 rounded-full border border-warm-border text-sm font-semibold
+                hover:bg-warm-surface-soft transition-opacity"
               >
                 취소
               </button>
               <button
                 onClick={handleAddTestingWithStatus}
                 disabled={safeModalMultiSelected.length === 0 || addingTesting}
-                className="flex-1 py-3 rounded-full text-primary-foreground text-sm font-bold
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-opacity disabled:opacity-40"
+                className="flex-1 py-3 rounded-full text-warm-brand-fg text-sm font-bold
+                bg-warm-brand
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
               >
                 {addingTesting
                   ? "추가 중"
@@ -2010,11 +2003,11 @@ function AllergyInner() {
 
             <div className="overflow-y-auto flex-1 space-y-2 pr-2
                 [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar-track]:rounded-full
-                [&::-webkit-scrollbar-thumb]:bg-[#D9F0FF] [&::-webkit-scrollbar-thumb]:rounded-full"
+                [&::-webkit-scrollbar-thumb]:bg-warm-border [&::-webkit-scrollbar-thumb]:rounded-full"
             >
               {addTestingSelected ? (
                 <div className="flex items-center gap-3 px-4 py-1 rounded-full
-                bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFE8E0_100%)] border border-[#FF8763]/70">
+                bg-reaction-bg border border-reaction-fg/40">
                   <IngredientIcon name={addTestingSelected.name} emoji={addTestingSelected.emoji} className="w-7 h-7 sm:w-8 sm:h-8" />
                   <span className="font-semibold text-lg flex-1">{addTestingSelected.name}</span>
                   <button onClick={() => setAddTestingSelected(null)} className="text-muted-foreground hover:text-foreground">
@@ -2028,17 +2021,17 @@ function AllergyInner() {
                     value={addTestingSearch}
                     onChange={(e) => { setAddTestingSearch(e.target.value); setAddTestingError(""); }}
                     placeholder="재료 이름 검색"
-                    className="w-full px-4 py-3 rounded-3xl border border-[#C5E5FA] bg-[#FAFAFA]/80 
-                    focus:outline-none focus:ring-2 focus:ring-[#EBF7FF] text-base font-semibold"
+                    className="w-full px-4 py-3 rounded-3xl border border-warm-border bg-warm-surface
+                    focus:outline-none focus:ring-2 focus:ring-warm-cta/40 text-base font-semibold"
                   />
                   {addTestingResults.filter((ing) => !existingConfirmedIdSet.has(ing.id)).length > 0 && (
-                    <div className="border border-[#EBF7FF] rounded-3xl overflow-hidden mt-2">
+                    <div className="border border-warm-border rounded-3xl overflow-hidden mt-2">
                       {addTestingResults.filter((ing) => !existingConfirmedIdSet.has(ing.id)).map((ing) => (
                         <button
                           key={ing.id}
                           onClick={() => { setAddTestingSelected(ing); setAddTestingResults([]); setAddTestingError(""); }}
                           className="w-full flex items-center gap-3 px-4 py-2 rounded-3xl
-                        hover:bg-[#EBF7FF] text-base text-left border border-[#EBF7FF]"
+                        hover:bg-warm-surface-soft text-base text-left border border-warm-border"
                         >
                           <IngredientIcon name={ing.name} emoji={ing.emoji} className="w-4 h-4 sm:w-5 sm:h-5" />
                           <span className="font-semibold">{ing.name}</span>
@@ -2057,15 +2050,15 @@ function AllergyInner() {
                       return (
                         <div
                           key={entry.id}
-                          className="border border-[#C5E5FA] rounded-3xl overflow-hidden bg-[#FAFAFA]/50"
+                          className="border border-warm-border rounded-3xl overflow-hidden bg-warm-surface"
                         >
                           <button
                             type="button"
                             onClick={() => setExpandedEntryId(isExpanded ? null : entry.id)}
-                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-[#EBF7FF]/60 transition-colors text-left"
+                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-warm-surface-soft/60 transition-colors text-left"
                           >
                             <span className="flex items-center justify-center w-7 h-7 shrink-0 rounded-full
-                                  bg-[#EBF7FF] text-sm font-semibold text-primary-foreground border border-[#C5E5FA]">
+                                  bg-warm-surface-soft text-sm font-semibold text-warm-brand border border-warm-border">
                               {idx + 1}
                             </span>
 
@@ -2079,7 +2072,7 @@ function AllergyInner() {
                                     <span
                                       key={sym.type}
                                       className="text-xs px-1.5 py-0.5 rounded-full shrink-0 font-semibold
-                                      bg-[#D47D7F]/10 text-[#D47D7F] border border-[#D47D7F]/30"
+                                      bg-reaction-fg/10 text-reaction-fg border border-reaction-fg/30"
                                     >
                                       {sym.type}
                                     </span>
@@ -2099,7 +2092,7 @@ function AllergyInner() {
                               <span
                                 role="button"
                                 onClick={(e) => { e.stopPropagation(); removeEntry(entry.id); }}
-                                className="p-1 rounded-full hover:bg-[#EBF7FF] text-muted-foreground shrink-0"
+                                className="p-1 rounded-full hover:bg-warm-surface-soft text-muted-foreground shrink-0"
                               >
                                 <X size={13} />
                               </span>
@@ -2112,27 +2105,27 @@ function AllergyInner() {
                           </button>
 
                           {isExpanded && (
-                            <div className="px-3 pb-3 pt-2.5 flex flex-col gap-3 border-t border-[#C5E5FA]/60 bg-card">
+                            <div className="px-3 pb-3 pt-2.5 flex flex-col gap-3 border-t border-warm-border/60 bg-card">
 
                               <div className="flex items-center gap-1.5 flex-wrap">
-                                <div className="inline-flex items-center rounded-xl border border-[#C5E5FA] bg-[#FAFAFA]/80 overflow-hidden">
+                                <div className="inline-flex items-center rounded-xl border border-warm-border bg-warm-surface overflow-hidden">
                                   {/* entry.date가 빈 문자열일 때 안전하게 처리 */}
                                   <span className="px-2.5 py-1 text-sm font-semibold text-foreground">
                                     {entry.date ? +entry.date.split("-")[0] : FIXED_YEAR}년
                                   </span>
-                                  <span className="w-px self-stretch bg-[#C5E5FA]" />
+                                  <span className="w-px self-stretch bg-warm-border" />
                                   <button
                                     type="button"
                                     onClick={() => setActiveDatePicker({ entryId: entry.id, initialStep: "month" })}
-                                    className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EBF7FF] transition-colors"
+                                    className="px-2.5 py-1 text-sm font-semibold hover:bg-warm-surface-soft transition-colors"
                                   >
                                     {+entry.date.split("-")[1]}월
                                   </button>
-                                  <span className="w-px self-stretch bg-[#C5E5FA]" />
+                                  <span className="w-px self-stretch bg-warm-border" />
                                   <button
                                     type="button"
                                     onClick={() => setActiveDatePicker({ entryId: entry.id, initialStep: "day" })}
-                                    className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EBF7FF] transition-colors"
+                                    className="px-2.5 py-1 text-sm font-semibold hover:bg-warm-surface-soft transition-colors"
                                   >
                                     {+entry.date.split("-")[2]}일
                                   </button>
@@ -2166,8 +2159,8 @@ function AllergyInner() {
                                           type="button"
                                           onClick={() => toggleEntrySymptom(entry.id, s.type)}
                                           className={`px-2.5 py-1 rounded-full text-xs font-semibold border transition-colors ${isSelected
-                                            ? "bg-[#D47D7F] text-white border-[#D47D7F]"
-                                            : "bg-muted text-muted-foreground border-border hover:bg-[#D47D7F]/10 hover:border-[#D47D7F]/40"
+                                            ? "bg-reaction-fg text-white border-reaction-fg"
+                                            : "bg-muted text-muted-foreground border-border hover:bg-reaction-fg/10 hover:border-reaction-fg/40"
                                             }`}
                                         >
                                           {s.type}
@@ -2190,8 +2183,8 @@ function AllergyInner() {
                                                 type="button"
                                                 onClick={() => setEntrySeverity(entry.id, sym.type, sev.value)}
                                                 className={`px-2.5 py-0.5 rounded-lg text-xs font-semibold border transition-colors ${sym.severity === sev.value
-                                                  ? "bg-[#D47D7F] text-white border-[#D47D7F]"
-                                                  : "bg-background text-muted-foreground border-border hover:bg-[#D47D7F]/10 hover:border-[#D47D7F]/40"
+                                                  ? "bg-reaction-fg text-white border-reaction-fg"
+                                                  : "bg-background text-muted-foreground border-border hover:bg-reaction-fg/10 hover:border-reaction-fg/40"
                                                   }`}
                                               >
                                                 {sev.label}
@@ -2227,8 +2220,8 @@ function AllergyInner() {
                       onChange={(e) => setReactionDescription(e.target.value)}
                       placeholder="전반적인 상황을 자유롭게 기록하세요"
                       rows={2}
-                      className="w-full px-4 py-3 rounded-xl border border-[#C5E5FA] bg-[#FAFAFA]/80
-                    focus:outline-none focus:ring-2 focus:ring-[#EBF7FF] text-sm resize-none"
+                      className="w-full px-4 py-3 rounded-xl border border-warm-border bg-warm-surface
+                    focus:outline-none focus:ring-2 focus:ring-warm-cta/40 text-sm resize-none"
                     />
                   </div>
                 </>
@@ -2242,16 +2235,16 @@ function AllergyInner() {
             )}
 
             <div className="flex gap-2">
-              <button onClick={closeAddTestingModal} className="flex-1 py-3 rounded-full border border-border text-base 
-              font-semibold hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-colors">
+              <button onClick={closeAddTestingModal} className="flex-1 py-3 rounded-full border border-warm-border text-base
+              font-semibold hover:bg-warm-surface-soft transition-colors">
                 취소
               </button>
               <button
                 onClick={handleAddTestingWithStatus}
                 disabled={!addTestingSelected || addingTesting}
-                className="flex-1 py-3 rounded-full text-primary-foreground text-base font-bold 
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-opacity disabled:opacity-40"
+                className="flex-1 py-3 rounded-full text-warm-brand-fg text-base font-bold 
+                bg-warm-brand 
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
               >
                 {addingTesting ? "추가 중" : "추가하기"}
               </button>
@@ -2298,23 +2291,23 @@ function AllergyInner() {
             </div>
 
             <label className="block text-sm font-medium text-muted-foreground mb-2">확정 날짜</label>
-            <div className="inline-flex items-center rounded-xl border border-[#C5E5FA] bg-[#FAFAFA]/80 overflow-hidden mb-2">
+            <div className="inline-flex items-center rounded-xl border border-warm-border bg-warm-surface overflow-hidden mb-2">
               <span className="px-2.5 py-1 text-sm font-semibold text-foreground">
                 {editConfirmedDate ? +editConfirmedDate.split("-")[0] : FIXED_YEAR}년
               </span>
-              <span className="w-px self-stretch bg-[#C5E5FA]" />
+              <span className="w-px self-stretch bg-warm-border" />
               <button
                 type="button"
                 onClick={() => setEditConfirmedDatePicker("month")}
-                className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EBF7FF] transition-colors"
+                className="px-2.5 py-1 text-sm font-semibold hover:bg-warm-surface-soft transition-colors"
               >
                 {editConfirmedDate ? +editConfirmedDate.split("-")[1] : new Date().getMonth() + 1}월
               </button>
-              <span className="w-px self-stretch bg-[#C5E5FA]" />
+              <span className="w-px self-stretch bg-warm-border" />
               <button
                 type="button"
                 onClick={() => setEditConfirmedDatePicker("day")}
-                className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EBF7FF] transition-colors"
+                className="px-2.5 py-1 text-sm font-semibold hover:bg-warm-surface-soft transition-colors"
               >
                 {editConfirmedDate ? +editConfirmedDate.split("-")[2] : new Date().getDate()}일
               </button>
@@ -2326,8 +2319,8 @@ function AllergyInner() {
               onChange={(e) => setEditConfirmedNote(e.target.value)}
               placeholder="메모를 입력하세요"
               rows={3}
-              className="w-full px-4 py-3 mb-2 rounded-3xl border border-[#C5E5FA] bg-[#FAFAFA]/80 
-              focus:outline-none focus:ring-2 focus:ring-[#EBF7FF] text-base font-semibold resize-none"
+              className="w-full px-4 py-3 mb-2 rounded-3xl border border-warm-border bg-warm-surface
+              focus:outline-none focus:ring-2 focus:ring-warm-cta/40 text-base font-semibold resize-none"
             />
 
             {editConfirmedError && (
@@ -2337,16 +2330,16 @@ function AllergyInner() {
             )}
 
             <div className="flex gap-2">
-              <button onClick={() => setEditingConfirmed(null)} className="flex-1 py-3 rounded-full border border-border text-sm font-semibold 
-                hover:bg-[radial-gradient(ellipse_at_center,#FFEEE8_0%,#FFDCD1_100%)] transition-opacity">
+              <button onClick={() => setEditingConfirmed(null)} className="flex-1 py-3 rounded-full border border-warm-border text-sm font-semibold
+                hover:bg-warm-surface-soft transition-opacity">
                 취소
               </button>
               <button
                 onClick={handleSaveConfirmedEdit}
                 disabled={savingConfirmedEdit}
-                className="flex-1 py-3 rounded-full text-primary-foreground text-sm font-bold 
-                bg-[radial-gradient(ellipse_at_center,#FFD9C9_0%,#FFC2B0_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#FFEEE8_0%,#FFDCD1_100%)] transition-opacity disabled:opacity-40"
+                className="flex-1 py-3 rounded-full text-warm-brand-fg text-sm font-bold 
+                bg-warm-brand 
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
               >
                 {savingConfirmedEdit ? "저장 중" : "저장"}
               </button>
@@ -2386,7 +2379,7 @@ function AllergyInner() {
                 onBlur={() => setTimeout(() => setConfirmedModalDropdownOpen(false), 150)}
                 placeholder="재료를 검색하세요."
                 className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm
-                focus:outline-none focus:ring-2 focus:ring-[#FFEEE8] placeholder:text-muted-foreground"
+                focus:outline-none focus:ring-2 focus:ring-reaction-fg/20 placeholder:text-muted-foreground"
               />
               <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
 
@@ -2407,7 +2400,7 @@ function AllergyInner() {
                           setConfirmedModalDropdownOpen(false);
                         }}
                         className={`px-4 py-2 text-sm cursor-pointer flex items-center gap-2 ${
-                          alreadySelected ? "bg-[#FFEEE8] text-foreground" : "hover:bg-primary/10"
+                          alreadySelected ? "bg-reaction-bg text-foreground" : "hover:bg-primary/10"
                         }`}
                       >
                         <IngredientIcon name={ing.name} emoji={ing.emoji} size={17} />
@@ -2427,7 +2420,7 @@ function AllergyInner() {
                   <span
                     key={ing.id}
                     className="flex items-center gap-1 pl-3 pr-2 py-1 rounded-full
-                    bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFEEE8_100%)] border border-[#FF8763]/50
+                    bg-reaction-bg border border-reaction-fg/30
                     text-xs font-semibold text-foreground"
                   >
                     <IngredientIcon name={ing.name} emoji={ing.emoji} size={15} />
@@ -2454,7 +2447,7 @@ function AllergyInner() {
                   className={`flex-1 py-1 text-xs font-semibold rounded-t-sm border border-b-0 transition-all ${
                     confirmedModalStageFilter === tab.key
                       ? "bg-muted/80 text-primary-foreground"
-                      : "border-border text-muted-foreground hover:border-[#FF8763]/50"
+                      : "border-warm-border text-muted-foreground hover:border-reaction-fg/40"
                   }`}
                 >
                   {tab.label}
@@ -2484,8 +2477,8 @@ function AllergyInner() {
                         }}
                         className={`flex flex-row items-center gap-1 px-1.5 py-1 rounded-xl border text-xs font-semibold transition-all ${
                           selected
-                            ? "border border-[#FF8763]/20 bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFEEE8_100%)] text-primary-foreground"
-                            : "border-border bg-card text-muted-foreground hover:border-[#FF8763]/60 hover:bg-[#FFFBE8]"
+                            ? "border border-reaction-fg/30 bg-reaction-bg text-foreground"
+                            : "border-warm-border bg-card text-muted-foreground hover:border-reaction-fg/40 hover:bg-reaction-bg/50"
                         }`}
                       >
                         <IngredientIcon name={item.name} emoji={item.emoji} size={17} />
@@ -2509,8 +2502,8 @@ function AllergyInner() {
                         }}
                         className={`flex flex-row items-center gap-1 px-1.5 py-1 rounded-xl border text-xs font-semibold transition-all ${
                           selected
-                            ? "bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFEEE8_100%)] text-primary-foreground"
-                            : "border-border bg-card text-muted-foreground hover:border-[#FF8763]/60 hover:bg-[#FFFBE8]"
+                            ? "bg-reaction-bg text-foreground"
+                            : "border-warm-border bg-card text-muted-foreground hover:border-reaction-fg/40 hover:bg-reaction-bg/50"
                         }`}
                       >
                         <IngredientIcon name={item.name} emoji={item.emoji} size={17} />
@@ -2575,17 +2568,17 @@ function AllergyInner() {
             <div className="flex gap-2">
               <button
                 onClick={closeAddConfirmedModal}
-                className="flex-1 py-3 rounded-full border border-border text-sm font-semibold
-                hover:bg-[radial-gradient(ellipse_at_center,#FFEEE8_0%,#FFDCD1_100%)] transition-opacity"
+                className="flex-1 py-3 rounded-full border border-warm-border text-sm font-semibold
+                hover:bg-warm-surface-soft transition-opacity"
               >
                 취소
               </button>
               <button
                 onClick={handleAddConfirmedAllergy}
                 disabled={confirmedModalMultiSelected.length === 0 || addingConfirmed}
-                className="flex-1 py-3 rounded-full text-primary-foreground text-sm font-bold
-                bg-[radial-gradient(ellipse_at_center,#FFD9C9_0%,#FFC2B0_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#FFEEE8_0%,#FFDCD1_100%)] transition-opacity disabled:opacity-40"
+                className="flex-1 py-3 rounded-full text-warm-brand-fg text-sm font-bold
+                bg-warm-brand
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
               >
                 {addingConfirmed
                   ? "추가 중"
@@ -2610,9 +2603,9 @@ function AllergyInner() {
             <p className="text-base text-foreground leading-none whitespace-pre-line">{conflictMessage}</p>
             <button
               onClick={handleConflictConfirm}
-              className="flex-1 py-3 rounded-full text-primary-foreground text-base font-bold 
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-opacity disabled:opacity-40"
+              className="flex-1 py-3 rounded-full text-warm-brand-fg text-base font-bold 
+                bg-warm-brand 
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
             >
               확인
             </button>
@@ -2642,8 +2635,8 @@ function AllergyInner() {
             <p className="text-sm text-foreground leading-relaxed">{addSuccessInfoMessage}</p>
             <button
               onClick={() => setShowAddSuccessInfo(false)}
-              className="w-full py-3 rounded-full bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
-              text-primary-foreground font-bold text-sm"
+              className="w-full py-3 rounded-full bg-warm-brand
+              text-warm-brand-fg font-bold text-sm"
             >
               확인
             </button>
@@ -2655,10 +2648,10 @@ function AllergyInner() {
       {suspectedPopup && (() => {
         const severityStyle =
           suspectedPopup.severity === "high"
-            ? { badge: "bg-reaction-bg text-reaction-fg border-red-200", label: "높음" }
+            ? { badge: "bg-reaction-bg text-reaction-fg border-reaction-fg/30", label: "높음" }
             : suspectedPopup.severity === "medium"
-              ? { badge: "bg-testing-bg text-testing-fg border-amber-200", label: "중간" }
-              : { badge: "bg-safe-bg text-safe-fg border-[#9AC6AF]", label: "낮음" };
+              ? { badge: "bg-testing-bg text-testing-fg border-testing-fg/30", label: "중간" }
+              : { badge: "bg-safe-bg text-safe-fg border-safe-fg/30", label: "낮음" };
         return (
           <div
             className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4"
@@ -2691,22 +2684,22 @@ function AllergyInner() {
                     <div
                       key={`c-${source}`}
                       className="flex items-center gap-2 px-3 py-1.5 rounded-xl
-                        bg-[#FFEEE8] border border-[#FF8763]/30"
+                        bg-reaction-bg border border-reaction-fg/30"
                     >
                       <AlertTriangle size={14} className="text-destructive shrink-0" />
-                      <span className="text-sm font-bold text-primary-foreground">{source}</span>
-                      <span className="text-sm text-[#5C5B58]">알레르기 확정</span>
+                      <span className="text-sm font-bold text-foreground">{source}</span>
+                      <span className="text-sm text-warm-fg-muted">알레르기 확정</span>
                     </div>
                   ))}
                   {suspectedPopup.reaction.map((source) => (
                     <div
                       key={`r-${source}`}
                       className="flex items-center gap-2 px-3 py-1.5 rounded-xl
-                        bg-[#FFF5D4] border border-[#FF8763]/30"
+                        bg-testing-bg border border-testing-fg/30"
                     >
                       <AlertTriangle size={14} className="text-destructive shrink-0" />
-                      <span className="text-sm font-bold text-primary-foreground">{source}</span>
-                      <span className="text-sm text-[#5C5B58]">알레르기 반응</span>
+                      <span className="text-sm font-bold text-foreground">{source}</span>
+                      <span className="text-sm text-warm-fg-muted">알레르기 반응</span>
                     </div>
                   ))}
                 </div>
@@ -2714,8 +2707,8 @@ function AllergyInner() {
 
               <button
                 onClick={() => setSuspectedPopup(null)}
-                className="w-full py-3 rounded-full bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
-                  text-primary-foreground font-bold text-sm"
+                className="w-full py-3 rounded-full bg-warm-brand
+                  text-warm-brand-fg font-bold text-sm"
               >
                 확인
               </button>
@@ -2746,7 +2739,7 @@ function AllergyInner() {
 
             {selectedIngredient ? (
               <div className="flex items-center gap-3 px-4 py-2 rounded-full 
-                bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FEF5CC_100%)] border border-[#FFE78A]">
+                bg-warm-surface-soft border border-warm-border">
                 <IngredientIcon name={selectedIngredient.name} emoji={selectedIngredient.emoji} className="w-6 h-6 sm:w-7 sm:h-7" />
                 <span className="font-bold text-lg flex-1">{selectedIngredient.name}</span>
                 <button
@@ -2763,17 +2756,17 @@ function AllergyInner() {
                   value={ingredientSearch}
                   onChange={(e) => { setIngredientSearch(e.target.value); setAddError(""); }}
                   placeholder="재료 이름 검색"
-                  className="w-full px-4 py-3 rounded-3xl border border-[#C5E5FA] bg-[#FAFAFA]/80
-                  focus:outline-none focus:ring-2 focus:ring-[#EBF7FF] text-base font-semibold"
+                  className="w-full px-4 py-3 rounded-3xl border border-warm-border bg-warm-surface
+                  focus:outline-none focus:ring-2 focus:ring-warm-cta/40 text-base font-semibold"
                 />
                 {searchResults.length > 0 && (
-                  <div className="border border-[#EBF7FF] rounded-3xl overflow-hidden mt-2">
+                  <div className="border border-warm-border rounded-3xl overflow-hidden mt-2">
                     {searchResults.map((ing) => (
                       <button
                         key={ing.id}
                         onClick={() => { setSelectedIngredient(ing); setSearchResults([]); setAddError(""); }}
-                        className="w-full flex items-center gap-3 px-4 py-2 rounded-3xl 
-                        hover:bg-[#EBF7FF] text-base text-left border border-[#EBF7FF]"
+                        className="w-full flex items-center gap-3 px-4 py-2 rounded-3xl
+                        hover:bg-warm-surface-soft text-base text-left border border-warm-border"
                       >
                         <IngredientIcon name={ing.name} emoji={ing.emoji} className="w-4 h-4 sm:w-5 sm:h-5" />
                         <span className="font-semibold">{ing.name}</span>
@@ -2794,17 +2787,17 @@ function AllergyInner() {
             <div className="flex gap-2">
               <button
                 onClick={closeAddModal}
-                className="flex-1 py-3 rounded-full border border-border text-base 
-                font-semibold hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-colors"
+                className="flex-1 py-3 rounded-full border border-warm-border text-base
+                font-semibold hover:bg-warm-surface-soft transition-colors"
               >
                 취소
               </button>
               <button
                 onClick={handleAddIngredientClick}
                 disabled={!selectedIngredient || adding}
-                className="flex-1 py-3 rounded-full text-primary-foreground text-base font-bold 
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-opacity disabled:opacity-40"
+                className="flex-1 py-3 rounded-full text-warm-brand-fg text-base font-bold 
+                bg-warm-brand 
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
               >
                 {adding ? "추가 중" : "추가하기"}
               </button>
@@ -2814,6 +2807,7 @@ function AllergyInner() {
       )}
       <TutorialModal open={showTutorial} onClose={() => setShowTutorial(false)}
         slides={allergySlides} title="알레르기 관리 사용법" />
+    </div>
     </div>
   );
 }

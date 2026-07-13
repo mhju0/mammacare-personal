@@ -274,6 +274,6 @@ button {
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D9F0FF;
+  background: var(--warm-border);
   border-radius: 9999px;
 }
