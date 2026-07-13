@@ -58,9 +58,9 @@
 - [ ] 보너스(재테스트 고아 이미지·미래 예약) — 미실행(P4 iOS 재검증 때).
 
 #### P2 백로그 — P1에서 발견 (심각도순)
-- [ ] **[Med/UX] 회원가입이 주소를 강제** — 주소 검색 팝업(외부 우편번호 서비스)이 이 환경에서 **빈 화면**으로 뜸 → UI 신규가입 불가. API는 `SignupRequest.address: str | None`(선택)이므로 **프론트 단독 강제**. 알레르기 도구가 집 주소를 받는 것 자체가 불필요 PII(포지셔닝/프라이버시 서사와 충돌). **결정 필요: 주소 필드 제거 vs 선택화.** (auth 터치 → NEEDS SENIOR REVIEW)
-- [ ] **[Med] signup의 inline `baby_profile` 경로 항상 500** — `auth_service.signup`이 `baby_payload.birth_year/feeding_status/photo/height…`를 읽지만 `BabyCreate`엔 `birth_date/…`만 존재 → AttributeError를 bare `except`가 **로그 없이** 삼킴. 실제 UI는 signup 전에 baby_profile을 떼고 `/babies`로 따로 생성하므로 **도달 불가 데드코드**지만 landmine + 무로그. 조치: `SignupRequest.baby_profile` 필드 + 죽은 분기 제거, 또는 그 except에 로깅. (auth/schema 터치 → NEEDS SENIOR REVIEW)
-- [ ] **[Med/이식성] 리포트 PDF 한글 폰트가 시스템 폰트 fallback 의존** — `report.html`은 `font-family:'Pretendard'`인데 `@font-face` 번들 없음. macOS는 AppleSDGothicNeo로 fallback되어 정상이지만, **한글 시스템 폰트 없는 최소 Linux/Docker 이미지에선 깨짐**. Docker 워크스트림 전 `@font-face`로 한글 폰트 번들 필요.
+- [x] **주소 강제 제거** (30e160f, 오너 결정: 필드 자체 삭제) — 주소 UI·Daum postcode 스크립트·검증 게이트 전부 삭제. 리뷰어 PASS(순수 UI 필드 삭제, 에스컬레이션 불필요). 브라우저 검증: 부모님 정보 → 계정 정보 주소 없이 진행 [Verified 2026-07-13].
+- [x] **signup inline `baby_profile` 데드 경로 제거** (5c30b9b) — 스키마/서비스 불일치로 항상 AttributeError→무로그 500이던 도달 불가 분기 삭제(-60줄). 리뷰어 PASS + NEEDS SENIOR REVIEW(auth 경로, 절차상). 검증: import OK · parent-only 201 · baby_profile 포함 요청 500→201 [Verified 2026-07-13].
+- [ ] **[Med/이식성] 리포트 PDF 한글 폰트가 시스템 폰트 fallback 의존** (오너 결정: 지금은 보류, Docker 워크스트림 전 처리) — `report.html`은 `font-family:'Pretendard'`인데 `@font-face` 번들 없음. macOS는 AppleSDGothicNeo fallback으로 정상[P1 Verified], **한글 폰트 없는 최소 Linux/Docker 이미지에선 깨짐**.
 - [x] ~~대시보드 "진행 중인 테스트" 카드 → Observe 딥링크~~ — 정상. `Dashboard.tsx:271` `onClick navigate(/observe/:id)` + 키보드 핸들러 확인. E2E 좌표 클릭 미스였음(버그 아님).
 - [ ] **[Low/P5] 마케팅 홈 "안드로이드 앱 다운로드" 버튼** — android 제거 서사와 모순(P5 데드코드 항목 보강).
 - 절차·증거 형식: `.claude/skills/e2e-check/` (체크리스트 포함)
