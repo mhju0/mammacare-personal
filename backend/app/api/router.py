@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api import auth, babies, inquiries, hospitals, media, notifications, ingredients, nutrition, oauth, parents, recipes, recommendations, schedules, users
+from app.api import auth, babies, inquiries, hospitals, media, notifications, ingredients, oauth, parents, recommendations, users
 from app.api.admin import admin_router
 from app.api.allergy import confirmed_allergy, ingredient_testing, symptom_check, symptom_photo, report
 from app.api.community import community_router
@@ -14,9 +14,6 @@ api_router.include_router(parents.router, prefix="/parents", tags=["parents"])
 api_router.include_router(notifications.router, prefix="/notifications", tags=["notifications"])
 api_router.include_router(hospitals.router, prefix="/hospitals", tags=["hospitals"])
 api_router.include_router(ingredients.router, prefix="/ingredients", tags=["ingredients"])
-api_router.include_router(recipes.router, prefix="/recipes", tags=["recipes"])
-api_router.include_router(schedules.router, prefix="/schedules", tags=["schedules"])
-api_router.include_router(nutrition.router, prefix="/nutrition", tags=["nutrition"])
 api_router.include_router(inquiries.router, tags=["inquiries"])
 api_router.include_router(media.router, prefix="/media", tags=["media"])
 

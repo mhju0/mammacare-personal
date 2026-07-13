@@ -37,9 +37,7 @@ openapi_tags = [
     {"name": "oauth",       "description": "Google / Kakao / Naver 소셜 로그인"},
     {"name": "users",       "description": "부모 사용자 프로필"},
     {"name": "babies",      "description": "아기 프로필 CRUD"},
-    {"name": "schedules",   "description": "이유식 식단 일정 (CalendarPage)"},
-    {"name": "ingredients", "description": "식재료 목록 · 영양소 (NutritionPage · CalendarPage)"},
-    {"name": "recipes",     "description": "레시피 목록 · 상세 (CalendarPage 식단 연동 · NutritionPage 영양소 집계)"},
+    {"name": "ingredients", "description": "식재료 목록 · 영양소"},
     {"name": "allergy",     "description": "식재료 테스트 · 증상 체크 · 확정 알레르기"},
 ]
 

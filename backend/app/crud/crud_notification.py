@@ -108,19 +108,6 @@ async def delete_all_notifications(db: AsyncSession, parent_id: uuid.UUID) -> in
     return result.rowcount or 0
 
 
-async def delete_notifications_for_schedule(
-    db: AsyncSession, schedule_id: uuid.UUID
-) -> int:
-    """특정 식단 일정에 연결된 meal_reminder 알림만 삭제."""
-    schedule_id_str = str(schedule_id)
-    stmt = delete(Notification).where(
-        Notification.type == "meal_reminder",
-        Notification.data["schedule_id"].as_string() == schedule_id_str,
-    )
-    result = await db.execute(stmt)
-    return result.rowcount or 0
-
-
 async def delete_notifications_for_ingredient_testing(
     db: AsyncSession, testing_id: uuid.UUID
 ) -> int:
