@@ -110,6 +110,5 @@ cd frontend && pnpm build                               # frontend builds
 
 ## Docs
 
-- [`AGENTS.md`](AGENTS.md) — development guide (source of truth for architecture and rules)
 - [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md) — color tokens, components, traffic-light principle
 - [`SETUP.md`](SETUP.md) — local setup

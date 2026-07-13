@@ -1,7 +1,6 @@
 # ==========================================================
 # MammaCare (personal) — .gitignore
-# 원칙: 비밀값/PII/빌드 아티팩트/로컬 캐시는 절대 커밋 금지.
-#       공유 문서(CLAUDE.md, AGENTS.md, .claude/rules/)는 커밋한다.
+# 원칙: 비밀값/PII/빌드 아티팩트/로컬 캐시/로컬 개발 도구 설정은 커밋 금지.
 # 주의: gitignore는 인라인 주석 불가 (# 은 줄 맨 앞에만).
 #       패턴 뒤 '# comment' 는 주석이 아니라 패턴의 일부로 처리된다.
 # ==========================================================
@@ -128,13 +127,21 @@ Thumbs.db
 *.swo
 
 # ----------------------------------------------------------
-# 8. 에이전트 / 툴링 (로컬만 무시 — 공유 설정은 커밋)
+# 8. 로컬 개발 도구 설정 & 작업 문서 (공개 저장소에 올리지 않음)
 # ----------------------------------------------------------
-# CLAUDE.md / AGENTS.md / .claude/rules/ 는 커밋한다 (무시 X).
-# CLAUDE.local.md 와 settings.local.json 만 무시.
+.claude/
+CLAUDE.md
 CLAUDE.local.md
-.claude/settings.local.json
-# Serena MCP 로컬 캐시 전체 무시
+AGENTS.md
+GEMINI.md
+.codex/
+.cursor/
+.aider*
+.github/copilot-instructions.md
 .serena/
+
+# 로컬 작업 문서 / 디자인 스크래치 (공개 불필요)
+ROADMAP.md
+docs/mocks/
 
 .tokensave/

@@ -8,7 +8,7 @@
 - night-watch(다크 모드)는 **보류** — warm 시스템 light-only 유지.
 - 탈락/보류 시안 원본: `docs/mocks/proposals/` (로컬, 미커밋).
 기준 시안은 `docs/mocks/hybrid/`(1차) + `docs/mocks/warm-kr/`(구판 참고), 정보 구조 참고용 대안은 `docs/mocks/clinical-en/` — 커버리지와 외부 레퍼런스는 `docs/mocks/README.md`.
-마이그레이션 현황과 순서는 `ROADMAP.md` P3. 아래 clinic 토큰은 **레거시**로, 아직 마이그레이션 안 된 화면에서만 유지한다. **새 작업은 warm-\* 토큰만 쓴다.**
+아래 clinic 토큰은 **레거시**로, 아직 마이그레이션 안 된 화면에서만 유지한다. **새 작업은 warm-\* 토큰만 쓴다.**
 
 변하지 않는 핵심 원리: **알레르기 상태 = 신호등.** 색이 곧 기능이다.
 - 안전/테스트 완료 → 초록 · 테스트 중/대기 → 노랑 · 반응 확정 → 빨강
