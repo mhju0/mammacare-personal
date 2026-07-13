@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
 import { useNavigate } from "react-router";
 import { useApp } from "../context/AppContext";
 import { checkEmailApi, checkNicknameApi, checkUsernameApi } from "../api/auth";
-import { Eye, EyeOff, CheckCircle, XCircle, Search, ChevronLeft, X, ChevronDown } from "lucide-react";
+import { Eye, EyeOff, CheckCircle, XCircle, ChevronLeft, ChevronDown } from "lucide-react";
 import { BabyInfoForm, DEFAULT_BABY_FORM } from "../components/BabyInfoForm";
 import type { BabyProfile } from "../types";
 import { motion } from "framer-motion";
@@ -73,16 +73,6 @@ function getSocialSignupParams() {
   return new URLSearchParams(raw);
 }
 
-declare global {
-  interface Window {
-    daum: {
-      Postcode: new (options: {
-        oncomplete: (data: { zonecode: string; roadAddress: string }) => void;
-      }) => { open: () => void; embed: (el: HTMLElement, options?: { autoClose?: boolean }) => void };
-    };
-  }
-}
-
 function isPasswordValid(pw: string) {
   return (
     /[a-zA-Z]/.test(pw) &&
@@ -118,11 +108,6 @@ export default function Register() {
   const [domainOpen, setDomainOpen] = useState(false);
   const [emailError, setEmailError] = useState("");
 
-  const [postcode, setPostcode] = useState("");
-  const [roadAddress, setRoadAddress] = useState("");
-  const [detailAddress, setDetailAddress] = useState("");
-  const [showAddressModal, setShowAddressModal] = useState(false);
-  const addressContainerRef = useRef<HTMLDivElement>(null);
   // ── 계정 정보 ──
   const [nickname, setNickname] = useState("");
   const [nicknameStatus, setNicknameStatus] = useState<null | "ok" | "taken">(null);
@@ -144,20 +129,7 @@ export default function Register() {
 
   // ── 성공 팝업 ──
   const [showSuccess, setShowSuccess] = useState(false);
-  useBodyScrollLock(showAddressModal || showSuccess);
-
-  const handleAddressSearch = () => setShowAddressModal(true);
-
-  useEffect(() => {
-    if (!showAddressModal || !addressContainerRef.current) return;
-    new window.daum.Postcode({
-      oncomplete(data) {
-        setPostcode(data.zonecode);
-        setRoadAddress(data.roadAddress);
-        setShowAddressModal(false);
-      },
-    }).embed(addressContainerRef.current, { autoClose: false });
-  }, [showAddressModal]);
+  useBodyScrollLock(showSuccess);
 
   const validateEmail = async () => {
     const validationMessage = getEmailValidationMessage(emailId, emailDomain);
@@ -251,7 +223,7 @@ export default function Register() {
   const isEmailValid = isValidEmailFormat(currentEmail) && !emailError;
 
   const canContinueToAccount =
-    Boolean(name && phone && isEmailValid && postcode);
+    Boolean(name && phone && isEmailValid);
 
   const canContinueToBaby =
     canContinueToAccount &&
@@ -273,9 +245,6 @@ export default function Register() {
     setEmailDomain(socialEmailDomain);
     setIsCustomDomain(Boolean(socialEmailDomain && !EMAIL_DOMAIN_OPTIONS.includes(socialEmailDomain)));
     setEmailError("");
-    setPostcode("");
-    setRoadAddress("");
-    setDetailAddress("");
     setNickname("");
     setNicknameStatus(null);
     setUserId("");
@@ -290,7 +259,6 @@ export default function Register() {
     if (!canContinueToBaby) return;
     setSignupError("");
     setSignupErrorCode("");
-    const address = [postcode, roadAddress, detailAddress].filter(Boolean).join(" ");
     const result = await registerAndLogin({
       username: userId,
       password,
@@ -298,7 +266,6 @@ export default function Register() {
       nickname,
       email: currentEmail,
       phone: phone || undefined,
-      address: address || undefined,
       oauth_signup_token: socialSignupToken || undefined,
       baby_profile: babyInfo,
     }, babyFile);
@@ -576,65 +543,19 @@ export default function Register() {
             )}
           </div>
 
-          {/* 주소 */}
-          <div className="col-span-2 space-y-1.5">
-            <label className="text-sm font-semibold text-foreground">주소</label>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={postcode}
-                readOnly
-                placeholder=" 우편번호"
-                className={`w-32 px-3 py-3 rounded-3xl border bg-[#FFFBED] text-sm font-semibold text-muted-foreground ${
-                  parentSubmitted && !postcode ? "border-destructive" : "border-border"
-                }`}
-              />
-              <button
-                onClick={handleAddressSearch}
-                  className="
-                  bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FEF5CC_50%,#FFEFAB_100%)]
-                  hover:bg-[radial-gradient(ellipse_at_center,#FEF5CC_0%,#FFEFAB_100%)]
-                  flex items-center gap-1.5 px-5 py-3 rounded-3xl shadow-sm text-sm font-semibold transition-all duration-300"
-              >
-                <Search size={14} />
-                우편번호 찾기
-              </button>
-            </div>
-            {parentSubmitted && !postcode && (
-              <p className="text-xs text-destructive">주소를 검색해주세요.</p>
-            )}
-            {roadAddress && (
-              <div className="flex gap-2 mt-2">
-                <input
-                  type="text"
-                  value={roadAddress}
-                  readOnly
-                  className="w-1/2 px-4 py-3 rounded-3xl border border-border bg-[#FFFBED] text-sm font-semibold text-foreground"
-                />
-                <input
-                  type="text"
-                  value={detailAddress}
-                  onChange={(e) => setDetailAddress(e.target.value)}
-                  placeholder="상세 주소를 입력하세요"
-                  className="w-1/2 px-4 py-3 rounded-3xl border border-border bg-card focus:outline-none focus:ring-2 focus:ring-[#FFF5D4] text-sm font-semibold placeholder:text-muted-foreground"
-                />
-              </div>
-            )}
-          </div>
-
           {/* 다음 버튼 */}
           <div className="col-span-2 pt-2 flex justify-end w-full">
             <button
               onClick={async () => {
                 setParentSubmitted(true);
                 const emailIsAvailable = await validateEmail();
-                if (name && phone && emailIsAvailable && postcode) setActiveTab("account");
+                if (name && phone && emailIsAvailable) setActiveTab("account");
               }}
               className={`w-[calc(50%-6px)] py-3.5 text-[#3D3C38] text-base font-bold rounded-3xl
               bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#C7E9FF_100%)]
               hover:bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#B8E2FF_100%)]
               shadow-sm transition-all duration-300 ${
-                !name || !phone || !isEmailValid || !postcode ? "opacity-70" : ""
+                !name || !phone || !isEmailValid ? "opacity-70" : ""
               }`}
             >
               다음 단계 →
@@ -886,31 +807,6 @@ export default function Register() {
             title=""
             saveLabel="회원가입 완료"
           />
-        </div>
-      )}
-
-      {/* ─────────────────────────────────────── */}
-      {/* 주소 검색 모달 (embed) */}
-      {/* ─────────────────────────────────────── */}
-      {showAddressModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-card rounded-3xl w-full max-w-md shadow-2xl border border-border overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-              <h3
-                className="font-bold text-base"
-                style={{ fontFamily: "'Pretendard', 'Noto Sans KR', sans-serif" }}
-              >
-                주소 검색
-              </h3>
-              <button
-                onClick={() => setShowAddressModal(false)}
-                className="p-1 rounded-full hover:opacity-80 transition-colors"
-              >
-                <X size={18} className="text-muted-foreground" />
-              </button>
-            </div>
-            <div ref={addressContainerRef} style={{ height: 460 }} />
-          </div>
         </div>
       )}
 
