@@ -22,7 +22,7 @@ import { SYMPTOM_PRESETS, SEVERITY_OPTIONS, parseCheckedAt } from "./types";
 
 export const STATUS_META: Record<TestStatus, { label: string; className: string }> = {
   testing: { label: "테스트 중", className: "bg-white text-primary-foreground font-medium" },
-  completed_safe: { label: "안전 통과", className: "bg-white text-[#347D57] font-medium" },
+  completed_safe: { label: "안전 통과", className: "bg-white text-safe-fg font-medium" },
   completed_reaction: { label: "반응 있음", className: "bg-white text-destructive font-medium" },
 };
 
@@ -135,7 +135,7 @@ function CheckRecord({ check, onDelete }: { check: SymptomCheckResponse; onDelet
           )}
         </>
       ) : (
-        <div className="flex items-center gap-2 px-3 py-2 bg-[#A8D5BA]/20 border border-[#A8D5BA]/50 rounded-xl">
+        <div className="flex items-center gap-2 px-3 py-2 bg-safe-bg border border-safe-fg/30 rounded-xl">
           <CheckCircle size={14} className="text-safe-fg flex-shrink-0" />
           <span className="text-sm font-semibold text-safe-fg">이상 없음</span>
         </div>
@@ -340,9 +340,9 @@ export function IngredientHistoryPopup({
 
         <button
           onClick={onClose}
-          className="flex-1 py-3 rounded-full text-primary-foreground text-base font-bold 
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-opacity disabled:opacity-40"
+          className="flex-1 py-3 rounded-full text-warm-brand-fg text-base font-bold 
+                bg-warm-brand 
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
         >
           닫기
         </button>
@@ -486,16 +486,16 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
         <div className="mb-4">
           <label className="text-sm font-semibold text-muted-foreground mb-1.5 block">기록 일시</label>
           <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center rounded-xl border border-[#C5E5FA] bg-[#FAFAFA]/80 overflow-hidden">
+            <div className="flex items-center rounded-xl border border-warm-border bg-warm-surface overflow-hidden">
               <span className="px-2.5 py-1 text-sm font-semibold text-foreground">{dateParts[0]}년</span>
-              <span className="w-px self-stretch bg-[#C5E5FA]" />
+              <span className="w-px self-stretch bg-warm-border" />
               <button type="button" onClick={() => setPickerStep("month")}
-                className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EBF7FF] transition-colors">
+                className="px-2.5 py-1 text-sm font-semibold hover:bg-warm-surface-soft transition-colors">
                 {dateParts[1]}월
               </button>
-              <span className="w-px self-stretch bg-[#C5E5FA]" />
+              <span className="w-px self-stretch bg-warm-border" />
               <button type="button" onClick={() => setPickerStep("day")}
-                className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EBF7FF] transition-colors">
+                className="px-2.5 py-1 text-sm font-semibold hover:bg-warm-surface-soft transition-colors">
                 {dateParts[2]}일
               </button>
             </div>
@@ -527,7 +527,7 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
                         <button key={m} type="button"
                           onClick={() => { updateDate(dateParts[0], m, dateParts[2]); setPickerStep("day"); }}
                           className={`py-2 rounded-xl text-sm font-semibold transition-colors ${
-                            m === dateParts[1] ? "bg-[#C5E5FA] text-primary-foreground" : "hover:bg-[#C5E5FA]/20 text-foreground"
+                            m === dateParts[1] ? "bg-warm-brand text-warm-brand-fg" : "hover:bg-warm-surface-soft text-foreground"
                           }`}>
                           {m}월
                         </button>
@@ -551,7 +551,7 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
                         <button key={d} type="button"
                           onClick={() => { updateDate(dateParts[0], dateParts[1], d); setPickerStep(null); }}
                           className={`aspect-square text-xs rounded-lg transition-colors flex items-center justify-center ${
-                            d === dateParts[2] ? "bg-[#C5E5FA] text-primary-foreground font-bold" : "hover:bg-[#C5E5FA]/20 text-foreground"
+                            d === dateParts[2] ? "bg-warm-brand text-warm-brand-fg font-bold" : "hover:bg-warm-surface-soft text-foreground"
                           }`}>
                           {d}
                         </button>
@@ -575,8 +575,8 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
               onClick={() => { setHasReaction(false); setReactionOpen(false); setSelectedSymptoms([]); }}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-3xl text-sm font-bold border-2 transition-all ${
                 hasReaction === false
-                  ? "bg-[image:var(--card-wash-green-bg)] border-[#A8D5BA] text-[#2D5F3F]"
-                  : "bg-muted/50 border-border text-muted-foreground hover:border-[#9AC6AF]/50"
+                  ? "bg-safe-bg border-safe-fg/40 text-safe-fg"
+                  : "bg-muted/50 border-warm-border text-muted-foreground hover:border-safe-fg/40"
               }`}
             >
               <CheckCircle size={18}/> 이상 없음
@@ -585,8 +585,8 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
               onClick={() => { setHasReaction(true); setReactionOpen(true); }}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-3xl text-sm font-bold border-2 transition-all ${
                 hasReaction === true
-                  ? "bg-[image:var(--card-wash-red-bg)] border-[#F8AC95] text-destructive"
-                  : "bg-muted/50 border-border text-muted-foreground hover:border-[#F8AC95]/50"
+                  ? "bg-reaction-bg border-reaction-fg/40 text-destructive"
+                  : "bg-muted/50 border-warm-border text-muted-foreground hover:border-reaction-fg/40"
               }`}
             >
               <AlertTriangle size={18}/> 반응 기록
@@ -603,8 +603,8 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
                 key={preset.type}
                 className={`w-full flex items-center gap-2 px-3 py-1.5 rounded-full border-2 text-sm font-semibold transition-all ${
                   selected
-                    ? "bg-[image:var(--card-wash-red-bg)] border-[#F8AC95] text-destructive"
-                    : "border-border text-muted-foreground hover:border-[#F8AC95]/50"
+                    ? "bg-reaction-bg border-reaction-fg/40 text-destructive"
+                    : "border-warm-border text-muted-foreground hover:border-reaction-fg/40"
                 }`}
               >
                 {/* 증상 이름 */}
@@ -627,8 +627,8 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
                         onClick={() => setSeverity(preset.type, sev.value)}
                         className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
                           selected.severity === sev.value
-                            ? "bg-[#F08667] text-white border-[#F08667]"
-                            : "border-border hover:border-[#F08667]/50"
+                            ? "bg-reaction-fg text-white border-reaction-fg"
+                            : "border-warm-border hover:border-reaction-fg/40"
                         }`}
                       >
                         {sev.label}
@@ -650,7 +650,7 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
               onChange={(e) => setDescription(e.target.value)}
               placeholder="추가 메모를 입력하세요..."
               rows={2}
-              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-[#FFF5D4] resize-none"
+              className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-warm-cta/40 resize-none"
             />
           </div>
         )}
@@ -705,16 +705,16 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
           <button
             onClick={onClose}
             className="flex-1 py-3 rounded-full border border-border text-base
-              font-semibold hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-colors"
+              font-semibold hover:bg-warm-surface-soft transition-colors"
           >
             취소
           </button>
           <button
             onClick={handleSaveClick}
             disabled={saving || hasReaction === null}
-            className="flex-1 py-3 rounded-full text-primary-foreground text-base font-bold
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-opacity disabled:opacity-40"
+            className="flex-1 py-3 rounded-full text-warm-brand-fg text-base font-bold
+                bg-warm-brand
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
           >
             {saving ? "저장 중" : "저장하기"}
           </button>
@@ -747,7 +747,7 @@ export function RecordModal({ item, token, onClose, onSaved }: RecordModalProps)
               <button
                 onClick={() => setShowReactionConfirm(false)}
                 className="flex-1 py-3 rounded-full border border-border text-base
-                  font-semibold hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-colors"
+                  font-semibold hover:bg-warm-surface-soft transition-colors"
               >
                 취소
               </button>
@@ -869,8 +869,8 @@ export function EditTestingModal({ item, token, onClose, onSaved }: EditTestingM
         <div className="mb-4">
           <label className="text-sm font-semibold text-muted-foreground mb-1.5 block">재료</label>
           {selectedIngredient ? (
-            <div className="flex items-center gap-3 px-3 py-2 rounded-full border border-primary/30
-            bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FEF5CC_100%)]">
+            <div className="flex items-center gap-3 px-3 py-2 rounded-full border border-warm-border
+            bg-warm-surface-soft">
               <IngredientIcon name={selectedIngredient.name} emoji={selectedIngredient.emoji} className="w-6 h-6 sm:w-7 sm:h-7" />
               <span className="font-semibold text-lg flex-1">{selectedIngredient.name}</span>
               <button
@@ -911,16 +911,16 @@ export function EditTestingModal({ item, token, onClose, onSaved }: EditTestingM
         <div className="mb-4">
           <label className="text-sm font-semibold text-muted-foreground mb-1.5 block">테스트 시작 일시</label>
           <div className="flex items-center gap-2 flex-wrap ">
-            <div className="flex items-center rounded-xl border border-[#C5E5FA] bg-[#FAFAFA]/80 overflow-hidden">
+            <div className="flex items-center rounded-xl border border-warm-border bg-warm-surface overflow-hidden">
               <span className="px-2.5 py-1 text-sm font-semibold text-foreground">{editDateParts[0]}년</span>
-              <span className="w-px self-stretch bg-[#C5E5FA]" />
+              <span className="w-px self-stretch bg-warm-border" />
               <button type="button" onClick={() => setEditPickerStep("month")}
-                className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EBF7FF] transition-colors">
+                className="px-2.5 py-1 text-sm font-semibold hover:bg-warm-surface-soft transition-colors">
                 {editDateParts[1]}월
               </button>
-              <span className="w-px self-stretch bg-[#C5E5FA]" />
+              <span className="w-px self-stretch bg-warm-border" />
               <button type="button" onClick={() => setEditPickerStep("day")}
-                className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EBF7FF] transition-colors">
+                className="px-2.5 py-1 text-sm font-semibold hover:bg-warm-surface-soft transition-colors">
                 {editDateParts[2]}일
               </button>
             </div>
@@ -952,7 +952,7 @@ export function EditTestingModal({ item, token, onClose, onSaved }: EditTestingM
                         <button key={m} type="button"
                           onClick={() => { updateEditDate(editDateParts[0], m, editDateParts[2]); setEditPickerStep("day"); }}
                           className={`py-2 rounded-xl text-sm font-semibold transition-colors ${
-                            m === editDateParts[1] ? "bg-[#C5E5FA] text-primary-foreground" : "hover:bg-[#C5E5FA]/20 text-foreground"
+                            m === editDateParts[1] ? "bg-warm-brand text-warm-brand-fg" : "hover:bg-warm-surface-soft text-foreground"
                           }`}>
                           {m}월
                         </button>
@@ -976,7 +976,7 @@ export function EditTestingModal({ item, token, onClose, onSaved }: EditTestingM
                         <button key={d} type="button"
                           onClick={() => { updateEditDate(editDateParts[0], editDateParts[1], d); setEditPickerStep(null); }}
                           className={`aspect-square text-xs rounded-lg transition-colors flex items-center justify-center ${
-                            d === editDateParts[2] ? "bg-[#C5E5FA] text-primary-foreground font-bold" : "hover:bg-[#C5E5FA]/20 text-foreground"
+                            d === editDateParts[2] ? "bg-warm-brand text-warm-brand-fg font-bold" : "hover:bg-warm-surface-soft text-foreground"
                           }`}>
                           {d}
                         </button>
@@ -1008,16 +1008,16 @@ export function EditTestingModal({ item, token, onClose, onSaved }: EditTestingM
           <button
             onClick={onClose}
             className="flex-1 py-3 rounded-full border border-border text-base
-              font-semibold hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-colors"
+              font-semibold hover:bg-warm-surface-soft transition-colors"
           >
             취소
           </button>
           <button
             onClick={handleSave}
             disabled={saving || !selectedIngredient}
-            className="flex-1 py-3 rounded-full text-primary-foreground text-base font-bold 
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-opacity disabled:opacity-40"
+            className="flex-1 py-3 rounded-full text-warm-brand-fg text-base font-bold 
+                bg-warm-brand 
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
           >
             {saving ? "저장 중" : "저장하기"}
           </button>
@@ -1083,16 +1083,16 @@ export function DeleteConfirmModal({ item, token, onClose, onDeleted }: DeleteCo
           <button
             onClick={onClose}
             className="flex-1 py-3 rounded-full border border-border text-base
-              font-semibold hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-colors"
+              font-semibold hover:bg-warm-surface-soft transition-colors"
           >
             돌아가기
           </button>
           <button
             onClick={handleDelete}
             disabled={deleting}
-            className="flex-1 py-3 rounded-full text-primary-foreground text-base font-bold 
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)] transition-opacity disabled:opacity-40"
+            className="flex-1 py-3 rounded-full text-warm-brand-fg text-base font-bold 
+                bg-warm-brand 
+                hover:bg-warm-brand-hover transition-opacity disabled:opacity-40"
           >
             {deleting ? "삭제 중" : "삭제하기"}
           </button>

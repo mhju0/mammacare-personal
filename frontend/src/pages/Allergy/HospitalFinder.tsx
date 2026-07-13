@@ -219,7 +219,7 @@ export function HospitalFinder() {
 
   return (
     <>
-      <div className="bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFFBE8_100%)] border border-border rounded-3xl py-3 px-5 mb-6">
+      <div className="bg-warm-surface shadow-warm rounded-3xl py-3 px-5 mb-6">
         <div className="flex items-center justify-between">
           <div>
             <h2 className={`font-bold ${isApp ? "text-base" : "text-lg sm:text-lg"} flex items-center gap-1.5`}>
@@ -241,8 +241,8 @@ export function HospitalFinder() {
             {hospitalSearched && allHospitals.length > 0 && (
               <button
                 onClick={() => setShowHospitalMore(true)}
-                className={` ${isApp ? "text-sm" : "text-base"} flex items-center gap-1 px-3 py-1 rounded-3xl text-primary-foreground
-                bg-[#FEF5CC] hover:opacity-70 font-semibold transition-colors`}>
+                className={` ${isApp ? "text-sm" : "text-base"} flex items-center gap-1 px-3 py-1 rounded-3xl text-warm-brand
+                bg-warm-surface-soft hover:opacity-70 font-semibold transition-colors`}>
               
                 <Plus size={18} /> 더보기
               </button>
@@ -251,9 +251,8 @@ export function HospitalFinder() {
               <button
                 onClick={handleFindHospitals}
                 className={`flex items-center gap-1.5 px-4 py-2
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)]
-                text-primary-foreground shadow-sm ${isApp ? "text-sm" : "text-base"} font-bold rounded-full`}
+                bg-warm-brand hover:bg-warm-brand-hover
+                text-warm-brand-fg shadow-sm ${isApp ? "text-sm" : "text-base"} font-bold rounded-full`}
               >
                 주변 병원 찾기
               </button>
@@ -262,9 +261,8 @@ export function HospitalFinder() {
               <button
                 onClick={handleFindHospitals}
                 className={`flex items-center gap-1.5 px-4 py-2
-                bg-[radial-gradient(ellipse_at_center,#EBF7FF_0%,#DBF2FF_50%,#D1EDFF_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#D4EEFF_0%,#DBF2FF_100%)]
-                text-primary-foreground shadow-sm ${isApp ? "text-sm" : "text-base"} font-bold rounded-full`}
+                bg-warm-brand hover:bg-warm-brand-hover
+                text-warm-brand-fg shadow-sm ${isApp ? "text-sm" : "text-base"} font-bold rounded-full`}
               >
                 다시 시도
               </button>
@@ -307,12 +305,12 @@ export function HospitalFinder() {
               return (
                 <div
                   key={h.id}
-                  className={`bg-background border border-border rounded-2xl p-4 flex flex-col ${isApp ? "gap-1" : "gap-2.5"}`}
+                  className={`bg-background border border-warm-border rounded-2xl p-4 flex flex-col ${isApp ? "gap-1" : "gap-2.5"}`}
                 >
                   <div className="flex items-center justify-between">
                     <span
                       className={`text-base font-bold px-2.5 py-1 rounded-full ${isApp ? "mb-1" : "mb-2"} ${
-                        isEmergency ? "bg-[#FFE8E8] text-[#C26F5D]" : "bg-muted/40 text-muted-foreground"
+                        isEmergency ? "bg-reaction-bg text-reaction-fg" : "bg-muted/40 text-muted-foreground"
                       }`}
                     >
                       {label}
@@ -336,9 +334,9 @@ export function HospitalFinder() {
                       href={`https://map.kakao.com/link/to/${encodeURIComponent(h.place_name)},${h.y},${h.x}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`bg-[radial-gradient(ellipse_at_center,#F5FBFF_0%,#D9F0FF_100%)]
-                      hover:bg-[radial-gradient(ellipse_at_center,#D9F0FF_0%,#CCEBFF_100%)] flex-1 flex items-center justify-center gap-1 py-2
-                      rounded-xl border border-border text-base font-semibold transition-colors`}
+                      className={`bg-warm-surface-soft text-warm-brand
+                      hover:bg-warm-border/60 flex-1 flex items-center justify-center gap-1 py-2
+                      rounded-xl border border-warm-border text-base font-semibold transition-colors`}
                     >
                       <Navigation size={16} />
                       길찾기
@@ -348,15 +346,15 @@ export function HospitalFinder() {
                         href={`tel:${h.phone}`}
                         className={`flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-base font-bold transition-colors ${
                           isEmergency
-                            ? "bg-red-400 text-white hover:bg-red-500"
-                            : "bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FEF5CC_100%)] text-primary-foreground hover:bg-[radial-gradient(ellipse_at_center,#FEF5CC_0%,#FFF5C2_100%)]"
+                            ? "bg-reaction-fg text-white hover:brightness-90"
+                            : "bg-warm-surface-soft text-warm-brand hover:bg-warm-border/60"
                         }`}
                       >
                         <Phone size={16} />
                         전화
                       </a>
                     ) : (
-                      <span className="flex-1 flex items-center justify-center py-2 rounded-xl border border-border text-base text-muted-foreground bg-[#F2F2F2]">
+                      <span className="flex-1 flex items-center justify-center py-2 rounded-xl border border-warm-border text-base text-muted-foreground bg-warm-bg">
                         번호 없음
                       </span>
                     )}
@@ -375,7 +373,7 @@ export function HospitalFinder() {
           onClick={() => setShowHospitalMore(false)}
         >
           <div
-            className={`bg-[radial-gradient(ellipse_at_center,#FFFAF0_0%,#FFFBE8_100%)] border border-border rounded-3xl w-full max-w-sm shadow-2xl flex flex-col ${isApp ? "max-h-[65dvh] py-6 px-3" : "max-h-[calc(100dvh-9rem)] sm:max-h-[80vh] p-6"}`}
+            className={`bg-warm-surface border border-warm-border rounded-3xl w-full max-w-sm shadow-2xl flex flex-col ${isApp ? "max-h-[65dvh] py-6 px-3" : "max-h-[calc(100dvh-9rem)] sm:max-h-[80vh] p-6"}`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-1 flex-shrink-0">
@@ -389,19 +387,19 @@ export function HospitalFinder() {
             </p>
             <div className={`overflow-y-auto flex-1 space-y-2 pr-2 ${isApp ? "pb-24" : ""}
                 [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar-track]:rounded-full
-                [&::-webkit-scrollbar-thumb]:bg-[#D9F0FF] [&::-webkit-scrollbar-thumb]:rounded-full`}
+                [&::-webkit-scrollbar-thumb]:bg-warm-border [&::-webkit-scrollbar-thumb]:rounded-full`}
             >
               {allHospitals.map(({ category, place: h }) => (
                 <div
                   key={h.id}
-                  className="flex items-start gap-3 p-3 rounded-2xl border border-border bg-background"
+                  className="flex items-start gap-3 p-3 rounded-2xl border border-warm-border bg-background"
                 >
                   <div className="flex-1 min-w-0">
                     <span className="font-bold text-base">{h.place_name}</span>
                     <div className="flex items-center gap-2 mt-1">
                       <span className={`${isApp ? "text-xs" : "text-sm"} font-semibold text-muted-foreground`}>{category === "병원 응급실" ? "응급실" : category === "피부과의원" ? "피부과" : category}</span>
                       {h.distance && (
-                        <span className={`${isApp ? "text-xs" : "text-sm"} px-2 py-0.5 bg-[#EBF7FF] text-muted-foreground rounded-full font-semibold`}>
+                        <span className={`${isApp ? "text-xs" : "text-sm"} px-2 py-0.5 bg-warm-surface-soft text-muted-foreground rounded-full font-semibold`}>
                           {formatDistance(h.distance)}
                         </span>
                       )}
@@ -417,9 +415,8 @@ export function HospitalFinder() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-xl
-                    bg-[radial-gradient(ellipse_at_center,#F5FBFF_0%,#D9F0FF_100%)]
-                    hover:bg-[radial-gradient(ellipse_at_center,#D9F0FF_0%,#CCEBFF_100%)]
-                    border border-border text-base font-semibold transition-colors${isApp ? " self-center" : ""}`}
+                    bg-warm-surface-soft text-warm-brand hover:bg-warm-border/60
+                    border border-warm-border text-base font-semibold transition-colors${isApp ? " self-center" : ""}`}
                   >
                     <Navigation size={12} />
                     길찾기
