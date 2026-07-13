@@ -5,6 +5,7 @@ import {
   Sparkles,
   RefreshCw,
   ChevronRight,
+  CircleCheck,
 } from "lucide-react";
 
 import { useApp } from "../context/AppContext";
@@ -289,6 +290,11 @@ export default function Dashboard() {
                         style={{ width: `${pct}%` }}
                       />
                     </div>
+                    {/* inProgress는 !has_reaction으로 필터됨 — 이 문구는 항상 사실 */}
+                    <p className="flex items-center gap-1 text-xs font-medium text-safe-fg">
+                      <CircleCheck className="size-3.5" />
+                      지금까지 이상 반응 없음
+                    </p>
                   </Card>
                 );
               })}
