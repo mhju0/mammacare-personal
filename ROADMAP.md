@@ -70,12 +70,13 @@
 
 ### P3 — 디자인 폴리시 = 하이브리드 마이그레이션 (데모 3화면 한정, token-only)
 기준 시안: **`docs/mocks/hybrid/`** (2026-07-13 오너 확정: warm-kr 셸 + 스탬프 언어는 도감·리포트 한정). 커버리지·미생성 시안·생성 스크립트·외부 레퍼런스는 **`docs/mocks/README.md`**.
-- [x] 대시보드 히어로 — warm-kr 적용 커밋됨(42f7622) [Verified]
-- [ ] 알레르기 화면(타임라인 포함) — 최대 잔여 화면. 시안 미생성(크레딧 소진) → `docs/mocks/generate-remaining.sh`부터
-- [ ] 리포트 화면(음식 여권, 스탬프 언어) — 시안 미생성(크레딧 소진) → 상동
-- [ ] 도감 화면을 스탬프 그리드 시안(`hybrid/ingredients.png`)에 맞게 재해석 — WIP 카드 그리드의 후속
-- [ ] 동의 다이얼로그 취소 버튼의 clinic-블루 그라디언트(`--action-soft-bg`, theme.css:60) — warm-kr 세계관과 불일치. 구 "인라인 hex 위반"은 토큰화로 해소됨 [Verified 2026-07-13]
-- [ ] BottomNav 재구성 결정 — 시안은 Home/Ingredients/Observe/Reports/Profile 5탭, 현재 `Layout.tsx`는 메뉴/일정/홈/알레르기/커뮤니티. P5 데드코드 퍼지와 함께 결정(오너 결정 사항)
+- [x] 대시보드 히어로 — warm-kr 적용 커밋됨(42f7622) + 안심문구(c76c0f2) [Verified]
+- [x] 알레르기 화면(타임라인 포함) — warm-kr 토큰 마이그레이션 완료: 본문+타임라인(fdccf55), 모달+병원 안내(a3cef58). 시안 없이 hybrid 2장에서 추정(그릴 확정 Q5-d). 두 커밋 reviewer PASS WITH NOTES + 절차적 NEEDS SENIOR REVIEW(제출 핸들러 버튼·삭제 경로 접점 — 핸들러 byte-identical 검증) [Verified 2026-07-13]
+- [x] 리포트 화면 — 라우트 추출(1c68181)부터 warm-kr 토큰, hex 0. 음식여권 **스탬프 연출**은 기능 추가라 token-migration 범위 밖 → 선택 항목으로 P4 이후 오너 결정
+- [x] 도감 화면 스탬프 그리드 — CSS StampBadge 커밋됨(6cf1f5c) [Verified]
+- [x] 동의 다이얼로그 취소 버튼 — clinic-블루 그라디언트 → warm-brand 솔리드(50fe7d7) [Verified]
+- [x] BottomNav 재구성 — 홈/도감/관찰/리포트/프로필 5탭 확정·커밋(1c68181) [Verified]
+- [x] 전역 스크롤바 thumb clinic-블루(#D9F0FF, globals.css) → `var(--warm-border)` (fdccf55 포함) — 앱 전역 적용
 - 절차: `.claude/skills/design-polish/` (hex 하드코딩 게이트 포함), 런당 1화면.
 - 데모 경로 밖 화면(Community/Nutrition/Recipes/Schedule 등)은 **폴리시 금지** — P5 퍼지에서 삭제 여부부터 결정한다(삭제할 화면을 재도색하지 않는다).
 
