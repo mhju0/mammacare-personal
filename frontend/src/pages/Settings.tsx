@@ -684,12 +684,10 @@ export default function Settings() {
   const { user, activeBaby, babies, deleteBaby, token, set_user, logout } = useApp();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [notifyMealTime, setNotifyMealTime] = useState(user?.notify_meal_time ?? true);
   const [notifyAllergyCheck, setNotifyAllergyCheck] = useState(user?.notify_allergy_check ?? true);
-  const [notifyCommunity, setNotifyCommunity] = useState(user?.notify_community ?? false);
 
   const toggleNotification = async (
-    key: "notify_meal_time" | "notify_allergy_check" | "notify_community",
+    key: "notify_allergy_check",
     setter: (v: boolean) => void,
     current: boolean,
   ) => {
@@ -895,9 +893,7 @@ export default function Settings() {
     {
       title: "알림 설정",
       items: [
-        { icon: Bell, label: "이유식 시간 알림", sub: "이유식 시간에 알림을 받아요", type: "toggle", value: notifyMealTime, action: () => toggleNotification("notify_meal_time", setNotifyMealTime, notifyMealTime) },
         { icon: Bell, label: "알레르기 증상 체크 알림", sub: "새 식품 도입 후 알림", type: "toggle", value: notifyAllergyCheck, action: () => toggleNotification("notify_allergy_check", setNotifyAllergyCheck, notifyAllergyCheck) },
-        { icon: Bell, label: "커뮤니티 알림", sub: "새 댓글, 좋아요 알림", type: "toggle", value: notifyCommunity, action: () => toggleNotification("notify_community", setNotifyCommunity, notifyCommunity) },
       ],
     },
     {

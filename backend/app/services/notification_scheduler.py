@@ -2,8 +2,9 @@
 """
 APScheduler 기반 알림 스케줄러.
 
-Job 1: 이유식 시간 알림 (1분 주기)
-Job 2: 알레르기 반응 체크 알림 (1분 주기)
+Job 1: 알레르기 반응 체크 알림 (1분 주기)
+Job 2: planned → done 식단 자동 전환 (1분 주기)
+(이유식 시간 알림 job은 일정 기능 삭제와 함께 제거됨 — 2026-07-13)
 
 원칙
 - 모든 쿼리는 read-only 우선. 알림은 1건 단위 commit 으로 중복 방지.
@@ -17,8 +18,6 @@ from __future__ import annotations
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
-
-KST = timezone(timedelta(hours=9))
 from typing import Any
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -30,7 +29,6 @@ from app.crud import crud_notification
 from app.models.parent_user import ParentUser
 from app.models.schedule import Schedule
 from app.models.baby_user import BabyUser
-from app.models.recipe import Recipe
 from app.services import notification_service, notification_templates
 
 logger = logging.getLogger("mammacare.scheduler")
@@ -78,70 +76,7 @@ async def _send_and_persist(
 
 
 # ──────────────────────────────────────────────
-# Job 1: 이유식 시간 알림
-# ──────────────────────────────────────────────
-async def job_meal_reminder() -> None:
-    """1분 이내에 meal_at 이 도래하고 아직 안 먹은 schedule 들을 찾아 알림."""
-    now = datetime.now(timezone.utc)
-    window_end = now + timedelta(seconds=_WINDOW_SECONDS)
-
-    try:
-        async with AsyncSessionLocal() as db:
-            try:
-                stmt = (
-                    select(Schedule, BabyUser, Recipe, ParentUser)
-                    .join(BabyUser, Schedule.baby_id == BabyUser.id)
-                    .join(ParentUser, BabyUser.parent_id == ParentUser.id)
-                    .outerjoin(Recipe, Schedule.recipe_id == Recipe.id)
-                    .where(
-                        Schedule.meal_at >= now - timedelta(seconds=_WINDOW_SECONDS),
-                        Schedule.meal_at <= window_end,
-                        Schedule.status == "planned",  # 아직 안 먹음
-                    )
-                )
-                rows = (await db.execute(stmt)).all()
-            except Exception:
-                logger.exception("이유식 스케줄 조회 실패")
-                return
-
-            for schedule, baby, recipe, parent in rows:
-                if not parent.notify_meal_time:
-                    continue
-                schedule_id_str = str(schedule.id)
-                # 중복 체크 — data->>'schedule_id' 가 같은 meal_reminder 가 있으면 skip
-                try:
-                    already = await crud_notification.exists_by_type_and_data_key(
-                        db, parent.id, "meal_reminder", "schedule_id", schedule_id_str
-                    )
-                except Exception:
-                    logger.exception("이유식 중복 체크 실패 schedule_id=%s", schedule_id_str)
-                    continue
-                if already:
-                    continue
-
-                meal_time_str = schedule.meal_at.astimezone(KST).strftime("%H:%M")
-                recipe_title = recipe.title if recipe else "이유식"
-                message = notification_templates.meal_reminder_message(
-                    baby_name=baby.name,
-                    recipe_title=recipe_title,
-                    meal_time=meal_time_str,
-                    schedule_id=schedule_id_str,
-                )
-                data = {
-                    "target_route": "/schedule",
-                    "schedule_id": schedule_id_str,
-                    "baby_id": str(baby.id),
-                    "dedup_key": f"meal_reminder:{schedule_id_str}",
-                }
-                await _send_and_persist(
-                    db, parent, baby.id, "meal_reminder", message.title, message.body, data
-                )
-    except asyncio.CancelledError:
-        logger.warning("이유식 알림 job 취소됨 (앱 재시작 중)")
-
-
-# ──────────────────────────────────────────────
-# Job 2: 알레르기 반응 체크 알림
+# Job 1: 알레르기 반응 체크 알림
 # ──────────────────────────────────────────────
 
 # 테스트 중인 ingredient_testing + 첫 식사 meal_at + 재료 정보 조회용 SQL.
@@ -296,15 +231,6 @@ def start_scheduler() -> AsyncIOScheduler:
         return _scheduler
     _scheduler = AsyncIOScheduler(timezone="UTC")
     _scheduler.add_job(
-        job_meal_reminder,
-        "interval",
-        minutes=1,
-        id="meal_reminder",
-        replace_existing=True,
-        coalesce=True,
-        max_instances=1,
-    )
-    _scheduler.add_job(
         job_allergy_check_reminder,
         "interval",
         minutes=1,
@@ -323,7 +249,7 @@ def start_scheduler() -> AsyncIOScheduler:
         max_instances=1,
     )
     _scheduler.start()
-    logger.info("알림 스케줄러 시작 (meal_reminder, allergy_check_reminder, auto_complete_schedules)")
+    logger.info("알림 스케줄러 시작 (allergy_check_reminder, auto_complete_schedules)")
     return _scheduler
 
 

@@ -16,38 +16,6 @@ def _pick(options: list[NotificationMessage], key: str) -> NotificationMessage:
     return options[index]
 
 
-def meal_reminder_message(
-    *,
-    baby_name: str,
-    recipe_title: str,
-    meal_time: str,
-    schedule_id: str,
-) -> NotificationMessage:
-    options = [
-        NotificationMessage(
-            title="🥄 맘마 시간이 왔어요",
-            body=f"{meal_time} {baby_name}의 {recipe_title} 시간이에요. 오늘 한 입도 살짝 기록해볼까요?",
-        ),
-        NotificationMessage(
-            title="🥣 오늘의 한 입 시간이에요",
-            body=f"{baby_name}이(가) 만난 음식과 재료를 남겨두면 식단 흐름을 더 잘 볼 수 있어요.",
-        ),
-        NotificationMessage(
-            title="🍚 따뜻한 맘마 시간이에요",
-            body=f"{recipe_title} 먹는 시간이에요. 작은 기록이 나중에 든든한 힌트가 돼요.",
-        ),
-        NotificationMessage(
-            title="🐣 오늘도 맘마 기록 이어가요",
-            body=f"{baby_name}의 식단 기록이 차곡차곡 쌓이고 있어요. 오늘 한 끼도 남겨볼까요?",
-        ),
-        NotificationMessage(
-            title="🌱 이번 주 맘마 흐름이 좋아요",
-            body="오늘 먹은 재료를 적어두면 아기에게 맞는 식단 패턴을 더 쉽게 볼 수 있어요.",
-        ),
-    ]
-    return _pick(options, schedule_id)
-
-
 def allergy_check_message(
     *,
     baby_name: str,
