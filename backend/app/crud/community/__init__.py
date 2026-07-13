@@ -20,23 +20,10 @@ from app.crud.community.community_post_image import (
     delete_post_image,
 )
 from app.crud.community.community_comment import (
-    create_comment,
     get_comment,
-    list_comments_by_post,
-    update_comment,
     soft_delete_comment,
 )
-from app.crud.community.community_like import (
-    get_like,
-    create_like,
-    delete_like,
-)
-from app.crud.community.community_report import (
-    get_report_by_post,
-    get_report_by_comment,
-    create_report,
-    list_reports,
-)
+from app.crud.community.community_like import get_like
 
 __all__ = [
     "create_category",
@@ -54,16 +41,7 @@ __all__ = [
     "get_images_by_post",
     "get_image",
     "delete_post_image",
-    "create_comment",
     "get_comment",
-    "list_comments_by_post",
-    "update_comment",
     "soft_delete_comment",
     "get_like",
-    "create_like",
-    "delete_like",
-    "get_report_by_post",
-    "get_report_by_comment",
-    "create_report",
-    "list_reports",
 ]
