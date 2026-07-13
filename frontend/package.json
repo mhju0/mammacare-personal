@@ -10,8 +10,6 @@
     "build": "vite build --mode web"
   },
   "dependencies": {
-    "@capacitor-community/speech-recognition": "^7.0.1",
-    "@capacitor/android": "^8.4.0",
     "@capacitor/app": "^8.1.0",
     "@capacitor/core": "^8.4.0",
     "@capacitor/filesystem": "8.0.0",
@@ -92,11 +90,5 @@
     "tailwindcss": "4.1.12",
     "typescript": "^5.0.0",
     "vite": "^6.3.5"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@firebase/util",
-      "protobufjs"
-    ]
   }
 }
