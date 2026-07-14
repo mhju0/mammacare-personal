@@ -9,7 +9,7 @@
   --popover: #FDFBF5;
   --popover-foreground: #2B3A31;
   --primary: #6FA07A;
-  --primary-foreground: #FFFFFF;
+  --primary-foreground: #2B3A31; /* dark ink: text-primary-foreground is used dark-on-light across the app; sage bg-primary reads better with ink (~4.1:1) than white (~3.2:1) */
   --secondary: #A9C6B0;
   --secondary-foreground: #2B3A31;
   --tertiary: #EFE9DA;
@@ -36,7 +36,7 @@
   --sidebar: #FDFBF5;
   --sidebar-foreground: #2B3A31;
   --sidebar-primary: #6FA07A;
-  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-primary-foreground: #2B3A31;
   --sidebar-accent: #A9C6B0;
   --sidebar-accent-foreground: #2B3A31;
   --sidebar-border: #ECE5D5;
@@ -55,8 +55,8 @@
   --safe-fg: #4E7C5B;
   --testing-bg: #FBF0D9;
   --testing-fg: #B0761F;
-  --reaction-bg: #F6E6DF;
-  --reaction-fg: #B0512F;
+  --reaction-bg: #F7DFD6;
+  --reaction-fg: #A8432B;
   --action-soft-bg: radial-gradient(ellipse at center, #EAF1EA 0%, #E3EEE4 50%, #DCEADE 100%);
   --action-soft-bg-hover: radial-gradient(ellipse at center, #E3EEE4 0%, #DCEADE 100%);
   --card-wash-bg: radial-gradient(ellipse at center, #FDFBF5 0%, #F7F2E8 100%);
@@ -82,8 +82,8 @@
   --warm-fg-muted: #8C8778;      /* muted secondary text on warm surfaces */
 
   /* StatusChip 5-variant expansion — additive status tokens (family: safe/testing/reaction above) */
-  --caution-bg: #F6E7D2;         /* warm peach — between testing and reaction */
-  --caution-fg: #B4652A;         /* burnt amber — hue between testing and reaction */
+  --caution-bg: #FAE4CC;         /* warm orange tint — distinct from reaction's red-terracotta */
+  --caution-fg: #C05621;         /* burnt orange — between gold testing and red-terracotta reaction */
   --not-started-bg: #EDE8DB;     /* warm neutral — deliberately off the traffic-light scale */
   --not-started-fg: #857F70;     /* warm slate */
 }
