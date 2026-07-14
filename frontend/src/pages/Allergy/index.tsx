@@ -51,6 +51,7 @@ import { TimeDropdown } from "../../components/TimeDropdown";
 import { dedupeRequest, readSessionCache, writeSessionCache } from "../../utils/sessionCache";
 import { saveReportFileApp } from "../../utils/reportFile";
 import { deriveIngredientStatuses, toAllergyBuckets } from "../../utils/allergyStatus";
+import { useSymptomDraft } from "../../hooks/useSymptomDraft";
 import TutorialModal from "../../components/TutorialModal";
 import { allergySlides } from "./tutorialSlides";
 
@@ -240,11 +241,12 @@ function AllergyInner() {
   const [safeModalMultiSelected, setSafeModalMultiSelected] = useState<IngredientResponse[]>([]);
   const [safeModalDropdownOpen, setSafeModalDropdownOpen] = useState(false);
   // 반응 추가 — 시간대별 증상 항목
-  const [symptomEntries, setSymptomEntries] = useState<{
-    id: string; date: string; time: string;
-    symptoms: { type: string; severity: string }[];
-  }[]>([]);
-  const [expandedEntryId, setExpandedEntryId] = useState<string | null>(null);
+  const {
+    symptomEntries, expandedEntryId, setExpandedEntryId,
+    startSymptomDraft, resetSymptomDraft,
+    addEntry, removeEntry, updateEntryDate, updateEntryTime,
+    toggleEntrySymptom, setEntrySeverity,
+  } = useSymptomDraft();
   const [reactionDescription, setReactionDescription] = useState("");
   // 삭제 중인 testing id
   const [deletingTestingId, setDeletingTestingId] = useState<string | null>(null);
@@ -612,35 +614,13 @@ function AllergyInner() {
     setAddError("");
   };
 
-  const makeEntry = () => {
-    const now = new Date();
-    return {
-      id: `${Date.now()}-${Math.random()}`,
-      date: now.toISOString().split("T")[0],
-      time: `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`,
-      symptoms: [] as { type: string; severity: string }[],
-    };
-  };
-
-  const updateEntryDate = (id: string, y: number, m: number, d: number) => {
-    const maxDay = new Date(y, m, 0).getDate();
-    updateEntry(id, {
-      date: `${y}-${String(m).padStart(2, "0")}-${String(Math.min(d, maxDay)).padStart(2, "0")}`,
-    });
-  };
-
-  const updateEntryTime = (id: string, h: number, min: number) => {
-    updateEntry(id, { time: `${String(h).padStart(2, "0")}:${String(min).padStart(2, "0")}` });
-  };
-
   const closeAddTestingModal = () => {
     setAddTestingTarget(null);
     setAddTestingSearch("");
     setAddTestingResults([]);
     setAddTestingSelected(null);
     setAddTestingError("");
-    setSymptomEntries([]);
-    setExpandedEntryId(null);
+    resetSymptomDraft();
     setReactionDescription("");
     setActiveDatePicker(null);
     setSafeModalMultiSelected([]);
@@ -651,47 +631,11 @@ function AllergyInner() {
 
   const openAddTestingModal = (target: "safe" | "reaction") => {
     if (target === "reaction") {
-      const first = makeEntry();
-      setSymptomEntries([first]);
-      setExpandedEntryId(first.id);
+      startSymptomDraft();
     }
     setAddTestingTarget(target);
   };
 
-  const addEntry = () => {
-    const entry = makeEntry();
-    setSymptomEntries((prev) => [...prev, entry]);
-    setExpandedEntryId(entry.id);
-  };
-
-  const removeEntry = (id: string) =>
-    setSymptomEntries((prev) => prev.filter((e) => e.id !== id));
-
-  const updateEntry = (id: string, patch: Partial<{ date: string; time: string }>) =>
-    setSymptomEntries((prev) => prev.map((e) => (e.id === id ? { ...e, ...patch } : e)));
-
-  const toggleEntrySymptom = (id: string, type: string) =>
-    setSymptomEntries((prev) =>
-      prev.map((e) => {
-        if (e.id !== id) return e;
-        const exists = e.symptoms.find((s) => s.type === type);
-        return {
-          ...e,
-          symptoms: exists
-            ? e.symptoms.filter((s) => s.type !== type)
-            : [...e.symptoms, { type, severity: "mild" }],
-        };
-      }),
-    );
-
-  const setEntrySeverity = (id: string, type: string, severity: string) =>
-    setSymptomEntries((prev) =>
-      prev.map((e) =>
-        e.id !== id
-          ? e
-          : { ...e, symptoms: e.symptoms.map((s) => (s.type === type ? { ...s, severity } : s)) },
-      ),
-    );
 
   const existingSafeIngredientIdSet = useMemo(
     () => new Set(testings.filter((t) => t.test_status === "completed_safe").map((t) => t.ingredient_id)),
