@@ -36,6 +36,15 @@ class IngredientTestingUpdate(BaseModel):
     test_status: Optional[TestStatus] = None
     memo: Optional[str] = None
 
+    @model_validator(mode="after")
+    def _restrict_patch_status(self):
+        # PATCH로는 '반응 있음'(completed_reaction) 수동 확정만 허용한다.
+        # completed_safe/testing 전이는 각각 자동완료 스케줄러 / 재테스트(create) 전용
+        # 경로를 거쳐야 날짜·겹침·반응 불변식이 지켜진다 — 임의 상태 강제 설정 차단.
+        if self.test_status is not None and self.test_status != TestStatus.REACTION:
+            raise ValueError("이 경로로는 '반응 있음'으로만 상태를 변경할 수 있습니다.")
+        return self
+
 
 class IngredientTestingResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
