@@ -1,6 +1,6 @@
 import { Outlet, Link, useNavigate, useLocation } from "react-router";
 import { useApp } from "../context/AppContext";
-import { Bell, User, Settings, LogOut, Home, Eye, BarChart3, BookOpen } from "lucide-react";
+import { Bell, User, Settings, LogOut, Home, BarChart3, Leaf } from "lucide-react";
 import { Capacitor } from "@capacitor/core";
 import { useCallback, useEffect, useRef, useState } from "react";
 import PushToast from "./PushToast";
@@ -14,10 +14,10 @@ const isApp = Capacitor.isNativePlatform();
 // 알레르기 안전 도구로 좁힌 IA(hybrid mock 기준). 일정/영양/레시피/커뮤니티는 detab —
 // 라우트는 유지되지만 탭에서 제거(삭제는 P5 데드코드 퍼지에서 결정).
 const navItems = [
-  { label: "식재료 도감", path: "/ingredients", color: "#FFEFAB" },
-  { label: "관찰", path: "/observe", color: "#FFEFAB" },
-  { label: "알레르기 관리", path: "/allergy", color: "#FFEFAB" },
-  { label: "리포트", path: "/reports", color: "#FFEFAB" },
+  { label: "재료", path: "/ingredients", color: "#A9C6B0" },
+  { label: "관찰", path: "/observe", color: "#A9C6B0" },
+  { label: "알레르기 관리", path: "/allergy", color: "#A9C6B0" },
+  { label: "리포트", path: "/reports", color: "#A9C6B0" },
 ];
 
 const adminNavItems = [
@@ -29,13 +29,13 @@ const adminNavItems = [
   { label: "결제 관리", path: "/admin/payments", color: "#FFEFAB" },
 ];
 
-// hybrid mock의 5탭. 구 메뉴 오버레이는 탭과 함께 제거 — 설정은 헤더 아이콘으로 이동.
+// 4탭 IA(concept): 홈/재료/리포트/설정. 관찰은 홈·재료의 진행중 테스트 카드에서 진입(라우트 유지),
+// 프로필은 헤더 아이콘 + 설정 화면에서 진입.
 const appTabItems = [
   { label: "홈", path: "/", icon: Home },
-  { label: "도감", path: "/ingredients", icon: BookOpen },
-  { label: "관찰", path: "/observe", icon: Eye },
+  { label: "재료", path: "/ingredients", icon: Leaf },
   { label: "리포트", path: "/reports", icon: BarChart3 },
-  { label: "프로필", path: "/profile", icon: User },
+  { label: "설정", path: "/settings", icon: Settings },
 ];
 
 const UNREAD_COUNT_CACHE_TTL_MS = 30 * 1000;
@@ -166,9 +166,9 @@ export default function Layout() {
                     )}
                   </button>
                 </Link>
-                <Link to="/settings">
-                  <button title="설정" className="p-[11px] rounded-full hover:bg-[#F6E26B]/30 transition-colors text-foreground">
-                    <Settings className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
+                <Link to="/profile">
+                  <button title="프로필" className="p-[11px] rounded-full hover:bg-[#F6E26B]/30 transition-colors text-foreground">
+                    <User className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
                   </button>
                 </Link>
               </div>
@@ -189,7 +189,7 @@ export default function Layout() {
         </main>
 
         {/* 하단 탭바 */}
-        <nav className="app-bottom-nav fixed bottom-0 left-0 right-0 w-full z-[9999] bg-card border-t border-border grid grid-cols-5 h-20">
+        <nav className="app-bottom-nav fixed bottom-0 left-0 right-0 w-full z-[9999] bg-card border-t border-border grid grid-cols-4 h-20">
           {appTabItems.map((item) => {
             const isActive = item.path === "/" ? location.pathname === "/" : location.pathname.startsWith(item.path);
             return (
