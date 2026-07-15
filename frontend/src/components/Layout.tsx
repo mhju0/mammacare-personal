@@ -7,7 +7,7 @@ import PushToast from "./PushToast";
 import { listNotificationsApi, NOTIFICATION_REFRESH_EVENT, emitPushToast, getNotificationTarget } from "../api/notifications";
 import { dedupeRequest, readSessionCache, writeSessionCache } from "../utils/sessionCache";
 import forkImage from "../asset/fork_4.webp";
-import logoImage from "../asset/mamma_9.webp";
+import Logo from "./Logo";
 
 const isApp = Capacitor.isNativePlatform();
 
@@ -152,7 +152,7 @@ export default function Layout() {
         <header className="app-header w-full shrink-0 z-[9999] bg-card border-b border-border shadow-sm">
           <div className="px-4 h-[var(--app-header-content-height)] flex items-center justify-between">
             <Link to="/">
-              <img src={logoImage} alt="맘마케어 로고" className="h-5 w-auto object-contain" />
+              <Logo size={17} />
             </Link>
             {user ? (
               <div className="flex items-center gap-0">
@@ -218,7 +218,7 @@ export default function Layout() {
       <header className="sticky top-0 z-[9999] bg-card border-b border-border shadow-sm">
         <div className="w-full px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-4 relative">
           <Link to={user?.isAdmin ? "/admin" : "/"} className="shrink-0">
-            <img src={logoImage} alt="맘마케어 로고" className="h-9 w-auto object-contain" />
+            <Logo size={26} />
           </Link>
 
           <nav ref={navRef} onPointerMove={handleDockMove} onPointerLeave={handleDockLeave} className="hidden lg:flex items-center gap-7 absolute left-1/2 -translate-x-1/2">

@@ -7,7 +7,7 @@ import { getApiBase } from "../api/base";
 import { Eye, EyeOff, X } from "lucide-react";
 import { motion } from "framer-motion";
 import kakaoLoginIcon from "../asset/kakao_login_circle.webp";
-import logoImage from "../asset/mamma_6.webp";
+import Logo from "../components/Logo";
 import naverLoginIcon from "../asset/NAVER_login_Light_KR_green_icon_H56.webp";
 
 type RecoveryMode = "username" | "password";
@@ -166,11 +166,21 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
 
           {/* ── 왼쪽: 로고 ── */}
           <div className="sm:w-[46%] border-b sm:border-b-0 sm:border-r border-border flex flex-col items-center justify-center px-8 py-10">
-            <img
-              src={logoImage}
-              alt="맘마케어 로고"
-              className="w-3/5 sm:w-4/5 max-w-[200px] sm:max-w-none h-auto object-contain"
-            />
+            <div className="flex flex-col items-center gap-3 text-center">
+              <Logo size={60} wordmark={false} />
+              <span
+                style={{
+                  fontSize: 30,
+                  fontWeight: 700,
+                  color: "var(--warm-fg)",
+                  letterSpacing: "-0.02em",
+                  fontFamily: "'Paperlogic', 'Pretendard', 'Noto Sans KR', sans-serif",
+                }}
+              >
+                맘마케어
+              </span>
+              <span className="text-sm text-warm-fg-muted">이유식 알레르기 안전 도구</span>
+            </div>
           </div>
 
           {/* ── 오른쪽: 일반 로그인 ── */}
