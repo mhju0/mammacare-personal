@@ -29,7 +29,6 @@ export default function PrivacyPolicy() {
             <li>필수: 이름, 이메일 주소, 아이디, 비밀번호</li>
             <li>선택: 전화번호, 주소</li>
             <li>아기 프로필: 이름, 생년월일, 성별, 신장, 체중, 이유식 정보</li>
-            <li>소셜 로그인 시: 소셜 서비스 고유 식별자, 이메일</li>
           </ul>
         </section>
 

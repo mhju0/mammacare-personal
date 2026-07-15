@@ -184,7 +184,7 @@ async def authenticate(db: AsyncSession, username: str, password: str) -> Parent
     """Verify credentials. Raises 401 with generic message on any failure."""
     result = await db.execute(select(ParentUser).where(ParentUser.username == username))
     user = result.scalar_one_or_none()
-    # 사용자가 없거나, 소셜 전용 계정(password_hash가 NULL)이면 즉시 실패
+    # 사용자가 없거나, 비밀번호 미설정(password_hash가 NULL)이면 즉시 실패
     if user is None or user.password_hash is None:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, GENERIC_AUTH_ERROR)
     # bcrypt verify — 상수 시간 비교

@@ -19,7 +19,7 @@ class ParentUser(Base):
     )
     # 로그인 아이디 — unique + index 둘 다. 검색이 빈번하고 중복 검사가 필수
     username: Mapped[str] = mapped_column(String(32), unique=True, index=True, nullable=False)
-    # 이메일 — 비밀번호 찾기 및 소셜 계정 매핑(같은 이메일이면 연동)에 사용
+    # 이메일 — 비밀번호 찾기에 사용
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
     # 비밀번호 해시 — 로컬 로그인용
     password_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
@@ -27,7 +27,7 @@ class ParentUser(Base):
     name: Mapped[str] = mapped_column(String(64), nullable=False)        # 실명
     # 닉네임 — 화면 표시용. unique 제약으로 중복 닉네임 방지
     nickname: Mapped[str] = mapped_column(String(64), unique=True, index=True, nullable=False)
-    # 전화번호/주소 — 로컬 가입자는 받지만, 소셜은 provider가 안 줄 수 있어 nullable
+    # 전화번호/주소 — 선택 입력(nullable)
     phone: Mapped[str | None] = mapped_column(String(32), nullable=True)
     address: Mapped[str | None] = mapped_column(String(255), nullable=True)
     # FCM 디바이스/브라우저 토큰 — 푸시 알림 발송용. 토큰이 없으면 푸시 미발송

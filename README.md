@@ -63,7 +63,7 @@ In early weaning, parents introduce one new ingredient at a time and watch for a
 | Backend | FastAPI, async SQLAlchemy, PostgreSQL 16, JWT (access-only), httpx, async scheduler |
 | Frontend | React 18 + TypeScript, Vite, Tailwind v4 (CSS tokens), React Router, pnpm |
 | Mobile | Capacitor (iOS simulator target) |
-| Other | Local image storage, FCM push (when keys present), OAuth (fragment token + HMAC state) |
+| Other | Local image storage, FCM push (when keys present) |
 
 ## Architecture
 
