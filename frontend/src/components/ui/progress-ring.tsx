@@ -76,20 +76,20 @@ export function ProgressRing({
           cy={center}
           r={radius}
           fill="none"
-          stroke={trackColor}
           strokeWidth={strokeWidth}
+          style={{ stroke: trackColor }}
         />
         <circle
           cx={center}
           cy={center}
           r={radius}
           fill="none"
-          stroke={color}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={dashOffset}
           className="transition-[stroke-dashoffset] duration-500 ease-out"
+          style={{ stroke: color }}
         />
       </svg>
       {children != null && (

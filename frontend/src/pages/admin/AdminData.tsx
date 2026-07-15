@@ -39,10 +39,10 @@ const AGE_GROUP_OPTIONS = [
 ];
 
 const PROVIDER_COLORS: Record<string, string> = {
-  google: "var(--secondary)",
-  kakao: "var(--honey-100)",
-  naver: "var(--secondary)",
-  local: "var(--secondary)",
+  google: "#A9C6B0",
+  kakao: "#F0DFAE",
+  naver: "#A9C6B0",
+  local: "#A9C6B0",
 };
 const PROVIDER_LABELS: Record<string, string> = {
   google: "구글",
@@ -50,15 +50,15 @@ const PROVIDER_LABELS: Record<string, string> = {
   naver: "네이버",
   local: "이메일",
 };
-const SEVERITY_COLORS = ["var(--secondary)", "var(--honey-100)", "var(--honey)", "var(--terracotta-200)", "var(--sage-100)"];
+const SEVERITY_COLORS = ["#A9C6B0", "#F0DFAE", "#E3A24C", "#E0A48F", "#DDE8DD"];
 const STATUS_LABELS: Record<string, string> = {
   planned: "예정",
   done: "완료",
   skipped: "건너뜀",
 };
-const CHART_PRIMARY = "var(--secondary)";
-const CHART_GREEN = "var(--secondary)";
-const CHART_YELLOW = "var(--honey-100)";
+const CHART_PRIMARY = "#A9C6B0";
+const CHART_GREEN = "#A9C6B0";
+const CHART_YELLOW = "#F0DFAE";
 
 // ── 공통 컴포넌트 ──────────────────────────────────────────
 
