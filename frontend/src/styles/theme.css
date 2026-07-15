@@ -15,7 +15,7 @@
   --tertiary: #EFE9DA;
   --tertiary-foreground: #2B3A31;
   --muted: #EFE9DA;
-  --muted-foreground: #8C8778;
+  --muted-foreground: #6F6A5C;
   --accent: #EFE9DA;
   --accent-foreground: ;
   --destructive: var(--reaction-fg); /* unified: single source of truth = --reaction-fg */
@@ -48,7 +48,7 @@
   /* DESIGN_SYSTEM names this '--border'; renamed to avoid clobbering the legacy --border */
   --surface-border: #ECE5D5;
   --text: #2B3A31;
-  --text-muted: #8C8778;
+  --text-muted: #6F6A5C;
   --clinic-blue: #2D7FF9;
   --sage: #6FA07A;
   --safe-bg: #E7F0E4;
@@ -79,7 +79,7 @@
   --warm-cta-hover: #5E8A66;     /* deeper sage — hover/active on CTA */
   --warm-cta-fg: #FFFFFF;        /* text/icon on sage CTA */
   --warm-fg: #2B3A31;            /* charcoal-green ink on warm surfaces (light-only, no .dark) */
-  --warm-fg-muted: #8C8778;      /* muted secondary text on warm surfaces */
+  --warm-fg-muted: #6F6A5C;      /* muted secondary text on warm surfaces */
 
   /* StatusChip 5-variant expansion — additive status tokens (family: safe/testing/reaction above) */
   --caution-bg: #FAE4CC;         /* warm orange tint — distinct from reaction's red-terracotta */
