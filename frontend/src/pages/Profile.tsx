@@ -899,7 +899,7 @@ function GrowthColumn({
                 dataKey="height"
                 stroke="#CF7B5E"
                 strokeWidth={2.5}
-                dot={{ r: 4, fill: "var(--terracotta)" }}
+                dot={{ r: 4, fill: "#CF7B5E" }}
                 activeDot={{ r: 6 }}
                 name="신장(cm)"
               />
@@ -927,7 +927,7 @@ function GrowthColumn({
                 dataKey="weight"
                 stroke="#A9C6B0"
                 strokeWidth={2.5}
-                dot={{ r: 4, fill: "var(--secondary)" }}
+                dot={{ r: 4, fill: "#A9C6B0" }}
                 activeDot={{ r: 6 }}
                 name="체중(kg)"
               />
