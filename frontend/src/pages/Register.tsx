@@ -324,7 +324,7 @@ export default function Register() {
 
       {/* Tab Navigation */}
       <div className="flex gap-0 rounded-3xl p-1 mb-6
-      bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#EAF1EA_100%)]">
+      bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-50)_100%)]">
         {(["parent", "account", "baby"] as Tab[]).map((tab) => {
           const isLocked =
             (tab === "account" && !canContinueToAccount) ||
@@ -343,7 +343,7 @@ export default function Register() {
                 <motion.div
                   layoutId="activeTabPill"
                   className="absolute inset-0 rounded-3xl
-                  bg-[radial-gradient(ellipse_at_center,#EFE9DA_0%,#FDFBF5_100%)] shadow-sm"
+                  bg-[radial-gradient(ellipse_at_center,var(--warm-surface-soft)_0%,var(--warm-surface)_100%)] shadow-sm"
                   transition={{ type: "spring", stiffness: 350, damping: 30 }}
                 />
               )}
@@ -351,7 +351,7 @@ export default function Register() {
               {/* 글자는 배경 위로 올라오게 z-10 */}
               <span
                 className={`relative z-10 ${
-                  activeTab === tab ? "text-[#2B3A31]" : "text-muted-foreground"
+                  activeTab === tab ? "text-warm-fg" : "text-muted-foreground"
                 }`}
               >
                 {tab === "parent" ? "① 부모님 정보" : tab === "account" ? "② 계정 정보" : "③ 아기 정보"}
@@ -374,7 +374,7 @@ export default function Register() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="이름을 입력하세요"
-              className={`w-full px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm font-semibold placeholder:text-muted-foreground ${
+              className={`w-full px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm font-semibold placeholder:text-muted-foreground ${
                 parentSubmitted && !name ? "border-destructive" : "border-border"
               }`}
             />
@@ -398,7 +398,7 @@ export default function Register() {
                  setPhone(formatted);
               }}
               placeholder="010-0000-0000"
-              className={`w-full px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm font-semibold placeholder:text-muted-foreground ${
+              className={`w-full px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm font-semibold placeholder:text-muted-foreground ${
                 parentSubmitted && !phone ? "border-destructive" : "border-border"
               }`}
             />
@@ -435,7 +435,7 @@ export default function Register() {
                 }}
                 onBlur={handleEmailBlur}
                 placeholder="이메일 아이디"
-                className={`flex-1 px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm font-semibold placeholder:text-muted-foreground ${
+                className={`flex-1 px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm font-semibold placeholder:text-muted-foreground ${
                   parentSubmitted && !isEmailValid ? "border-destructive" : "border-border"
                 }`}
               />
@@ -468,7 +468,7 @@ export default function Register() {
                         }}
                         onBlur={handleEmailBlur}
                         placeholder="도메인 직접 입력"
-                        className={`w-full px-4 py-3 pr-8 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm font-bold ${
+                        className={`w-full px-4 py-3 pr-8 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm font-bold ${
                           parentSubmitted && !isEmailValid ? "border-destructive" : "border-border"
                         }`}
                       />
@@ -490,7 +490,7 @@ export default function Register() {
                     <button
                       type="button"
                       onClick={() => setDomainOpen(!domainOpen)}
-                      className={`w-full px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm font-semibold text-left ${
+                      className={`w-full px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm font-semibold text-left ${
                         emailDomain ? "text-foreground" : "text-muted-foreground"
                       } ${parentSubmitted && !isEmailValid ? "border-destructive" : "border-border"}`}
                     >
@@ -551,9 +551,9 @@ export default function Register() {
                 const emailIsAvailable = await validateEmail();
                 if (name && phone && emailIsAvailable) setActiveTab("account");
               }}
-              className={`w-[calc(50%-6px)] py-3.5 text-[#2B3A31] text-base font-bold rounded-3xl
-              bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-              hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
+              className={`w-[calc(50%-6px)] py-3.5 text-warm-fg text-base font-bold rounded-3xl
+              bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+              hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
               shadow-sm transition-all duration-300 ${
                 !name || !phone || !isEmailValid ? "opacity-70" : ""
               }`}
@@ -581,16 +581,16 @@ export default function Register() {
                   setNicknameStatus(null);
                 }}
                 placeholder="커뮤니티에서 사용할 닉네임"
-                className={`w-[300px] px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm placeholder:text-muted-foreground font-semibold ${
+                className={`w-[300px] px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm placeholder:text-muted-foreground font-semibold ${
                   accountSubmitted && (!nickname || nicknameStatus !== "ok") ? "border-destructive" : "border-border"
                 }`}
               />
               <button
                 onClick={handleNicknameCheck}
                 disabled={!nickname.trim()}
-                className="px-4 py-3 rounded-3xl text-[#2B3A31] text-sm font-semibold disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap
-                bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_50%,#A9C6B0_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#EFE9DA_0%,#A9C6B0_100%)]
+                className="px-4 py-3 rounded-3xl text-warm-fg text-sm font-semibold disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap
+                bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_50%,var(--secondary)_100%)]
+                hover:bg-[radial-gradient(ellipse_at_center,var(--warm-surface-soft)_0%,var(--secondary)_100%)]
                 shadow-sm transition-all duration-300"
               >
                 중복 확인
@@ -644,16 +644,16 @@ export default function Register() {
                   setUserIdFormatError("");
                 }}
                 placeholder="영문 소문자 + 숫자 조합 4~16자"
-                className={`w-[300px] px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm placeholder:text-muted-foreground font-semibold ${
+                className={`w-[300px] px-4 py-3 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm placeholder:text-muted-foreground font-semibold ${
                   accountSubmitted && (!userId || userIdStatus !== "ok") ? "border-destructive" : "border-border"
                 }`}
               />
               <button
                 onClick={handleUserIdCheck}
                 disabled={!userId.trim()}
-                className="px-4 py-3 rounded-3xl text-[#2B3A31] text-sm font-semibold disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap
-                bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_50%,#A9C6B0_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#EFE9DA_0%,#A9C6B0_100%)]
+                className="px-4 py-3 rounded-3xl text-warm-fg text-sm font-semibold disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap
+                bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_50%,var(--secondary)_100%)]
+                hover:bg-[radial-gradient(ellipse_at_center,var(--warm-surface-soft)_0%,var(--secondary)_100%)]
                 shadow-sm transition-all duration-300"
               >
                 중복 확인
@@ -701,7 +701,7 @@ export default function Register() {
                 }}
                 onBlur={handlePasswordBlur}
                 placeholder="영문 + 숫자 조합 8자 이상"
-                className={`w-full px-4 py-3 pr-11 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm font-semibold placeholder:text-muted-foreground ${
+                className={`w-full px-4 py-3 pr-11 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm font-semibold placeholder:text-muted-foreground ${
                   passwordError || (accountSubmitted && !password) ? "border-destructive" : "border-border"
                 }`}
               />
@@ -743,7 +743,7 @@ export default function Register() {
                 }}
                 onBlur={handlePasswordConfirmBlur}
                 placeholder="비밀번호를 다시 입력하세요"
-                className={`w-full px-4 py-3 pr-11 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm font-semibold placeholder:text-muted-foreground ${
+                className={`w-full px-4 py-3 pr-11 rounded-3xl border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm font-semibold placeholder:text-muted-foreground ${
                   passwordConfirmError || (accountSubmitted && !passwordConfirm) ? "border-destructive" : "border-border"
                 }`}
               />
@@ -768,9 +768,9 @@ export default function Register() {
           <div className="col-span-2 pt-2 mt-3 flex gap-3 w-full">
             <button
               onClick={() => setActiveTab("parent")}
-              className="flex-1 py-3.5 text-[#2B3A31] text-base font-bold rounded-3xl disabled:opacity-70 disabled:cursor-not-allowed
-              bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-              hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
+              className="flex-1 py-3.5 text-warm-fg text-base font-bold rounded-3xl disabled:opacity-70 disabled:cursor-not-allowed
+              bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+              hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
               shadow-sm transition-all duration-300"
             >
               ← 이전 단계
@@ -784,9 +784,9 @@ export default function Register() {
                   setPasswordConfirmError("비밀번호가 일치하지 않습니다.");
                 if (canContinueToBaby) setActiveTab("baby");
               }}
-              className={`flex-1 py-3.5 text-[#2B3A31] text-base font-bold rounded-3xl
-              bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-              hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
+              className={`flex-1 py-3.5 text-warm-fg text-base font-bold rounded-3xl
+              bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+              hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
               shadow-sm transition-all duration-300 ${!canContinueToBaby ? "opacity-70" : ""}`}
             >
               다음 단계 →

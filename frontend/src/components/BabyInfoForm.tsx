@@ -180,7 +180,7 @@ export function MonthDayPicker({
                     isMonthDisabled(m)
                       ? "opacity-30 cursor-not-allowed text-muted-foreground"
                       : m === value.month
-                        ? "bg-[#F0DFAE] text-primary-foreground"
+                        ? "bg-honey-100 text-primary-foreground"
                         : "hover:bg-primary/20 text-foreground"
                   }`}
                 >
@@ -216,7 +216,7 @@ export function MonthDayPicker({
                     isDayDisabled(d)
                       ? "opacity-30 cursor-not-allowed text-muted-foreground"
                       : d === value.day && selMonth === value.month
-                        ? "bg-[#F0DFAE] text-primary-foreground font-bold"
+                        ? "bg-honey-100 text-primary-foreground font-bold"
                         : "hover:bg-primary/20 text-foreground"
                   }`}
                 >
@@ -569,7 +569,7 @@ export function BabyInfoForm({
           <button
             type="button"
             onClick={() => fileRef.current?.click()}
-            className="w-24 h-24 rounded-full bg-[#FBF8F2] border-2 border-dashed border-border flex items-center justify-center overflow-hidden hover:border-primary transition-colors"
+            className="w-24 h-24 rounded-full bg-input-background border-2 border-dashed border-border flex items-center justify-center overflow-hidden hover:border-primary transition-colors"
           >
             {form.photo ? (
               <AuthImage
@@ -611,7 +611,7 @@ export function BabyInfoForm({
           value={form.name}
           onChange={(e) => update("name", e.target.value)}
           placeholder="이름을 입력하세요."
-          className="w-full px-4 py-3 rounded-3xl border border-border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm placeholder:text-muted-foreground font-semibold"
+          className="w-full px-4 py-3 rounded-3xl border border-border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm placeholder:text-muted-foreground font-semibold"
         />
       </div>
 
@@ -628,7 +628,7 @@ export function BabyInfoForm({
               onClick={() => handleBirthTypeChange(t)}
               className={`flex-1 py-2 rounded-3xl text-sm font-semibold border transition-all ${
                 form.birthType === t
-                  ? "bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_100%)] text-primary-foreground border-primary"
+                  ? "bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_100%)] text-primary-foreground border-primary"
                   : "border-border text-muted-foreground hover:border-primary/50"
               }`}
             >
@@ -643,7 +643,7 @@ export function BabyInfoForm({
             <button
               type="button"
               onClick={() => setYearOpen(!yearOpen)}
-              className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-left"
+              className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-left"
             >
               {form.birthYear}
             </button>
@@ -717,7 +717,7 @@ export function BabyInfoForm({
                   onClick={() => update("gender", g)}
                   className={`flex-1 py-2 rounded-3xl text-base font-semibold border transition-all flex items-center justify-center gap-2 ${
                     form.gender === g
-                      ? "bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_100%)] text-primary-foreground border-primary"
+                      ? "bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_100%)] text-primary-foreground border-primary"
                       : "border-border text-muted-foreground hover:border-primary/50"
                   }`}
                 >
@@ -747,7 +747,7 @@ export function BabyInfoForm({
                   onClick={() => update("feedingStatus", s)}
                   className={`flex-1 py-2 rounded-3xl text-sm font-semibold border transition-all ${
                     form.feedingStatus === s
-                      ? "bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_100%)] text-primary-foreground border-primary"
+                      ? "bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_100%)] text-primary-foreground border-primary"
                       : "border-border text-muted-foreground hover:border-primary/50"
                   }`}
                 >
@@ -768,7 +768,7 @@ export function BabyInfoForm({
                     <button
                       type="button"
                       onClick={() => setFeedingYearOpen(!feedingYearOpen)}
-                      className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-left"
+                      className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-left"
                     >
                       {form.feedingYear}
                     </button>
@@ -832,7 +832,7 @@ export function BabyInfoForm({
                 onFocus={() => setAllergyDropdownOpen(true)}
                 onBlur={() => setTimeout(() => setAllergyDropdownOpen(false), 150)}
                 placeholder="재료를 검색하세요."
-                className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] placeholder:text-muted-foreground"
+                className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-warm-surface-soft placeholder:text-muted-foreground"
               />
               <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
 
@@ -887,7 +887,7 @@ export function BabyInfoForm({
                   {(form.allergens ?? []).map((allergen) => (
                     <span
                       key={allergen.id}
-                      className="flex items-center gap-1 pl-3 pr-3 py-1 rounded-full bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#F6E6DF_100%)] border border-[#CF7B5E]/50 text-xs font-semibold text-primary-foreground"
+                      className="flex items-center gap-1 pl-3 pr-3 py-1 rounded-full bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--terracotta-50)_100%)] border border-terracotta/50 text-xs font-semibold text-primary-foreground"
                     >
                       <IngredientIcon name={allergen.name} emoji={allergen.emoji} size={17} />
                       {allergen.name}
@@ -959,8 +959,8 @@ export function BabyInfoForm({
                     }}
                     className={`flex flex-row items-center gap-1 px-1.5 py-1 rounded-xl border text-xs font-semibold transition-all ${
                       selected
-                        ? "border border-[#CF7B5E]/20 bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#F6E6DF_100%)] text-primary-foreground"
-                        : "border-border bg-card text-muted-foreground hover:border-primary/60 hover:bg-[#FBF8F2]"
+                        ? "border border-terracotta/20 bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--terracotta-50)_100%)] text-primary-foreground"
+                        : "border-border bg-card text-muted-foreground hover:border-primary/60 hover:bg-input-background"
                     }`}
                   >
                     <IngredientIcon name={item.name} emoji={item.emoji} size={18} />
@@ -983,8 +983,8 @@ export function BabyInfoForm({
                         }}
                         className={`flex flex-row items-center gap-1 px-1.5 py-1 rounded-xl border text-xs font-semibold transition-all ${
                           selected
-                            ? "bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#F6E6DF_100%)] text-primary-foreground"
-                            : "border-border bg-card text-muted-foreground hover:border-primary/60 hover:bg-[#FBF8F2]"
+                            ? "bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--terracotta-50)_100%)] text-primary-foreground"
+                            : "border-border bg-card text-muted-foreground hover:border-primary/60 hover:bg-input-background"
                         }`}
                       >
                         <IngredientIcon name={item.name} emoji={item.emoji} size={18} />
@@ -1060,7 +1060,7 @@ export function BabyInfoForm({
                 onFocus={() => setSafeDropdownOpen(true)}
                 onBlur={() => setTimeout(() => setSafeDropdownOpen(false), 150)}
                 placeholder="재료를 검색하세요."
-                className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] placeholder:text-muted-foreground"
+                className="w-full px-4 py-2 rounded-3xl border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-warm-surface-soft placeholder:text-muted-foreground"
               />
               <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
 
@@ -1087,14 +1087,14 @@ export function BabyInfoForm({
                           inAllergen
                             ? "text-red-500 hover:bg-orange-50"
                             : selected
-                              ? "bg-[#E7F0E4] text-foreground"
+                              ? "bg-safe-bg text-foreground"
                               : "hover:bg-primary/10"
                         }`}
                       >
                         <IngredientIcon name={ing.name} emoji={ing.emoji} size={17} />
                         <span className="flex-1">{ing.name}</span>
                         {inAllergen && <span className="text-xs font-semibold text-red-400">확정 목록</span>}
-                        {!inAllergen && selected && <Check size={13} className="text-[#4E7C5B] shrink-0" />}
+                        {!inAllergen && selected && <Check size={13} className="text-warm-brand shrink-0" />}
                       </div>
                     );
                   })}
@@ -1117,7 +1117,7 @@ export function BabyInfoForm({
                   ).map((s) => (
                     <span
                       key={s.id}
-                      className="flex items-center gap-1 pl-3 pr-2 py-1 rounded-full bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#E7F0E4_100%)] border border-[#A9C6B0]/70 text-xs font-semibold text-foreground"
+                      className="flex items-center gap-1 pl-3 pr-2 py-1 rounded-full bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--safe-bg)_100%)] border border-secondary/70 text-xs font-semibold text-foreground"
                     >
                       <IngredientIcon name={s.name} emoji={s.emoji} size={17} />
                       {s.name}
@@ -1168,7 +1168,7 @@ export function BabyInfoForm({
                       className={`flex-1 py-1 text-xs font-semibold rounded-t-sm border border-b-0 transition-all ${
                         safeStageFilter === tab.key
                           ? "bg-muted/80 text-primary-foreground"
-                          : "border-border text-muted-foreground hover:border-[#A9C6B0]/50"
+                          : "border-border text-muted-foreground hover:border-secondary/50"
                       }`}
                     >
                       {tab.label}
@@ -1187,8 +1187,8 @@ export function BabyInfoForm({
                         onClick={() => toggleSafe(ing)}
                         className={`flex flex-row items-center gap-1 px-1.5 py-1 rounded-xl border text-xs font-semibold transition-all ${
                           selected
-                            ? "border border-[#A9C6B0]/20 bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#E7F0E4_100%)] text-foreground"
-                            : "border-border bg-card text-muted-foreground hover:border-[#A9C6B0]/60 hover:bg-[#E7F0E4]"
+                            ? "border border-secondary/20 bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--safe-bg)_100%)] text-foreground"
+                            : "border-border bg-card text-muted-foreground hover:border-secondary/60 hover:bg-safe-bg"
                         }`}
                       >
                         <IngredientIcon name={ing.name} emoji={ing.emoji} size={17} />
@@ -1264,7 +1264,7 @@ export function BabyInfoForm({
                 onChange={(e) => handleHeightChange(e.target.value)}
                 min={0} max={140} step={0.1} inputMode="decimal"
                 placeholder="0.0"
-                className="w-[110px] px-3 py-2 rounded-3xl border border-border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm font-semibold"
+                className="w-[110px] px-3 py-2 rounded-3xl border border-border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm font-semibold"
               />
               <span className="text-sm shrink-0">cm</span>
             </div>
@@ -1273,7 +1273,7 @@ export function BabyInfoForm({
                 <div className="flex gap-1.5 items-center flex-1">
                   <div className="relative flex-[3]">
                     <button type="button" onClick={() => setHeightYearOpen(!heightYearOpen)}
-                      className="w-full px-3 py-1.5 rounded-3xl border border-border bg-card text-sm text-left focus:outline-none focus:ring-2 focus:ring-[#EFE9DA]">
+                      className="w-full px-3 py-1.5 rounded-3xl border border-border bg-card text-sm text-left focus:outline-none focus:ring-2 focus:ring-warm-surface-soft">
                       {hd.year}
                     </button>
                     <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
@@ -1311,7 +1311,7 @@ export function BabyInfoForm({
                 onChange={(e) => handleWeightChange(e.target.value)}
                 min={0} max={140} step={0.1} inputMode="decimal"
                 placeholder="0.0"
-                className="w-[110px] px-3 py-2 rounded-3xl border border-border bg-card focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm font-semibold"
+                className="w-[110px] px-3 py-2 rounded-3xl border border-border bg-card focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm font-semibold"
               />
               <span className="text-sm shrink-0">kg</span>
             </div>
@@ -1320,7 +1320,7 @@ export function BabyInfoForm({
                 <div className="flex gap-1.5 items-center flex-1">
                   <div className="relative flex-[3]">
                     <button type="button" onClick={() => setWeightYearOpen(!weightYearOpen)}
-                      className="w-full px-3 py-1.5 rounded-3xl border border-border bg-card text-sm text-left focus:outline-none focus:ring-2 focus:ring-[#EFE9DA]">
+                      className="w-full px-3 py-1.5 rounded-3xl border border-border bg-card text-sm text-left focus:outline-none focus:ring-2 focus:ring-warm-surface-soft">
                       {wd.year}
                     </button>
                     <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
@@ -1357,9 +1357,9 @@ export function BabyInfoForm({
           type="button"
           onClick={() => !saving && canSave && onSave(form, pendingFile)}
           disabled={!canSave || saving}
-          className="w-full py-3.5 text-[#2B3A31] text-base font-bold rounded-3xl
-          bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-          hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
+          className="w-full py-3.5 text-warm-fg text-base font-bold rounded-3xl
+          bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+          hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
           shadow-sm transition-all duration-300
           disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >

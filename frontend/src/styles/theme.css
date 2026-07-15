@@ -86,6 +86,19 @@
   --caution-fg: #C05621;         /* burnt orange — between gold testing and red-terracotta reaction */
   --not-started-bg: #EDE8DB;     /* warm neutral — deliberately off the traffic-light scale */
   --not-started-fg: #857F70;     /* warm slate */
+
+  /* extended palette tints — named so CP3's swept literals can be tokenized (values unchanged, no visual change) */
+  --sage-50: #EAF1EA;
+  --sage-100: #DDE8DD;
+  --sage-150: #DCEADE;
+  --sage-200: #CFE0D2;
+  --terracotta: #CF7B5E;
+  --terracotta-50: #F6E6DF;
+  --terracotta-100: #F2D9CE;
+  --terracotta-150: #E8BCA9;
+  --terracotta-200: #E0A48F;
+  --honey: #E3A24C;
+  --honey-100: #F0DFAE;
 }
 
 .dark {
@@ -199,6 +212,17 @@
   --color-caution-fg: var(--caution-fg);
   --color-not-started-bg: var(--not-started-bg);
   --color-not-started-fg: var(--not-started-fg);
+  --color-sage-50: var(--sage-50);
+  --color-sage-100: var(--sage-100);
+  --color-sage-150: var(--sage-150);
+  --color-sage-200: var(--sage-200);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-50: var(--terracotta-50);
+  --color-terracotta-100: var(--terracotta-100);
+  --color-terracotta-150: var(--terracotta-150);
+  --color-terracotta-200: var(--terracotta-200);
+  --color-honey: var(--honey);
+  --color-honey-100: var(--honey-100);
 
   /* soft terracotta-tinted card shadow for warm-kr surfaces → `shadow-warm` utility */
   --shadow-warm: 0 2px 16px rgba(158, 64, 55, 0.05);

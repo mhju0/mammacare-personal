@@ -61,9 +61,9 @@ export default function AuthCallback() {
             <p className="text-sm text-destructive">{error}</p>
             <button
               onClick={() => navigate("/login", { replace: true })}
-              className="mt-4 w-full rounded-xl py-2.5 text-sm font-bold text-[#2B3A31]
-                bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
+              className="mt-4 w-full rounded-xl py-2.5 text-sm font-bold text-warm-fg
+                bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+                hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
                 shadow-sm transition-all duration-300"
             >
               로그인 페이지로 이동
@@ -72,9 +72,9 @@ export default function AuthCallback() {
         ) : (
           <div className="pointer-events-auto flex w-auto items-center gap-3 rounded-full border border-gray-200 bg-card px-6 py-4 shadow-lg">
             <div className="flex shrink-0 items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#DDE8DD] animate-bounce [animation-delay:-0.3s]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#DDE8DD] animate-bounce [animation-delay:-0.15s]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#DDE8DD] animate-bounce" />
+              <span className="w-2.5 h-2.5 rounded-full bg-sage-100 animate-bounce [animation-delay:-0.3s]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-sage-100 animate-bounce [animation-delay:-0.15s]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-sage-100 animate-bounce" />
             </div>
             <span className="text-lg font-medium text-primary-foreground">로그인 처리 중입니다</span>
           </div>

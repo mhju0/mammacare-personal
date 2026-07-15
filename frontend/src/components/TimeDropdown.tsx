@@ -43,8 +43,8 @@ export function TimeDropdown({
         type="button"
         onClick={() => setOpen((o) => !o)}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
-        className={`px-3 py-2 rounded-xl border border-[#DDE8DD] bg-[#FDFBF5]/80 
-        focus:outline-none focus:ring-2 focus:ring-[#EAF1EA] text-base font-semibold flex items-center gap-1.5 ${className}`}
+        className={`px-3 py-2 rounded-xl border border-sage-100 bg-warm-surface/80 
+        focus:outline-none focus:ring-2 focus:ring-sage-50 text-base font-semibold flex items-center gap-1.5 ${className}`}
       >
         {value}{suffix}
         <span className={`text-xs transition-transform ${open ? "rotate-180" : ""}`}>▾</span>
@@ -59,7 +59,7 @@ export function TimeDropdown({
             width: pos.width,
             zIndex: 9999,
           }}
-          className="max-h-60 overflow-auto scrollbar-hide bg-[#EAF1EA] border border-[#DDE8DD] rounded-3xl shadow-lg"
+          className="max-h-60 overflow-auto scrollbar-hide bg-sage-50 border border-sage-100 rounded-3xl shadow-lg"
         >
           {Array.from({ length }, (_, i) => {
             const val = i * step;
@@ -67,8 +67,8 @@ export function TimeDropdown({
               <button
                 key={i}
                 onMouseDown={(e) => { e.preventDefault(); onChange(val); setOpen(false); }}
-                className={`w-full px-3 py-2.5 text-base text-left hover:bg-[#FDFBF5]/70 font-medium ${
-                  val === value ? "bg-[#FDFBF5]/70" : ""
+                className={`w-full px-3 py-2.5 text-base text-left hover:bg-warm-surface/70 font-medium ${
+                  val === value ? "bg-warm-surface/70" : ""
                 }`}
               >
                 {val}{suffix}

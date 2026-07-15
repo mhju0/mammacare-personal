@@ -199,7 +199,7 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                 onChange={(e) => setId(e.target.value)}
                 placeholder="아이디를 입력하세요"
                 className="w-full px-4 py-3 rounded-xl border border-border bg-input-background
-                focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm placeholder:text-muted-foreground"
+                focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm placeholder:text-muted-foreground"
                 autoComplete="username"
               />
 
@@ -211,7 +211,7 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                   onChange={(e) => setPw(e.target.value)}
                   placeholder="비밀번호를 입력하세요"
                   className="w-full px-4 py-3 pr-11 rounded-xl border border-border bg-input-background 
-                  focus:outline-none focus:ring-2 focus:ring-[#EFE9DA] text-sm placeholder:text-muted-foreground"
+                  focus:outline-none focus:ring-2 focus:ring-warm-surface-soft text-sm placeholder:text-muted-foreground"
                   autoComplete="current-password"
                 />
                 <button
@@ -235,7 +235,7 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                     type="checkbox"
                     checked={keep}
                     onChange={(e) => setKeep(e.target.checked)}
-                    className="w-4 h-4 rounded accent-[#6FA07A] cursor-pointer"
+                    className="w-4 h-4 rounded accent-warm-cta cursor-pointer"
                   />
                   <span className="text-sm text-muted-foreground whitespace-nowrap">
                     자동 로그인
@@ -245,10 +245,10 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                 <button
                   type="submit"
                   disabled={loading || !id || !pw}
-                  className="px-8 py-2.5 text-[#2B3A31] text-sm font-bold rounded-3xl shadow-sm
+                  className="px-8 py-2.5 text-warm-fg text-sm font-bold rounded-3xl shadow-sm
                   disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap shrink-0
-                  bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-                  hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
+                  bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+                  hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
                   transition-all duration-300"
                 >
                   {loading ? "로그인 중" : "로그인"}
@@ -336,7 +336,7 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
 
             <div className="px-6 pb-5">
               <div className="mb-4 flex gap-0 rounded-3xl p-1.5
-                bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#EAF1EA_100%)]">
+                bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-50)_100%)]">
                 {(["username", "password"] as RecoveryMode[]).map((mode) => (
                   <button
                     key={mode}
@@ -348,11 +348,11 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                       <motion.div
                         layoutId="recoveryTabPill"
                         className="absolute inset-0 rounded-3xl
-                          bg-[radial-gradient(ellipse_at_center,#EFE9DA_0%,#FDFBF5_100%)] shadow-sm"
+                          bg-[radial-gradient(ellipse_at_center,var(--warm-surface-soft)_0%,var(--warm-surface)_100%)] shadow-sm"
                         transition={{ type: "spring", stiffness: 350, damping: 30 }}
                       />
                     )}
-                    <span className={`relative z-10 ${recoveryMode === mode ? "text-[#2B3A31]" : "text-muted-foreground"}`}>
+                    <span className={`relative z-10 ${recoveryMode === mode ? "text-warm-fg" : "text-muted-foreground"}`}>
                       {mode === "username" ? "아이디 찾기" : "비밀번호 변경"}
                     </span>
                   </button>
@@ -367,7 +367,7 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                     value={findIdentifier}
                     onChange={(e) => setFindIdentifier(e.target.value)}
                     placeholder="test@example.com 또는 010-1234-5678"
-                    className="w-full rounded-xl border border-border bg-input-background px-4 py-3 text-sm border border-border focus:outline-none focus:ring-2 focus:ring-[#EFE9DA]"
+                    className="w-full rounded-xl border border-border bg-input-background px-4 py-3 text-sm border border-border focus:outline-none focus:ring-2 focus:ring-warm-surface-soft"
                     autoComplete="email"
                   />
                   {maskedUsername && (
@@ -379,8 +379,8 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                     type="submit"
                     disabled={!findIdentifier.trim() || recoveryLoading}
                     className="w-full rounded-xl py-3 text-sm font-bold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-60
-                    bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-                    hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
+                    bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+                    hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
                     shadow-sm transition-all duration-300"
                   >
                     {recoveryLoading ? "조회 중" : "아이디 찾기"}
@@ -394,7 +394,7 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                     value={resetUsername}
                     onChange={(e) => setResetUsername(e.target.value)}
                     placeholder="아이디를 입력하세요"
-                    className="w-full rounded-xl border border-border bg-input-background px-4 py-3 text-sm border border-border focus:outline-none focus:ring-2 focus:ring-[#EFE9DA]"
+                    className="w-full rounded-xl border border-border bg-input-background px-4 py-3 text-sm border border-border focus:outline-none focus:ring-2 focus:ring-warm-surface-soft"
                     autoComplete="username"
                   />
                   <label className="block text-sm text-muted-foreground">이메일</label>
@@ -403,7 +403,7 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                     value={resetEmail}
                     onChange={(e) => setResetEmail(e.target.value)}
                     placeholder="가입한 이메일 주소"
-                    className="w-full rounded-xl border border-border bg-input-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#EFE9DA]"
+                    className="w-full rounded-xl border border-border bg-input-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-warm-surface-soft"
                     autoComplete="email"
                   />
                   <label className="block text-sm text-muted-foreground">새 비밀번호</label>
@@ -413,7 +413,7 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                       value={resetNewPassword}
                       onChange={(e) => setResetNewPassword(e.target.value)}
                       placeholder="영문+숫자 8자 이상"
-                      className="w-full rounded-xl border border-border bg-input-background px-4 py-3 pr-11 text-sm focus:outline-none focus:ring-2 focus:ring-[#EFE9DA]"
+                      className="w-full rounded-xl border border-border bg-input-background px-4 py-3 pr-11 text-sm focus:outline-none focus:ring-2 focus:ring-warm-surface-soft"
                       autoComplete="new-password"
                     />
                     <button
@@ -428,8 +428,8 @@ const handleSocial = (provider: "카카오" | "네이버" | "구글") => {
                     type="submit"
                     disabled={!resetUsername.trim() || !resetEmail.trim() || !resetNewPassword || recoveryLoading}
                     className="w-full rounded-xl py-3 text-sm font-bold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-60
-                    bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-                    hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
+                    bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+                    hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
                     shadow-sm transition-all duration-300"
                   >
                     {recoveryLoading ? "변경 중" : "비밀번호 변경"}

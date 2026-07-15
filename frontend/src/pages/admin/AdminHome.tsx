@@ -84,8 +84,8 @@ export default function AdminHome() {
       {/* Quick Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div className="bg-card border border-border rounded-3xl p-6 flex gap-4 items-start hover:shadow-md transition-shadow">
-          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)] flex items-center justify-center">
-            <span style={{ color: "#2B3A31" }}><Users size={24} /></span>
+          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)] flex items-center justify-center">
+            <span style={{ color: "var(--warm-fg)" }}><Users size={24} /></span>
           </div>
           <div>
             <h3 className="font-bold text-foreground mb-1">전체 회원</h3>
@@ -95,8 +95,8 @@ export default function AdminHome() {
         </div>
 
         <div className="bg-card border border-border rounded-3xl p-6 flex gap-4 items-start hover:shadow-md transition-shadow">
-          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)] flex items-center justify-center">
-            <span style={{ color: "#2B3A31" }}><Users size={24} /></span>
+          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)] flex items-center justify-center">
+            <span style={{ color: "var(--warm-fg)" }}><Users size={24} /></span>
           </div>
           <div>
             <h3 className="font-bold text-foreground mb-1">활성 사용자</h3>
@@ -106,8 +106,8 @@ export default function AdminHome() {
         </div>
 
         <div className="bg-card border border-border rounded-3xl p-6 flex gap-4 items-start hover:shadow-md transition-shadow">
-          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)] flex items-center justify-center">
-            <span style={{ color: "#2B3A31" }}><Shield size={24} /></span>
+          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)] flex items-center justify-center">
+            <span style={{ color: "var(--warm-fg)" }}><Shield size={24} /></span>
           </div>
           <div>
             <h3 className="font-bold text-foreground mb-1">관리자</h3>
@@ -117,8 +117,8 @@ export default function AdminHome() {
         </div>
 
         <div className="bg-card border border-border rounded-3xl p-6 flex gap-4 items-start hover:shadow-md transition-shadow">
-          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)] flex items-center justify-center">
-            <span style={{ color: "#2B3A31" }}><Bell size={24} /></span>
+          <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)] flex items-center justify-center">
+            <span style={{ color: "var(--warm-fg)" }}><Bell size={24} /></span>
           </div>
           <div>
             <h3 className="font-bold text-foreground mb-1">신고 대기</h3>

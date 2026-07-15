@@ -66,7 +66,7 @@ function AnnotationLayer({ items }: { items?: Annotation[] }) {
               y1={a.y}
               x2={a.tx}
               y2={a.ty}
-              stroke="#2B3A31"
+              stroke="var(--warm-fg)"
               strokeWidth={3}
               strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
@@ -80,7 +80,7 @@ function AnnotationLayer({ items }: { items?: Annotation[] }) {
         a.type === "callout" ? (
           <div
             key={`dot-${i}`}
-            className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2B3A31]"
+            className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-warm-fg"
             style={{ left: `${a.tx}%`, top: `${a.ty}%` }}
           />
         ) : null
@@ -113,7 +113,7 @@ function AnnotationLayer({ items }: { items?: Annotation[] }) {
           <div
             key={i}
             className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 
-            whitespace-nowrap rounded-full bg-[#2B3A31] px-4 py-1.5 text-base font-medium text-white shadow-lg"
+            whitespace-nowrap rounded-full bg-warm-fg px-4 py-1.5 text-base font-medium text-white shadow-lg"
             style={{ left: `${a.x}%`, top: `${a.y}%` }}
           >
             {Icon && <Icon className="h-[1.1em] w-[1.1em] shrink-0" />}
@@ -190,7 +190,7 @@ export default function TutorialModal({
     >
       {/* 모달 카드 — 바깥(배경) 클릭은 닫힘, 카드 클릭은 전파 차단 */}
       <div
-        className="flex max-h-[80vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-[#F7F2E8] shadow-2xl ring-1 ring-black/5"
+        className="flex max-h-[80vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-warm-bg shadow-2xl ring-1 ring-black/5"
         onClick={(e) => e.stopPropagation()}
       >
         {/* 헤더 */}

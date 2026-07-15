@@ -230,9 +230,9 @@ export default function Notifications() {
       {loading ? (
         <div className="flex flex-col items-center justify-center gap-3 py-20">
           <div className="flex shrink-0 items-center pt-24 gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#DDE8DD] animate-bounce [animation-delay:-0.3s]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#DDE8DD] animate-bounce [animation-delay:-0.15s]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#DDE8DD] animate-bounce" />
+            <span className="w-2.5 h-2.5 rounded-full bg-sage-100 animate-bounce [animation-delay:-0.3s]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-sage-100 animate-bounce [animation-delay:-0.15s]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-sage-100 animate-bounce" />
           </div>
           <span className="text-lg font-medium text-primary-foreground">알림을 불러오는 중이에요</span>
         </div>

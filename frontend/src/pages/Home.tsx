@@ -144,9 +144,9 @@ export default function Home() {
                   className="
                     btn-primary !px-4 !py-2
                     !text-base font-semibold whitespace-nowrap
-                    !bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#FDFBF5_100%)]
-                    hover:!bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_100%)]
-                    !text-[#2B3A31]
+                    !bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface)_100%)]
+                    hover:!bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_100%)]
+                    !text-warm-fg
                     transition-all duration-300 shadow-lg
                     flex items-center gap-2
                   "
@@ -159,9 +159,9 @@ export default function Home() {
                   className="
                     btn-primary !px-4 !py-2
                     !text-base font-semibold whitespace-nowrap
-                    !bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#FDFBF5_100%)]
-                    hover:!bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_100%)]
-                    !text-[#2B3A31]
+                    !bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface)_100%)]
+                    hover:!bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_100%)]
+                    !text-warm-fg
                     transition-all duration-300 shadow-lg
                     flex items-center gap-2
                   "

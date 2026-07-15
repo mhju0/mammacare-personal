@@ -265,7 +265,7 @@ function NewRecipeModal({ token, onClose, onCreated }: NewRecipeModalProps) {
                   onClick={() => setStage(stage === value ? "" : value)}
                   className={`py-2 rounded-xl text-sm border transition-colors ${
                     stage === value
-                      ? "bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_50%,#A9C6B0_100%)] text-primary-foreground border-primary/50 shadow-sm"
+                      ? "bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_50%,var(--secondary)_100%)] text-primary-foreground border-primary/50 shadow-sm"
                       : "border-border hover:bg-muted"
                   }`}
                 >
@@ -289,7 +289,7 @@ function NewRecipeModal({ token, onClose, onCreated }: NewRecipeModalProps) {
           <button
             onClick={handleSubmit}
             disabled={submitting || !title.trim()}
-            className="px-4 py-2.5 rounded-3xl text-sm text-primary-foreground font-bold bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)] hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)] shadow-sm transition-all duration-300 disabled:opacity-50"
+            className="px-4 py-2.5 rounded-3xl text-sm text-primary-foreground font-bold bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)] hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)] shadow-sm transition-all duration-300 disabled:opacity-50"
           >
             {submitting ? "추가 중" : "추가하기"}
           </button>
@@ -496,7 +496,7 @@ function NewIngredientModal({ token, onClose, onCreated }: NewIngredientModalPro
                         onClick={() => toggleNutrient(key, level)}
                         className={`flex-1 py-1.5 text-xs rounded-lg transition-colors ${
                           nutrients[key] === level
-                            ? "bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_50%,#A9C6B0_100%)] text-primary-foreground border border-primary/50 shadow-sm font-medium"
+                            ? "bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_50%,var(--secondary)_100%)] text-primary-foreground border border-primary/50 shadow-sm font-medium"
                             : "border border-border text-muted-foreground hover:bg-muted"
                         }`}
                       >
@@ -523,7 +523,7 @@ function NewIngredientModal({ token, onClose, onCreated }: NewIngredientModalPro
           <button
             onClick={handleSubmit}
             disabled={submitting || !name.trim()}
-            className="px-4 py-2.5 rounded-3xl text-sm text-primary-foreground font-bold bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)] hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)] shadow-sm transition-all duration-300 disabled:opacity-50"
+            className="px-4 py-2.5 rounded-3xl text-sm text-primary-foreground font-bold bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)] hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)] shadow-sm transition-all duration-300 disabled:opacity-50"
           >
             {submitting ? "추가 중" : "추가하기"}
           </button>
@@ -764,7 +764,7 @@ export default function AdminContent() {
             onClick={() => handleTabChange(tab.id)}
             className={`flex items-center gap-2.5 px-3 py-1 rounded-full font-medium text-base whitespace-nowrap transition-colors ${
               activeTab === tab.id
-                ? "bg-[#EFE9DA] hover:opacity-70 font-semibold transition-colors"
+                ? "bg-warm-surface-soft hover:opacity-70 font-semibold transition-colors"
                 : "bg-card text-muted-foreground hover:bg-muted"
             }`}
           >
@@ -842,7 +842,7 @@ export default function AdminContent() {
               {!isDeleteMode && (
                 <button
                   onClick={() => setShowNewRecipeModal(true)}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_50%,#A9C6B0_100%)] text-primary-foreground border border-primary/50 shadow-sm transition-colors text-sm"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_50%,var(--secondary)_100%)] text-primary-foreground border border-primary/50 shadow-sm transition-colors text-sm"
                 >
                   <Upload size={14} />
                   새 레시피 추가
@@ -982,7 +982,7 @@ export default function AdminContent() {
               {!isIngredientDeleteMode && (
                 <button
                   onClick={() => setShowNewIngredientModal(true)}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_50%,#A9C6B0_100%)] text-primary-foreground border border-primary/50 shadow-sm transition-colors text-sm"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_50%,var(--secondary)_100%)] text-primary-foreground border border-primary/50 shadow-sm transition-colors text-sm"
                 >
                   <Plus size={14} />
                   새 식재료 추가

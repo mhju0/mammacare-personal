@@ -317,7 +317,7 @@ export default function AdminCommunity() {
             onClick={() => setActiveTab(key)}
             className={`flex items-center gap-2.5 px-3 py-1 rounded-full font-medium text-base transition-colors ${
               activeTab === key
-                ? "bg-[#EFE9DA] hover:opacity-70 font-semibold transition-colors"
+                ? "bg-warm-surface-soft hover:opacity-70 font-semibold transition-colors"
                 : "bg-card text-muted-foreground hover:bg-muted"
             }`}
           >
@@ -334,8 +334,8 @@ export default function AdminCommunity() {
             <button
               onClick={() => { setNoticeForm({ title: "", content: "" }); setShowNoticeModal(true); }}
               className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold 
-              text-primary-foreground bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)] 
-              hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)] shadow-sm transition-all duration-300"
+              text-primary-foreground bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)] 
+              hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)] shadow-sm transition-all duration-300"
             >
               <Plus size={14} /> 새 공지 작성
             </button>
@@ -412,7 +412,7 @@ export default function AdminCommunity() {
               onClick={() => setReportSubTab("post")}
               className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
                 reportSubTab === "post"
-                  ? "bg-[#EFE9DA] text-foreground"
+                  ? "bg-warm-surface-soft text-foreground"
                   : "text-muted-foreground hover:bg-muted"
               }`}
             >
@@ -422,7 +422,7 @@ export default function AdminCommunity() {
               onClick={() => setReportSubTab("comment")}
               className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
                 reportSubTab === "comment"
-                  ? "bg-[#EFE9DA] text-foreground"
+                  ? "bg-warm-surface-soft text-foreground"
                   : "text-muted-foreground hover:bg-muted"
               }`}
             >
@@ -699,7 +699,7 @@ export default function AdminCommunity() {
                             <div className="flex justify-end">
                               <button
                                 onClick={() => handleReply(inq.id)}
-                                className="flex items-center gap-1.5 px-4 py-2 rounded-3xl text-sm font-bold text-primary-foreground bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)] hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)] shadow-sm transition-all duration-300"
+                                className="flex items-center gap-1.5 px-4 py-2 rounded-3xl text-sm font-bold text-primary-foreground bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)] hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)] shadow-sm transition-all duration-300"
                               >
                                 <CheckCircle size={14} /> 답변 완료
                               </button>
@@ -774,7 +774,7 @@ export default function AdminCommunity() {
             </div>
             <div className="px-6 py-4 border-t border-border flex gap-2">
               <button onClick={() => setShowNoticeModal(false)} className="flex-1 py-2.5 rounded-xl border border-border font-semibold hover:bg-muted">취소</button>
-              <button onClick={handleCreateNotice} className="flex-1 py-2.5 rounded-3xl font-bold text-primary-foreground bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)] hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)] shadow-sm transition-all duration-300">공지 등록</button>
+              <button onClick={handleCreateNotice} className="flex-1 py-2.5 rounded-3xl font-bold text-primary-foreground bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)] hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)] shadow-sm transition-all duration-300">공지 등록</button>
             </div>
           </div>
         </div>
@@ -810,7 +810,7 @@ export default function AdminCommunity() {
             </div>
             <div className="px-6 py-4 border-t border-border flex gap-2">
               <button onClick={() => setEditingNotice(null)} className="flex-1 py-2.5 rounded-xl border border-border font-semibold hover:bg-muted">취소</button>
-              <button onClick={handleUpdateNotice} className="flex-1 py-2.5 rounded-3xl font-bold text-primary-foreground bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)] hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)] shadow-sm transition-all duration-300">수정 완료</button>
+              <button onClick={handleUpdateNotice} className="flex-1 py-2.5 rounded-3xl font-bold text-primary-foreground bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)] hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)] shadow-sm transition-all duration-300">수정 완료</button>
             </div>
           </div>
         </div>

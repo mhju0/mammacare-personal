@@ -86,8 +86,8 @@ function ProviderDropdown({
         type="button"
         onClick={() => setOpen((o) => !o)}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
-        className="px-2.5 py-1 rounded-xl border border-[#DDE8DD] bg-[#FDFBF5]/80
-          focus:outline-none focus:ring-2 focus:ring-[#EAF1EA] text-sm font-semibold
+        className="px-2.5 py-1 rounded-xl border border-sage-100 bg-warm-surface/80
+          focus:outline-none focus:ring-2 focus:ring-sage-50 text-sm font-semibold
           flex items-center gap-1.5 cursor-pointer"
       >
         {selected?.label ?? value}
@@ -104,14 +104,14 @@ function ProviderDropdown({
             ...(minWidth !== undefined && { minWidth }),
             ...(maxWidth !== undefined && { maxWidth }),
           }}
-          className="overflow-hidden bg-[#EAF1EA] border border-[#DDE8DD] rounded-3xl shadow-lg"
+          className="overflow-hidden bg-sage-50 border border-sage-100 rounded-3xl shadow-lg"
         >
           {options.map((o) => (
             <button
               key={o.value}
               onMouseDown={(e) => { e.preventDefault(); onChange(o.value); setOpen(false); }}
-              className={`w-full px-3 py-2 text-sm text-left font-medium transition-colors hover:bg-[#FDFBF5]/70 ${
-                o.value === value ? "bg-[#FDFBF5]/70" : ""
+              className={`w-full px-3 py-2 text-sm text-left font-medium transition-colors hover:bg-warm-surface/70 ${
+                o.value === value ? "bg-warm-surface/70" : ""
               }`}
             >
               {o.label}
@@ -153,8 +153,8 @@ function DatePickerButton({
       <button
         type="button"
         onClick={initToday}
-        className="px-2.5 py-1 text-sm text-muted-foreground rounded-xl border border-[#DDE8DD]
-          bg-[#FDFBF5]/80 hover:bg-[#EAF1EA] transition-colors"
+        className="px-2.5 py-1 text-sm text-muted-foreground rounded-xl border border-sage-100
+          bg-warm-surface/80 hover:bg-sage-50 transition-colors"
       >
         {placeholder}
       </button>
@@ -165,24 +165,24 @@ function DatePickerButton({
 
   return (
     <>
-      <div className="flex items-center rounded-xl border border-[#DDE8DD] bg-[#FDFBF5]/80 overflow-hidden">
+      <div className="flex items-center rounded-xl border border-sage-100 bg-warm-surface/80 overflow-hidden">
         <button type="button" onClick={() => setPickerStep("year")}
-          className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EAF1EA] transition-colors">
+          className="px-2.5 py-1 text-sm font-semibold hover:bg-sage-50 transition-colors">
           {y}년
         </button>
-        <span className="w-px self-stretch bg-[#DDE8DD]" />
+        <span className="w-px self-stretch bg-sage-100" />
         <button type="button" onClick={() => setPickerStep("month")}
-          className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EAF1EA] transition-colors">
+          className="px-2.5 py-1 text-sm font-semibold hover:bg-sage-50 transition-colors">
           {m}월
         </button>
-        <span className="w-px self-stretch bg-[#DDE8DD]" />
+        <span className="w-px self-stretch bg-sage-100" />
         <button type="button" onClick={() => setPickerStep("day")}
-          className="px-2.5 py-1 text-sm font-semibold hover:bg-[#EAF1EA] transition-colors">
+          className="px-2.5 py-1 text-sm font-semibold hover:bg-sage-50 transition-colors">
           {d}일
         </button>
-        <span className="w-px self-stretch bg-[#DDE8DD]" />
+        <span className="w-px self-stretch bg-sage-100" />
         <button type="button" onClick={() => onChange("")}
-          className="px-1.5 py-1 text-muted-foreground hover:text-foreground hover:bg-[#EAF1EA] transition-colors">
+          className="px-1.5 py-1 text-muted-foreground hover:text-foreground hover:bg-sage-50 transition-colors">
           <X size={12} />
         </button>
       </div>
@@ -200,7 +200,7 @@ function DatePickerButton({
                     <button key={yr} type="button"
                       onClick={() => { updateDate(yr, m, d); setPickerStep("month"); }}
                       className={`py-2 rounded-xl text-sm font-semibold transition-colors ${
-                        yr === y ? "bg-[#DDE8DD] text-primary-foreground" : "hover:bg-[#DDE8DD]/20 text-foreground"
+                        yr === y ? "bg-sage-100 text-primary-foreground" : "hover:bg-sage-100/20 text-foreground"
                       }`}>
                       {yr}
                     </button>
@@ -222,7 +222,7 @@ function DatePickerButton({
                     <button key={mo} type="button"
                       onClick={() => { updateDate(y, mo, d); setPickerStep("day"); }}
                       className={`py-2 rounded-xl text-sm font-semibold transition-colors ${
-                        mo === m ? "bg-[#DDE8DD] text-primary-foreground" : "hover:bg-[#DDE8DD]/20 text-foreground"
+                        mo === m ? "bg-sage-100 text-primary-foreground" : "hover:bg-sage-100/20 text-foreground"
                       }`}>
                       {mo}월
                     </button>
@@ -246,7 +246,7 @@ function DatePickerButton({
                     <button key={day} type="button"
                       onClick={() => { updateDate(y, m, day); setPickerStep(null); }}
                       className={`aspect-square text-xs rounded-lg transition-colors flex items-center justify-center ${
-                        day === d ? "bg-[#DDE8DD] text-primary-foreground font-bold" : "hover:bg-[#DDE8DD]/20 text-foreground"
+                        day === d ? "bg-sage-100 text-primary-foreground font-bold" : "hover:bg-sage-100/20 text-foreground"
                       }`}>
                       {day}
                     </button>
@@ -619,7 +619,7 @@ export default function AdminUsers() {
       <h1 className="text-2xl font-bold mb-5 flex items-center gap-2" style={{ fontFamily: "'Paperlogic'", fontWeight: 600 }}><Users size={24} />회원 관리</h1>
 
       {/* 검색 & 필터 */}
-      <div className="bg-[#EAF1EA]/50 border border-[#EAF1EA] rounded-xl p-2 mb-3 space-y-3">
+      <div className="bg-sage-50/50 border border-sage-50 rounded-xl p-2 mb-3 space-y-3">
         <form onSubmit={handleSearch} className="flex gap-1">
           <div className="flex-1 relative">
             <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -628,22 +628,22 @@ export default function AdminUsers() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="이름, 이메일, 아이디로 검색"
-              className="w-full pl-10 pr-4 py-2 rounded-xl border border-[#DDE8DD] 
-              bg-[#FDFBF5]/80 focus:outline-none focus:ring-2 focus:ring-[#EAF1EA] text-sm"
+              className="w-full pl-10 pr-4 py-2 rounded-xl border border-sage-100 
+              bg-warm-surface/80 focus:outline-none focus:ring-2 focus:ring-sage-50 text-sm"
             />
           </div>
           <button
             type="button"
             onClick={() => setShowFilter((v) => !v)}
             className={`px-3 py-1 rounded-xl text-sm transition-colors flex items-center gap-1.5 
-              ${showFilter ? "bg-[#EAF1EA] text-primary-foreground" 
-                : "hover:bg-[#EAF1EA]/70 text-muted-foreground"}`}
+              ${showFilter ? "bg-sage-50 text-primary-foreground" 
+                : "hover:bg-sage-50/70 text-muted-foreground"}`}
           >
             필터
           </button>
           <button
             type="submit"
-            className="px-3 py-1 text-sm bg-[#EAF1EA] rounded-xl text-primary-foreground"
+            className="px-3 py-1 text-sm bg-sage-50 rounded-xl text-primary-foreground"
           >
             검색
           </button>

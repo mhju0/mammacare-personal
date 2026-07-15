@@ -211,7 +211,7 @@ export default function AdminPermissions() {
               <button
                 type="submit"
                 disabled={searching}
-                className="px-4 py-2.5 rounded-xl bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_50%,#A9C6B0_100%)] text-primary-foreground border border-primary/50 shadow-sm text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-opacity"
+                className="px-4 py-2.5 rounded-xl bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_50%,var(--secondary)_100%)] text-primary-foreground border border-primary/50 shadow-sm text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-opacity"
               >
                 검색
               </button>
@@ -231,7 +231,7 @@ export default function AdminPermissions() {
                     </div>
                     <button
                       onClick={() => setModal({ user: u, action: "grant" })}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)] text-blue-600 text-xs font-medium hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)] transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)] text-blue-600 text-xs font-medium hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)] transition-colors"
                     >
                       <UserCheck size={13} /> 권한 부여
                     </button>
@@ -258,7 +258,7 @@ export default function AdminPermissions() {
           confirmLabel={acting ? "처리 중" : modal.action === "grant" ? "권한 부여" : "권한 해제"}
           confirmClass={
             modal.action === "grant"
-              ? "text-primary-foreground font-bold bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)] hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)] shadow-sm transition-all duration-300"
+              ? "text-primary-foreground font-bold bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)] hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)] shadow-sm transition-all duration-300"
               : "bg-orange-500 text-white hover:bg-orange-600"
           }
           onConfirm={handleAction}

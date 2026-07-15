@@ -27,8 +27,8 @@ export default function AdminPayments() {
           { title: "이상 거래 감지", desc: "비정상 결제 패턴 알림", icon: AlertTriangle },
         ].map((card) => (
           <div key={card.title} className="bg-card border border-border rounded-3xl p-6 flex gap-4 items-start hover:shadow-md transition-shadow opacity-60">
-            <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)] flex items-center justify-center">
-              <span style={{ color: "#2B3A31" }}><card.icon size={24} /></span>
+            <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)] flex items-center justify-center">
+              <span style={{ color: "var(--warm-fg)" }}><card.icon size={24} /></span>
             </div>
             <div>
               <h3 className="font-bold text-foreground mb-1">{card.title}</h3>
@@ -40,8 +40,8 @@ export default function AdminPayments() {
       </div>
 
       <div className="bg-card border border-border rounded-3xl p-10 flex flex-col items-center justify-center text-center hover:shadow-md transition-shadow">
-        <div className="w-16 h-16 rounded-2xl bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)] flex items-center justify-center mb-4">
-          <span style={{ color: "#2B3A31" }}><CreditCard size={32} /></span>
+        <div className="w-16 h-16 rounded-2xl bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)] flex items-center justify-center mb-4">
+          <span style={{ color: "var(--warm-fg)" }}><CreditCard size={32} /></span>
         </div>
         <h3 className="font-bold text-foreground mb-2">결제 기능 준비 중</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">구독 · 인앱 결제 도입 시 활성화됩니다.</p>

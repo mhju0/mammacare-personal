@@ -45,9 +45,9 @@ export default function ProtectedPage({ children }: Props) {
           </p>
           <button
             onClick={() => navigate("/signup")}
-            className="w-full py-3 font-bold rounded-3xl text-sm mb-2 text-[#2B3A31]
-                bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
+            className="w-full py-3 font-bold rounded-3xl text-sm mb-2 text-warm-fg
+                bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+                hover:bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
                 shadow-sm transition-all duration-300"
           >
             회원가입하고 이용하기

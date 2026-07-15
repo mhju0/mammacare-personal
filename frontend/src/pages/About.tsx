@@ -16,7 +16,7 @@ const isApp = Capacitor.isNativePlatform();
 const features = [
   {
     icon: <CalendarDays className="w-5 h-5 sm:w-7 sm:h-7" />,
-    bgClass: "bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)]",
+    bgClass: "bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)]",
     title: "이유식 일정 관리",
     desc: isApp
       ? <>개월 수에 맞는 이유식 일정을 자동으로 생성하고, <br />매일 먹은 식품을 기록해 성장 단계별 맞춤 식단을<br />관리하세요.</>
@@ -24,7 +24,7 @@ const features = [
   },
   {
     icon: <ShieldAlert className="w-5 h-5 sm:w-7 sm:h-7" />,
-    bgClass: "bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)]",
+    bgClass: "bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)]",
     title: "알레르기 추적",
     desc: isApp
       ? <>새로운 식재료를 처음 먹일 때 알레르기 반응을 기록하고 추적하세요. 위험 성분을 미리 파악해 안전한 이유식을 만들어 드립니다.</>
@@ -32,7 +32,7 @@ const features = [
   },
   {
     icon: <Salad className="w-5 h-5 sm:w-7 sm:h-7" />,
-    bgClass: "bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)]",
+    bgClass: "bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)]",
     title: "영양 정보 & 레시피",
     desc: isApp
       ? <>아이의 연령과 발달 단계에 맞는<br />영양 균형 정보를 제공하고, <br />재료별 맞춤 이유식 레시피를 추천해 드립니다.</>
@@ -40,7 +40,7 @@ const features = [
   },
   {
     icon: <Users className="w-5 h-5 sm:w-7 sm:h-7" />,
-    bgClass: "bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)]",
+    bgClass: "bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)]",
     title: "육아 커뮤니티",
     desc: isApp
       ? <>또래 아이를 키우는 부모들과 이유식 노하우를<br />공유하고, 궁금한 점을 함께 해결해 보세요.</>
@@ -119,7 +119,7 @@ export default function About() {
               {/* 더 안전한 이유식: 웹 text-6xl → 앱 text-4xl */}
               <span
                 className={`inline-flex items-center gap-1 ${isApp ? "text-4xl" : "text-4xl sm:text-5xl"}`}
-                style={{ fontFamily: "'Paperlogic'", fontWeight: 500, color: "#2B3A31" }}
+                style={{ fontFamily: "'Paperlogic'", fontWeight: 500, color: "var(--warm-fg)" }}
               >
                 <span style={{ position: "relative", display: "inline-block" }}>
                   <span style={{ position: "relative", top: "3px" , zIndex: 1, letterSpacing: "0.00em" }}>더 안전한 이유식</span>
@@ -144,7 +144,7 @@ export default function About() {
                   left: "-0.5rem",
                   top: "1.5rem",
                   opacity: 0.25,
-                  color: "#2B3A31",
+                  color: "var(--warm-fg)",
                   pointerEvents: "none",
                 }}
               />
@@ -165,7 +165,7 @@ export default function About() {
                   right: "-0.5rem",
                   bottom: "1.5rem",
                   opacity: 0.25,
-                  color: "#2B3A31",
+                  color: "var(--warm-fg)",
                   pointerEvents: "none",
                 }}
               />
@@ -183,7 +183,7 @@ export default function About() {
             { icon: <Baby className="mx-auto mb-1 w-6 h-6 sm:w-[30px] sm:h-[30px]" />, value: "4단계", label: "개월별 맞춤 식단" },
           ].map((item) => (
             <div key={item.label} className="space-y-0.5">
-              <div className="text-[#CFE0D2]">{item.icon}</div>
+              <div className="text-sage-200">{item.icon}</div>
               {/* 웹 text-2xl → 앱 text-base */}
               <p className={`font-bold text-foreground ${isApp ? "text-base" : "text-2xl"}`}>{item.value}</p>
               {/* 웹 text-lg → 앱 text-xs */}
@@ -210,7 +210,7 @@ export default function About() {
               className={`bg-card border border-border rounded-3xl flex gap-4 items-start hover:shadow-md transition-shadow ${isApp ? "p-4" : "p-6"}`}
             >
               <div className={`flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center ${f.bgClass}`}>
-                <span style={{ color: "#2B3A31" }}>{f.icon}</span>
+                <span style={{ color: "var(--warm-fg)" }}>{f.icon}</span>
               </div>
               <div>
                 {/* 웹 text-base → 앱 text-sm */}
@@ -247,7 +247,7 @@ export default function About() {
                 <div className={`bg-card border border-border rounded-3xl h-full ${isApp ? "p-4 space-y-2" : "p-6 space-y-3"}`}>
                   {isApp ? (
                     <div className="flex items-center gap-2">
-                      <span className="font-black text-xl flex-shrink-0" style={{ color: "#CFE0D2" }}>
+                      <span className="font-black text-xl flex-shrink-0" style={{ color: "var(--sage-200)" }}>
                         {s.num}
                       </span>
                       <h3 className="font-bold text-foreground text-sm">
@@ -256,7 +256,7 @@ export default function About() {
                     </div>
                   ) : (
                     <>
-                      <span className="font-black text-3xl" style={{ color: "#CFE0D2" }}>
+                      <span className="font-black text-3xl" style={{ color: "var(--sage-200)" }}>
                         {s.num}
                       </span>
                       <h3 className="font-bold text-foreground text-base">
@@ -314,9 +314,9 @@ export default function About() {
                 btn-primary !px-5 !py-3.5
                 ${isApp ? "!text-xs" : "!text-base"}
                 font-semibold
-                !bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#FDFBF5_100%)]
-                hover:!bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_100%)]
-                !text-[#2B3A31]
+                !bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface)_100%)]
+                hover:!bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_100%)]
+                !text-warm-fg
                 transition-all duration-300 shadow-md
                 flex items-center gap-2
               `}
@@ -331,9 +331,9 @@ export default function About() {
                   btn-primary !px-9.5 !py-3.5
                   ${isApp ? "!text-xs" : "!text-base"}
                   font-semibold
-                  !bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#DDE8DD_100%)]
-                  hover:!bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#CFE0D2_100%)]
-                  !text-[#2B3A31]
+                  !bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-100)_100%)]
+                  hover:!bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--sage-200)_100%)]
+                  !text-warm-fg
                   transition-all duration-300 shadow-md
                 `}
               >

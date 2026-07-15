@@ -14,19 +14,19 @@ const isApp = Capacitor.isNativePlatform();
 // 알레르기 안전 도구로 좁힌 IA(hybrid mock 기준). 일정/영양/레시피/커뮤니티는 detab —
 // 라우트는 유지되지만 탭에서 제거(삭제는 P5 데드코드 퍼지에서 결정).
 const navItems = [
-  { label: "재료", path: "/ingredients", color: "#A9C6B0" },
-  { label: "관찰", path: "/observe", color: "#A9C6B0" },
-  { label: "알레르기 관리", path: "/allergy", color: "#A9C6B0" },
-  { label: "리포트", path: "/reports", color: "#A9C6B0" },
+  { label: "재료", path: "/ingredients", color: "var(--secondary)" },
+  { label: "관찰", path: "/observe", color: "var(--secondary)" },
+  { label: "알레르기 관리", path: "/allergy", color: "var(--secondary)" },
+  { label: "리포트", path: "/reports", color: "var(--secondary)" },
 ];
 
 const adminNavItems = [
-  { label: "대시보드", path: "/admin/dashboard", color: "#A9C6B0" },
-  { label: "회원 관리", path: "/admin/users", color: "#A9C6B0" },
-  { label: "콘텐츠 관리", path: "/admin/content", color: "#A9C6B0" },
-  { label: "커뮤니티 & 문의", path: "/admin/notice", color: "#A9C6B0" },
-  { label: "보안 & 권한", path: "/admin/security", color: "#A9C6B0" },
-  { label: "결제 관리", path: "/admin/payments", color: "#A9C6B0" },
+  { label: "대시보드", path: "/admin/dashboard", color: "var(--secondary)" },
+  { label: "회원 관리", path: "/admin/users", color: "var(--secondary)" },
+  { label: "콘텐츠 관리", path: "/admin/content", color: "var(--secondary)" },
+  { label: "커뮤니티 & 문의", path: "/admin/notice", color: "var(--secondary)" },
+  { label: "보안 & 권한", path: "/admin/security", color: "var(--secondary)" },
+  { label: "결제 관리", path: "/admin/payments", color: "var(--secondary)" },
 ];
 
 // 4탭 IA(concept): 홈/재료/리포트/설정. 관찰은 홈·재료의 진행중 테스트 카드에서 진입(라우트 유지),
@@ -157,25 +157,25 @@ export default function Layout() {
             {user ? (
               <div className="flex items-center gap-0">
                 <Link to="/notifications">
-                  <button title="알림" className="p-[11px] rounded-full hover:bg-[#6FA07A]/30 transition-colors text-foreground relative">
+                  <button title="알림" className="p-[11px] rounded-full hover:bg-warm-cta/30 transition-colors text-foreground relative">
                     <Bell className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
                     {unreadCount > 0 && (
-                      <span className="absolute top-1.5 right-1.5 min-w-[16px] h-[16px] px-1 bg-[#CF7B5E] rounded-full text-[9px] leading-[16px] text-[#2B3A31] font-bold text-center">
+                      <span className="absolute top-1.5 right-1.5 min-w-[16px] h-[16px] px-1 bg-terracotta rounded-full text-[9px] leading-[16px] text-warm-fg font-bold text-center">
                         {unreadCount > 9 ? "9+" : unreadCount}
                       </span>
                     )}
                   </button>
                 </Link>
                 <Link to="/profile">
-                  <button title="프로필" className="p-[11px] rounded-full hover:bg-[#6FA07A]/30 transition-colors text-foreground">
+                  <button title="프로필" className="p-[11px] rounded-full hover:bg-warm-cta/30 transition-colors text-foreground">
                     <User className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
                   </button>
                 </Link>
               </div>
             ) : (
               <Link to="/login">
-                <button className="text-[#2B3A31] px-4 py-1.5 text-sm rounded-full font-semibold shadow-md
-                  bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_50%,#A9C6B0_100%)]">
+                <button className="text-warm-fg px-4 py-1.5 text-sm rounded-full font-semibold shadow-md
+                  bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_50%,var(--secondary)_100%)]">
                   로그인
                 </button>
               </Link>
@@ -287,22 +287,22 @@ export default function Layout() {
                 {!user.isAdmin && (
                   <>
                     <Link to="/profile">
-                      <button title="프로필" className="p-2.5 rounded-full hover:bg-[#6FA07A]/30 transition-colors text-foreground">
+                      <button title="프로필" className="p-2.5 rounded-full hover:bg-warm-cta/30 transition-colors text-foreground">
                         <User size={22} />
                       </button>
                     </Link>
                     <Link to="/notifications">
-                      <button title="알림" className="p-2.5 rounded-full hover:bg-[#6FA07A]/30 transition-colors text-foreground relative">
+                      <button title="알림" className="p-2.5 rounded-full hover:bg-warm-cta/30 transition-colors text-foreground relative">
                         <Bell size={22} />
                         {unreadCount > 0 && (
-                          <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-[#CF7B5E] rounded-full text-[10px] leading-[18px] text-[#2B3A31] font-bold text-center">
+                          <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-terracotta rounded-full text-[10px] leading-[18px] text-warm-fg font-bold text-center">
                             {unreadCount > 9 ? "9+" : unreadCount}
                           </span>
                         )}
                       </button>
                     </Link>
                     <Link to="/settings">
-                      <button title="설정" className="p-2.5 rounded-full hover:bg-[#6FA07A]/30 transition-colors text-foreground">
+                      <button title="설정" className="p-2.5 rounded-full hover:bg-warm-cta/30 transition-colors text-foreground">
                         <Settings size={22} />
                       </button>
                     </Link>
@@ -312,7 +312,7 @@ export default function Layout() {
                 <button
                   onClick={handleLogout}
                   title="로그아웃"
-                  className="lg:hidden p-2.5 rounded-full hover:bg-[#6FA07A]/30 transition-colors text-foreground ml-1"
+                  className="lg:hidden p-2.5 rounded-full hover:bg-warm-cta/30 transition-colors text-foreground ml-1"
                 >
                   <LogOut size={18} />
                 </button>
@@ -320,7 +320,7 @@ export default function Layout() {
                 <button
                   onClick={handleLogout}
                   title="로그아웃"
-                  className="hidden lg:flex items-center gap-1.5 px-4 py-2 text-sm rounded-full border border-border hover:bg-[#6FA07A]/20 transition-colors ml-1"
+                  className="hidden lg:flex items-center gap-1.5 px-4 py-2 text-sm rounded-full border border-border hover:bg-warm-cta/20 transition-colors ml-1"
                 >
                   <LogOut size={16} />
                   로그아웃
@@ -328,9 +328,9 @@ export default function Layout() {
               </>
             ) : (
               <Link to="/login">
-                <button className="text-[#2B3A31] px-5 py-2 text-sm rounded-full font-semibold transition-opacity shadow-md whitespace-nowrap
-                  bg-[radial-gradient(ellipse_at_center,#FDFBF5_0%,#EFE9DA_50%,#A9C6B0_100%)]
-                  hover:bg-[radial-gradient(ellipse_at_center,#EFE9DA_0%,#A9C6B0_100%)]">
+                <button className="text-warm-fg px-5 py-2 text-sm rounded-full font-semibold transition-opacity shadow-md whitespace-nowrap
+                  bg-[radial-gradient(ellipse_at_center,var(--warm-surface)_0%,var(--warm-surface-soft)_50%,var(--secondary)_100%)]
+                  hover:bg-[radial-gradient(ellipse_at_center,var(--warm-surface-soft)_0%,var(--secondary)_100%)]">
                   로그인 / 회원가입
                 </button>
               </Link>
@@ -349,8 +349,8 @@ export default function Layout() {
                   to={item.path}
                   className={`text-sm sm:text-base font-semibold px-3 sm:px-4 py-1.5 rounded-full whitespace-nowrap transition-colors ${
                     location.pathname === item.path
-                      ? "bg-[#6FA07A]/40 text-foreground"
-                      : "text-muted-foreground hover:bg-[#6FA07A]/20"
+                      ? "bg-warm-cta/40 text-foreground"
+                      : "text-muted-foreground hover:bg-warm-cta/20"
                   }`}
                 >
                   {item.label}
@@ -363,8 +363,8 @@ export default function Layout() {
                   to={item.path}
                   className={`text-sm sm:text-base font-semibold px-3 sm:px-4 py-1 rounded-full whitespace-nowrap transition-colors ${
                     location.pathname.startsWith(item.path)
-                      ? "bg-[#6FA07A]/40 text-foreground"
-                      : "text-muted-foreground hover:bg-[#6FA07A]/20"
+                      ? "bg-warm-cta/40 text-foreground"
+                      : "text-muted-foreground hover:bg-warm-cta/20"
                   }`}
                 >
                   {item.label}

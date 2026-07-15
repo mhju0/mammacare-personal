@@ -39,10 +39,10 @@ const AGE_GROUP_OPTIONS = [
 ];
 
 const PROVIDER_COLORS: Record<string, string> = {
-  google: "#A9C6B0",
-  kakao: "#F0DFAE",
-  naver: "#A9C6B0",
-  local: "#A9C6B0",
+  google: "var(--secondary)",
+  kakao: "var(--honey-100)",
+  naver: "var(--secondary)",
+  local: "var(--secondary)",
 };
 const PROVIDER_LABELS: Record<string, string> = {
   google: "구글",
@@ -50,15 +50,15 @@ const PROVIDER_LABELS: Record<string, string> = {
   naver: "네이버",
   local: "이메일",
 };
-const SEVERITY_COLORS = ["#A9C6B0", "#F0DFAE", "#E3A24C", "#E0A48F", "#DDE8DD"];
+const SEVERITY_COLORS = ["var(--secondary)", "var(--honey-100)", "var(--honey)", "var(--terracotta-200)", "var(--sage-100)"];
 const STATUS_LABELS: Record<string, string> = {
   planned: "예정",
   done: "완료",
   skipped: "건너뜀",
 };
-const CHART_PRIMARY = "#A9C6B0";
-const CHART_GREEN = "#A9C6B0";
-const CHART_YELLOW = "#F0DFAE";
+const CHART_PRIMARY = "var(--secondary)";
+const CHART_GREEN = "var(--secondary)";
+const CHART_YELLOW = "var(--honey-100)";
 
 // ── 공통 컴포넌트 ──────────────────────────────────────────
 
@@ -128,8 +128,8 @@ function FilterSelect({
         type="button"
         onClick={() => setOpen((o) => !o)}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
-        className="px-3 py-2 rounded-xl border border-[#DDE8DD] bg-[#FDFBF5]/80
-          focus:outline-none focus:ring-2 focus:ring-[#EAF1EA] text-sm font-semibold
+        className="px-3 py-2 rounded-xl border border-sage-100 bg-warm-surface/80
+          focus:outline-none focus:ring-2 focus:ring-sage-50 text-sm font-semibold
           flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
       >
         {selected?.label ?? value}
@@ -145,14 +145,14 @@ function FilterSelect({
             zIndex: 9999,
             ...(maxWidth !== undefined && { maxWidth }),
           }}
-          className="overflow-hidden bg-[#EAF1EA] border border-[#DDE8DD] rounded-3xl shadow-lg"
+          className="overflow-hidden bg-sage-50 border border-sage-100 rounded-3xl shadow-lg"
         >
           {options.map((o) => (
             <button
               key={o.value}
               onMouseDown={(e) => { e.preventDefault(); onChange(o.value); setOpen(false); }}
-              className={`w-full px-3 py-2.5 text-sm text-left font-medium transition-colors hover:bg-[#FDFBF5]/70 whitespace-nowrap ${
-                o.value === value ? "bg-[#FDFBF5]/70" : ""
+              className={`w-full px-3 py-2.5 text-sm text-left font-medium transition-colors hover:bg-warm-surface/70 whitespace-nowrap ${
+                o.value === value ? "bg-warm-surface/70" : ""
               }`}
             >
               {o.label}
@@ -245,7 +245,7 @@ export default function AdminData() {
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-2.5 px-3 py-1 rounded-full font-medium text-base whitespace-nowrap transition-colors ${
               activeTab === tab.id
-                ? "bg-[#EFE9DA] hover:opacity-70 font-semibold transition-colors"
+                ? "bg-warm-surface-soft hover:opacity-70 font-semibold transition-colors"
                 : "bg-card text-muted-foreground hover:bg-muted"
             }`}
           >
@@ -337,7 +337,7 @@ export default function AdminData() {
                   <span className="text-lg font-bold">{data?.testing_completion_rate ?? 0}%</span>
                 </div>
                 <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full rounded-full bg-[#A9C6B0] transition-all" style={{ width: `${data?.testing_completion_rate ?? 0}%` }} />
+                  <div className="h-full rounded-full bg-secondary transition-all" style={{ width: `${data?.testing_completion_rate ?? 0}%` }} />
                 </div>
               </div>
               <div className="bg-card border border-border rounded-2xl p-5">
@@ -346,7 +346,7 @@ export default function AdminData() {
                   <span className="text-lg font-bold">{data?.schedule_completion_rate ?? 0}%</span>
                 </div>
                 <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full rounded-full bg-[#A9C6B0] transition-all" style={{ width: `${data?.schedule_completion_rate ?? 0}%` }} />
+                  <div className="h-full rounded-full bg-secondary transition-all" style={{ width: `${data?.schedule_completion_rate ?? 0}%` }} />
                 </div>
               </div>
             </>
@@ -405,7 +405,7 @@ export default function AdminData() {
                   <XAxis type="number" tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" allowDecimals={false} />
                   <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" width={60} />
                   <Tooltip contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: 12, fontSize: 13 }} />
-                  <Bar dataKey="count" name="확진 수" fill="#E0A48F" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="count" name="확진 수" fill="var(--terracotta-200)" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -475,7 +475,7 @@ export default function AdminData() {
                   <XAxis dataKey="age_group" tick={{ fontSize: 10 }} stroke="var(--muted-foreground)" />
                   <YAxis tick={{ fontSize: 11 }} stroke="var(--muted-foreground)" allowDecimals={false} />
                   <Tooltip contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: 12, fontSize: 13 }} />
-                  <Bar dataKey="count" name="아기 수" fill="#A9C6B0" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="count" name="아기 수" fill="var(--secondary)" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -501,7 +501,7 @@ export default function AdminData() {
                   />
                   <Legend iconSize={10} wrapperStyle={{ fontSize: 12 }} formatter={(v) => v === "avg_weight" ? "평균 체중(kg)" : "평균 키(cm)"} />
                   <Bar dataKey="avg_weight" name="avg_weight" fill={CHART_PRIMARY} radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="avg_height" name="avg_height" fill="#E3A24C" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="avg_height" name="avg_height" fill="var(--honey)" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}

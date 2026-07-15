@@ -147,10 +147,10 @@ function Field({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={`w-full px-3 py-2 rounded-xl text-base font-normal
-          border bg-[#FDFBF5]/80 focus:outline-none focus:ring-2 ${
+          border bg-warm-surface/80 focus:outline-none focus:ring-2 ${
             errorMsg
               ? "border-destructive focus:ring-destructive/20"
-              : "border-[#DDE8DD] focus:ring-[#EAF1EA]"
+              : "border-sage-100 focus:ring-sage-50"
           }`}
         />
       ) : (
@@ -267,7 +267,7 @@ function AccountInfoModal({ onClose }: { onClose: () => void }) {
                 <button
                   onClick={handleSave}
                   disabled={saving || !form.name.trim() || !form.email.trim()}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold bg-[#DCEADE]
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold bg-sage-150
                   text-primary-foreground rounded-full hover:opacity-80 transition-opacity
                   disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -283,7 +283,7 @@ function AccountInfoModal({ onClose }: { onClose: () => void }) {
                 <button
                   onClick={() => setIsEditing(true)}
                   className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold border border-border
-                  rounded-full hover:bg-[#DCEADE] transition-colors"
+                  rounded-full hover:bg-sage-150 transition-colors"
                 >
                   <Edit3 size={13} /> 수정
                 </button>
@@ -319,8 +319,8 @@ function AccountInfoModal({ onClose }: { onClose: () => void }) {
           <button
             onClick={onClose}
             className="w-full py-3 rounded-full text-primary-foreground text-base font-bold 
-                bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#E7F0E4_0%,#E7F0E4_100%)] transition-opacity disabled:opacity-40"
+                bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)] 
+                hover:bg-[radial-gradient(ellipse_at_center,var(--safe-bg)_0%,var(--safe-bg)_100%)] transition-opacity disabled:opacity-40"
           >
             닫기
           </button>
@@ -461,7 +461,7 @@ function PasswordField({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className="w-full px-3 py-2 pr-10 rounded-xl text-base font-normal
-          border border-[#DDE8DD] bg-[#FDFBF5]/80 focus:outline-none focus:ring-2 focus:ring-[#EAF1EA]"
+          border border-sage-100 bg-warm-surface/80 focus:outline-none focus:ring-2 focus:ring-sage-50"
         />
         <button
           type="button"
@@ -568,7 +568,7 @@ function PasswordChangeModal({ onClose }: { onClose: () => void }) {
             onClick={onClose}
             disabled={saving}
             className="flex-1 py-3 rounded-full border border-border text-sm 
-              font-semibold hover:bg-[radial-gradient(ellipse_at_center,#E7F0E4_0%,#E7F0E4_100%)] transition-colors"
+              font-semibold hover:bg-[radial-gradient(ellipse_at_center,var(--safe-bg)_0%,var(--safe-bg)_100%)] transition-colors"
           >
             닫기
           </button>
@@ -576,8 +576,8 @@ function PasswordChangeModal({ onClose }: { onClose: () => void }) {
             onClick={handleSave}
             disabled={!currentPassword || !newPassword || !confirmPassword || saving}
             className="flex-1 py-3 rounded-full text-primary-foreground text-sm font-bold 
-                bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#E7F0E4_0%,#E7F0E4_100%)] transition-opacity disabled:opacity-40"
+                bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)] 
+                hover:bg-[radial-gradient(ellipse_at_center,var(--safe-bg)_0%,var(--safe-bg)_100%)] transition-opacity disabled:opacity-40"
           >
             {saving ? "변경 중" : "저장"}
           </button>
@@ -1066,7 +1066,7 @@ export default function Settings() {
                   onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                   placeholder="답변 받으실 이메일 주소"
                   className="w-full px-3 py-2 rounded-xl text-base font-normal
-                  border border-[#DDE8DD] bg-[#FDFBF5]/80 focus:outline-none focus:ring-2 focus:ring-[#EAF1EA]"
+                  border border-sage-100 bg-warm-surface/80 focus:outline-none focus:ring-2 focus:ring-sage-50"
                 />
               </div>
               <div>
@@ -1077,7 +1077,7 @@ export default function Settings() {
                   onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
                   placeholder="문의 제목"
                   className="w-full px-3 py-2 rounded-xl text-base font-normal
-                  border border-[#DDE8DD] bg-[#FDFBF5]/80 focus:outline-none focus:ring-2 focus:ring-[#EAF1EA]"
+                  border border-sage-100 bg-warm-surface/80 focus:outline-none focus:ring-2 focus:ring-sage-50"
                 />
               </div>
               <div>
@@ -1087,7 +1087,7 @@ export default function Settings() {
                   onChange={(e) => setContactForm({ ...contactForm, content: e.target.value })}
                   placeholder="문의하실 내용을 입력해주세요"
                   className="w-full px-3 py-2 rounded-xl text-base font-normal resize-none
-                  border border-[#DDE8DD] bg-[#FDFBF5]/80 focus:outline-none focus:ring-2 focus:ring-[#EAF1EA]"
+                  border border-sage-100 bg-warm-surface/80 focus:outline-none focus:ring-2 focus:ring-sage-50"
                   rows={3}
                 />
               </div>
@@ -1101,7 +1101,7 @@ export default function Settings() {
                 onClick={() => { setShowContactModal(false); setContactError(null); }}
                 disabled={contactSubmitting}
                 className="flex-1 py-3 rounded-full border border-border text-sm 
-                  font-semibold hover:bg-[radial-gradient(ellipse_at_center,#E7F0E4_0%,#E7F0E4_100%)] transition-colors"
+                  font-semibold hover:bg-[radial-gradient(ellipse_at_center,var(--safe-bg)_0%,var(--safe-bg)_100%)] transition-colors"
               >
                 취소
               </button>
@@ -1109,8 +1109,8 @@ export default function Settings() {
                 onClick={handleContactSubmit}
                 disabled={!contactForm.email || !contactForm.subject || !contactForm.content || contactSubmitting}
                 className="flex-1 py-3 rounded-full text-primary-foreground text-sm font-bold 
-                    bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)] 
-                    hover:bg-[radial-gradient(ellipse_at_center,#E7F0E4_0%,#E7F0E4_100%)] transition-opacity disabled:opacity-40"
+                    bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)] 
+                    hover:bg-[radial-gradient(ellipse_at_center,var(--safe-bg)_0%,var(--safe-bg)_100%)] transition-opacity disabled:opacity-40"
               >
                 {contactSubmitting ? "전송 중" : "문의하기"}
               </button>
@@ -1137,8 +1137,8 @@ export default function Settings() {
               <button
                 onClick={() => { logout(); navigate("/"); setShowLogoutConfirm(false); }}
                 className="flex-1 py-3 rounded-full text-primary-foreground text-sm font-bold
-                bg-[radial-gradient(ellipse_at_center,#EAF1EA_0%,#E7F0E4_50%,#DCEADE_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#E7F0E4_0%,#E7F0E4_100%)] transition-opacity"
+                bg-[radial-gradient(ellipse_at_center,var(--sage-50)_0%,var(--safe-bg)_50%,var(--sage-150)_100%)]
+                hover:bg-[radial-gradient(ellipse_at_center,var(--safe-bg)_0%,var(--safe-bg)_100%)] transition-opacity"
               >
                 네
               </button>
@@ -1165,15 +1165,15 @@ export default function Settings() {
               <button
                 onClick={() => setShowDeleteConfirm(false)}
                 className="flex-1 py-3 rounded-full border border-border text-sm font-semibold 
-                hover:bg-[radial-gradient(ellipse_at_center,#F6E6DF_0%,#F2D9CE_100%)] transition-opacity"
+                hover:bg-[radial-gradient(ellipse_at_center,var(--terracotta-50)_0%,var(--terracotta-100)_100%)] transition-opacity"
               >
                 취소
               </button>
               <button
                 onClick={handleDeleteProfile}
                 className="flex-1 py-3 rounded-full text-primary-foreground text-sm font-bold 
-                bg-[radial-gradient(ellipse_at_center,#F2D9CE_0%,#E8BCA9_100%)] 
-                hover:bg-[radial-gradient(ellipse_at_center,#F6E6DF_0%,#F2D9CE_100%)] transition-opacity disabled:opacity-40"
+                bg-[radial-gradient(ellipse_at_center,var(--terracotta-100)_0%,var(--terracotta-150)_100%)] 
+                hover:bg-[radial-gradient(ellipse_at_center,var(--terracotta-50)_0%,var(--terracotta-100)_100%)] transition-opacity disabled:opacity-40"
               >
                 삭제하기
               </button>
@@ -1201,7 +1201,7 @@ export default function Settings() {
                 onClick={() => setShowWithdrawConfirm(false)}
                 disabled={withdrawing}
                 className="flex-1 py-3 rounded-full border border-border text-sm font-semibold
-                hover:bg-[radial-gradient(ellipse_at_center,#F6E6DF_0%,#F2D9CE_100%)] transition-opacity disabled:opacity-40"
+                hover:bg-[radial-gradient(ellipse_at_center,var(--terracotta-50)_0%,var(--terracotta-100)_100%)] transition-opacity disabled:opacity-40"
               >
                 취소
               </button>
@@ -1209,8 +1209,8 @@ export default function Settings() {
                 onClick={handleWithdraw}
                 disabled={withdrawing}
                 className="flex-1 py-3 rounded-full text-primary-foreground text-sm font-bold
-                bg-[radial-gradient(ellipse_at_center,#F2D9CE_0%,#E8BCA9_100%)]
-                hover:bg-[radial-gradient(ellipse_at_center,#F6E6DF_0%,#F2D9CE_100%)] transition-opacity disabled:opacity-40"
+                bg-[radial-gradient(ellipse_at_center,var(--terracotta-100)_0%,var(--terracotta-150)_100%)]
+                hover:bg-[radial-gradient(ellipse_at_center,var(--terracotta-50)_0%,var(--terracotta-100)_100%)] transition-opacity disabled:opacity-40"
               >
                 {withdrawing ? "탈퇴 중" : "탈퇴하기"}
               </button>

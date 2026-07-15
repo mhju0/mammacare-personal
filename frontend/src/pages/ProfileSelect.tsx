@@ -11,10 +11,10 @@ import type { BabyProfile } from "../context/AppContext";
 
 function DefaultProfileIcon({ gender }: { gender: BabyProfile["gender"] }) {
   const strokeColor =
-    gender === "girl" ? "#CF7B5E" : gender === "boy" ? "#A9C6B0" : "#A1A1A1";
+    gender === "girl" ? "var(--terracotta)" : gender === "boy" ? "var(--secondary)" : "#A1A1A1";
 
   return (
-    <div className="w-full h-full flex items-center justify-center bg-[#FDFBF5]">
+    <div className="w-full h-full flex items-center justify-center bg-warm-surface">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -80,7 +80,7 @@ export default function ProfileSelect() {
             onClick={() => handleSelectBaby(baby.id)}
             className="group flex flex-col items-center gap-3 p-4 rounded-2xl hover:bg-primary/10 transition-all duration-200"
           >
-            <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-transparent group-hover:border-[#EFE9DA] transition-all duration-200 shadow-md">
+            <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-transparent group-hover:border-warm-surface-soft transition-all duration-200 shadow-md">
               {baby.photo ? (
                 <AuthImage src={baby.photo} alt={baby.name} className="w-full h-full object-cover" />
               ) : (
@@ -95,8 +95,8 @@ export default function ProfileSelect() {
                 className="inline-flex items-center gap-1.5 h-8 text-base text-foreground px-3 rounded-full font-semibold"
                 style={{
                   background: baby.gender === "girl"
-                    ? "radial-gradient(ellipse at center, #FDFBF5 0%, #CF7B5E 100%)"
-                    : "radial-gradient(ellipse at center, #EAF1EA 0%, #A9C6B0 100%)",
+                    ? "radial-gradient(ellipse at center, var(--warm-surface) 0%, var(--terracotta) 100%)"
+                    : "radial-gradient(ellipse at center, var(--sage-50) 0%, var(--secondary) 100%)",
                 }}
               >
                 {baby.gender === "girl" ? <><Venus size={16} /> 여아</> : <><Mars size={16} /> 남아</>}
@@ -110,7 +110,7 @@ export default function ProfileSelect() {
           onClick={() => setShowAddModal(true)}
           className="group flex flex-col items-center gap-3 p-4 rounded-2xl hover:bg-primary/10 transition-all duration-200"
         >
-          <div className="w-28 h-28 rounded-full border-4 border-dashed border-border group-hover:border-[#EFE9DA] flex items-center justify-center bg-muted/30 transition-all duration-200">
+          <div className="w-28 h-28 rounded-full border-4 border-dashed border-border group-hover:border-warm-surface-soft flex items-center justify-center bg-muted/30 transition-all duration-200">
             <Plus className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground transition-colors" />
           </div>
           <span className="text-lg font-bold text-foreground transition-colors">
@@ -140,7 +140,7 @@ export default function ProfileSelect() {
               </div>
               <div className="overflow-y-auto px-6 pb-5
                 [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar-track]:rounded-full
-                [&::-webkit-scrollbar-thumb]:bg-[#DCEADE] [&::-webkit-scrollbar-thumb]:rounded-full">
+                [&::-webkit-scrollbar-thumb]:bg-sage-150 [&::-webkit-scrollbar-thumb]:rounded-full">
                 <BabyInfoForm
                   initial={DEFAULT_BABY_FORM}
                   onSave={handleAddSave}
