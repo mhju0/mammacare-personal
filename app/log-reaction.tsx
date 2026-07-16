@@ -95,6 +95,7 @@ export default function LogReaction() {
 
       <Text style={{ fontSize: 14, fontWeight: '600', color: colors.text }}>{t('reaction.when')}</Text>
       <DateTimePicker
+        locale="ko-KR"
         value={occurredAt}
         mode="datetime"
         maximumDate={new Date()}

@@ -33,6 +33,7 @@ function SetupCard() {
       />
       <Text style={{ fontSize: 13, fontWeight: '600', color: colors.text }}>{t('setup.birthdate')}</Text>
       <DateTimePicker
+        locale="ko-KR"
         value={birthdate}
         mode="date"
         maximumDate={new Date()}

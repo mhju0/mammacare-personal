@@ -4,10 +4,9 @@ import { Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import migrations from '../drizzle/migrations';
-import i18n from '../src/i18n';
+import '../src/i18n';
 import { db } from '../src/db/client';
 import { seedIfEmpty } from '../src/db/seed';
-import { useBaby } from '../src/data/queries';
 import { initNotificationHandler } from '../src/services/notify';
 import { colors } from '../src/ui/tokens';
 
@@ -30,16 +29,11 @@ export default function RootLayout() {
     );
   }
   if (!success || !seeded) return null;
-  return <LocalizedStack />;
+  return <AppStack />;
 }
 
-function LocalizedStack() {
-  const { t } = useTranslation(); // subscribes — titles relabel on language change
-  const baby = useBaby();
-  useEffect(() => {
-    if (baby?.locale && i18n.language !== baby.locale) i18n.changeLanguage(baby.locale);
-  }, [baby?.locale]);
-
+function AppStack() {
+  const { t } = useTranslation();
   return (
     <Stack
       screenOptions={{

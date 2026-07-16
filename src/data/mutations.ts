@@ -76,12 +76,12 @@ export async function saveBaby(data: { name: string; birthdate: Date }): Promise
   if (rows[0]) {
     await db.update(baby).set(data).where(eq(baby.id, rows[0].id));
   } else {
-    await db.insert(baby).values({ id: newId(), ...data, defaultWindowDays: 3, locale: null });
+    await db.insert(baby).values({ id: newId(), ...data, defaultWindowDays: 3 });
   }
 }
 
 export async function updateBabySettings(
-  patch: Partial<{ name: string; birthdate: Date; defaultWindowDays: number; locale: string | null }>,
+  patch: Partial<{ name: string; birthdate: Date; defaultWindowDays: number }>,
 ): Promise<void> {
   const rows = await db.select().from(baby);
   if (rows[0]) await db.update(baby).set(patch).where(eq(baby.id, rows[0].id));

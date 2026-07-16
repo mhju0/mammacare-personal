@@ -1,0 +1,1 @@
+ALTER TABLE `baby` DROP COLUMN `locale`;

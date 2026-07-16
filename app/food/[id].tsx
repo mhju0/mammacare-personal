@@ -93,7 +93,7 @@ export default function FoodDetail() {
             {tr.outcome ? t(`food.outcome.${tr.outcome}`) : t('status.testing')}
           </Text>
           <Text style={{ fontSize: 12, color: colors.textMuted }}>
-            {t('food.startedOn', { date: tr.startedAt.toLocaleDateString() })}
+            {t('food.startedOn', { date: tr.startedAt.toLocaleDateString('ko-KR') })}
           </Text>
           {reactions.filter((r) => r.trialId === tr.id).map((r) => (
             <Text key={r.id} style={{ fontSize: 12, color: colors.danger }}>

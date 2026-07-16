@@ -55,8 +55,6 @@
     "title": "설정",
     "babySection": "아기",
     "window": "관찰 기간 (일)",
-    "language": "언어",
-    "languageSystem": "시스템 설정",
     "exportSection": "내보내기",
     "exportPdf": "진료용 리포트 (PDF)",
     "exportJson": "데이터 백업 (JSON)",

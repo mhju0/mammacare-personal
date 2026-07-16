@@ -18,7 +18,7 @@ never leaves the phone.**
 ## Stack
 Expo (React Native, TypeScript) · Expo Router · expo-sqlite + Drizzle ORM
 (on-device relational DB, statuses derived at read time, never stored) ·
-expo-notifications (all local) · i18next (EN/KO) · Jest.
+expo-notifications (all local) · i18next (한국어 전용 UI) · Jest.
 
 ## Run
 ```bash

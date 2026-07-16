@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Allergies",
+    "name": "알레르기",
     "slug": "allergy-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -36,7 +36,6 @@
       ],
       "expo-sqlite",
       "expo-sharing",
-      "expo-localization",
       "@react-native-community/datetimepicker"
     ],
     "experiments": {

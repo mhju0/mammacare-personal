@@ -15,7 +15,7 @@ import { colors } from '../src/ui/tokens';
 import { buildBackup, buildReportHtml } from '../src/services/export';
 
 export default function Settings() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const baby = useBaby();
   const foods = useFoodsWithStatus();
   const reactions = useReactions();
@@ -29,8 +29,8 @@ export default function Settings() {
       const tried = foods.filter((f) => f.trials.some((tr) => tr.outcome !== 'cancelled'));
       const html = buildReportHtml({
         title: t('report.title'),
-        babyLine: t('report.babyLine', { name: baby.name, birthdate: baby.birthdate.toLocaleDateString() }),
-        generatedLine: t('report.generated', { date: new Date().toLocaleDateString() }),
+        babyLine: t('report.babyLine', { name: baby.name, birthdate: baby.birthdate.toLocaleDateString('ko-KR') }),
+        generatedLine: t('report.generated', { date: new Date().toLocaleDateString('ko-KR') }),
         foodsHeading: t('report.foodsTried'),
         reactionsHeading: t('report.reactionsSection'),
         noneLabel: t('report.none'),
@@ -38,13 +38,13 @@ export default function Settings() {
         rows: tried.map((f) => ({
           food: foodLabel(f.food),
           status: t(`status.${f.status}`),
-          lastTried: f.latest?.startedAt.toLocaleDateString() ?? '',
+          lastTried: f.latest?.startedAt.toLocaleDateString('ko-KR') ?? '',
         })),
         reactionRows: reactions.map((r) => {
           const tr = foods.flatMap((f) => f.trials.map((x) => ({ f, x }))).find((p) => p.x.id === r.trialId);
           return {
             food: tr ? foodLabel(tr.f.food) : '',
-            date: r.occurredAt.toLocaleDateString(),
+            date: r.occurredAt.toLocaleDateString('ko-KR'),
             severity: t(`reaction.severityLevel.${r.severity}`),
             symptoms: r.symptoms.map((s) => t(`reaction.symptom.${s}`)).join(', '),
             note: r.note ?? '',
@@ -89,6 +89,7 @@ export default function Settings() {
 
       <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text }}>{t('setup.birthdate')}</Text>
       <DateTimePicker
+        locale="ko-KR"
         value={baby.birthdate}
         mode="date"
         maximumDate={new Date()}
@@ -105,29 +106,6 @@ export default function Settings() {
                 borderColor: on ? colors.accent : colors.border,
                 backgroundColor: on ? colors.accent : colors.bg }}>
               <Text style={{ color: on ? colors.bg : colors.text }}>{d}</Text>
-            </Pressable>
-          );
-        })}
-      </View>
-
-      <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text }}>{t('settings.language')}</Text>
-      <View style={{ flexDirection: 'row', gap: 8 }}>
-        {([
-          { key: null, label: t('settings.languageSystem') },
-          { key: 'en', label: 'English' },
-          { key: 'ko', label: '한국어' },
-        ] as const).map((opt) => {
-          const on = baby.locale === opt.key;
-          return (
-            <Pressable key={String(opt.key)}
-              onPress={async () => {
-                await updateBabySettings({ locale: opt.key });
-                if (opt.key) i18n.changeLanguage(opt.key);
-              }}
-              style={{ flex: 1, paddingVertical: 10, borderRadius: 10, alignItems: 'center', borderWidth: 1,
-                borderColor: on ? colors.accent : colors.border,
-                backgroundColor: on ? colors.accent : colors.bg }}>
-              <Text style={{ color: on ? colors.bg : colors.text, fontSize: 13 }}>{opt.label}</Text>
             </Pressable>
           );
         })}

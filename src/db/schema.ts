@@ -5,7 +5,6 @@ export const baby = sqliteTable('baby', {
   name: text('name').notNull(),
   birthdate: integer('birthdate', { mode: 'timestamp' }).notNull(),
   defaultWindowDays: integer('default_window_days').notNull().default(3),
-  locale: text('locale'), // null = follow system; 'en' | 'ko'
 });
 
 export const food = sqliteTable('food', {
