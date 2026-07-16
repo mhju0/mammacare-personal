@@ -9,6 +9,13 @@ export function useBaby(): Baby | undefined {
   return data?.[0];
 }
 
+// updatedAt stays undefined until the live query resolves for the first time —
+// lets callers avoid a setup-card flash before the DB has actually reported "no baby".
+export function useBabyLoaded(): boolean {
+  const { updatedAt } = useLiveQuery(db.select().from(baby));
+  return updatedAt !== undefined;
+}
+
 export type FoodWithStatus = { food: Food; trials: Trial[]; status: FoodStatus; latest: Trial | undefined };
 
 export function useFoodsWithStatus(): FoodWithStatus[] {

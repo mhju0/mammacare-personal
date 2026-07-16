@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -11,6 +11,8 @@ import { colors } from '../src/ui/tokens';
 
 const SYMPTOMS = ['hives', 'rash', 'vomiting', 'diarrhea', 'swelling', 'breathing', 'other'] as const;
 const SEVERITIES = ['mild', 'moderate', 'severe'] as const;
+const labelStyle = { fontSize: 11, fontWeight: '800' as const, letterSpacing: 1.5, color: colors.muted, marginTop: 18, marginBottom: 8 };
+const underlineBorder = { borderBottomWidth: 2, borderColor: colors.hairline, paddingVertical: 10 };
 
 export default function LogReaction() {
   const { t } = useTranslation();
@@ -42,25 +44,38 @@ export default function LogReaction() {
         new Date(),
       );
       if (navigation.isFocused()) router.back();
+    } catch {
+      Alert.alert(t('errors.generic'));
     } finally {
       saving.current = false;
     }
   };
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 20, gap: 14 }}>
-      <Text style={{ fontSize: 22, fontWeight: '700', color: colors.text }}>{foodLabel(entry.food)}</Text>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 22, paddingTop: 12, backgroundColor: colors.paper }}>
+      <Text style={{ fontSize: 10, fontWeight: '700', letterSpacing: 2.2, color: colors.muted, textAlign: 'center', paddingBottom: 12 }}>
+        {t('reaction.title')}
+      </Text>
+      <Text style={{ fontSize: 40, fontWeight: '900', color: colors.ink, letterSpacing: -0.5 }}>
+        {foodLabel(entry.food)}
+      </Text>
 
-      <Text style={{ fontSize: 14, fontWeight: '600', color: colors.text }}>{t('reaction.symptoms')}</Text>
+      <Text style={labelStyle}>{t('reaction.symptoms')}</Text>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
         {SYMPTOMS.map((s) => {
           const on = symptoms.includes(s);
           return (
-            <Pressable key={s} onPress={() => toggle(s)}
-              style={{ paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999, borderWidth: 1,
-                borderColor: on ? colors.accent : colors.border,
-                backgroundColor: on ? colors.accent : colors.bg }}>
-              <Text style={{ color: on ? colors.bg : colors.text, fontSize: 13 }}>
+            <Pressable
+              key={s}
+              accessibilityRole="button"
+              onPress={() => toggle(s)}
+              style={{
+                paddingHorizontal: 13, paddingVertical: 8, borderRadius: 999, borderWidth: 1.5,
+                borderColor: on ? colors.ink : colors.hairline,
+                backgroundColor: on ? colors.ink : 'transparent',
+              }}
+            >
+              <Text style={{ color: on ? colors.paper : colors.ink, fontSize: 13, fontWeight: '600' }}>
                 {t(`reaction.symptom.${s}`)}
               </Text>
             </Pressable>
@@ -68,16 +83,21 @@ export default function LogReaction() {
         })}
       </View>
 
-      <Text style={{ fontSize: 14, fontWeight: '600', color: colors.text }}>{t('reaction.severity')}</Text>
-      <View style={{ flexDirection: 'row', gap: 8 }}>
+      <Text style={labelStyle}>{t('reaction.severity')}</Text>
+      <View style={{ flexDirection: 'row', borderWidth: 1.5, borderColor: colors.ink, borderRadius: 999, overflow: 'hidden' }}>
         {SEVERITIES.map((s) => {
           const on = severity === s;
           return (
-            <Pressable key={s} onPress={() => setSeverity(s)}
-              style={{ flex: 1, paddingVertical: 10, borderRadius: 10, alignItems: 'center', borderWidth: 1,
-                borderColor: on ? colors.accent : colors.border,
-                backgroundColor: on ? colors.accent : colors.bg }}>
-              <Text style={{ color: on ? colors.bg : colors.text, fontSize: 14 }}>
+            <Pressable
+              key={s}
+              accessibilityRole="button"
+              onPress={() => setSeverity(s)}
+              style={{
+                flex: 1, alignItems: 'center', paddingVertical: 10,
+                backgroundColor: on ? colors.ink : 'transparent',
+              }}
+            >
+              <Text style={{ color: on ? colors.paper : colors.ink, fontSize: 13, fontWeight: '700' }}>
                 {t(`reaction.severityLevel.${s}`)}
               </Text>
             </Pressable>
@@ -86,32 +106,33 @@ export default function LogReaction() {
       </View>
 
       {showEmergency && (
-        <View style={{ backgroundColor: colors.status.reacted.bg, borderRadius: 10, padding: 12 }}>
-          <Text style={{ color: colors.danger, fontSize: 13, fontWeight: '600' }}>
-            {t('reaction.emergency')}
-          </Text>
+        <View style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors.redTint, paddingVertical: 9, marginTop: 14 }}>
+          <Text style={{ color: colors.red, fontSize: 12.5, fontWeight: '700' }}>{t('reaction.emergency')}</Text>
         </View>
       )}
 
-      <Text style={{ fontSize: 14, fontWeight: '600', color: colors.text }}>{t('reaction.when')}</Text>
-      <DateTimePicker
-        locale="ko-KR"
-        value={occurredAt}
-        mode="datetime"
-        maximumDate={new Date()}
-        onChange={(_, d) => d && setOccurredAt(d)}
-      />
+      <Text style={labelStyle}>{t('reaction.when')}</Text>
+      <View style={underlineBorder}>
+        <DateTimePicker
+          locale="ko-KR"
+          value={occurredAt}
+          mode="datetime"
+          maximumDate={new Date()}
+          onChange={(_, d) => d && setOccurredAt(d)}
+        />
+      </View>
 
-      <Text style={{ fontSize: 14, fontWeight: '600', color: colors.text }}>{t('reaction.note')}</Text>
+      <Text style={labelStyle}>{t('reaction.note')}</Text>
       <TextInput
         value={note}
         onChangeText={setNote}
         multiline
-        style={{ borderWidth: 1, borderColor: colors.border, borderRadius: 10, padding: 12,
-          minHeight: 70, fontSize: 15 }}
+        style={[underlineBorder, { fontSize: 15, color: colors.ink, minHeight: 60 }]}
       />
 
-      <Button label={t('reaction.save')} disabled={symptoms.length === 0} onPress={save} />
+      <View style={{ marginTop: 'auto', paddingTop: 20 }}>
+        <Button label={t('reaction.save')} disabled={symptoms.length === 0} onPress={save} />
+      </View>
     </ScrollView>
   );
 }

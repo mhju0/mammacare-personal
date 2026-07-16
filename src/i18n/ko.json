@@ -10,7 +10,8 @@
     "markSafe": "안전으로 표시",
     "logReaction": "반응 기록",
     "allFoods": "전체 재료",
-    "empty": "아직 테스트 기록이 없어요. “새 재료 시작하기”를 눌러보세요."
+    "empty": "아직 테스트 기록이 없어요. “새 재료 시작하기”를 눌러보세요.",
+    "calendar": "캘린더"
   },
   "setup": {
     "title": "환영해요",
@@ -25,7 +26,9 @@
     "search": "재료 검색…",
     "add": "추가",
     "addPlaceholder": "직접 재료 추가…",
-    "highRisk": "고위험"
+    "customAdd": "직접 추가",
+    "highRisk": "고위험",
+    "empty": "검색 결과가 없어요"
   },
   "food": {
     "startTrial": "{{days}}일 테스트 시작",
@@ -78,6 +81,7 @@
     "colFood": "재료", "colStatus": "상태", "colLastTried": "마지막 시도"
   },
   "common": { "cancel": "취소", "ok": "확인", "notNow": "나중에" },
+  "errors": { "generic": "문제가 발생했어요. 잠시 후 다시 시도해 주세요." },
   "foodName": {
     "egg": "달걀", "milk": "우유", "wheat": "밀", "peanut": "땅콩", "soy": "대두",
     "sesame": "참깨", "shrimp": "새우", "crab": "게", "whitefish": "흰살 생선",

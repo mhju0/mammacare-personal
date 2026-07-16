@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Print from 'expo-print';
@@ -13,6 +13,13 @@ import { foodLabel } from '../src/i18n';
 import { Button } from '../src/ui/Button';
 import { colors } from '../src/ui/tokens';
 import { buildBackup, buildReportHtml } from '../src/services/export';
+
+const labelStyle = { fontSize: 11, fontWeight: '800' as const, letterSpacing: 1.5, color: colors.muted, marginTop: 18, marginBottom: 4 };
+const rowStyle = {
+  flexDirection: 'row' as const, justifyContent: 'space-between' as const, alignItems: 'center' as const,
+  paddingVertical: 14, borderBottomWidth: 1, borderColor: colors.hairline,
+};
+const rowLabelText = { fontSize: 15, fontWeight: '600' as const, color: colors.ink };
 
 export default function Settings() {
   const { t } = useTranslation();
@@ -53,6 +60,8 @@ export default function Settings() {
       });
       const { uri } = await Print.printToFileAsync({ html });
       await Sharing.shareAsync(uri, { mimeType: 'application/pdf', UTI: 'com.adobe.pdf' });
+    } catch {
+      Alert.alert(t('errors.generic'));
     } finally {
       exporting.current = false;
     }
@@ -70,53 +79,72 @@ export default function Settings() {
       const path = `${FileSystem.cacheDirectory}allergy-tracker-backup.json`;
       await FileSystem.writeAsStringAsync(path, json);
       await Sharing.shareAsync(path, { mimeType: 'application/json' });
+    } catch {
+      Alert.alert(t('errors.generic'));
     } finally {
       exporting.current = false;
     }
   };
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 20, gap: 16 }}>
-      <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text }}>{t('settings.babySection')}</Text>
-      <TextInput
-        defaultValue={baby.name}
-        onEndEditing={(e) => {
-          const name = e.nativeEvent.text.trim();
-          if (name) updateBabySettings({ name });
-        }}
-        style={{ borderWidth: 1, borderColor: colors.border, borderRadius: 10, padding: 12, fontSize: 16 }}
-      />
+    <ScrollView contentContainerStyle={{ padding: 22, paddingTop: 12, backgroundColor: colors.paper }}>
+      <Text style={{ fontSize: 10, fontWeight: '700', letterSpacing: 2.2, color: colors.muted, textAlign: 'center', paddingBottom: 12 }}>
+        {t('settings.title')}
+      </Text>
 
-      <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text }}>{t('setup.birthdate')}</Text>
-      <DateTimePicker
-        locale="ko-KR"
-        value={baby.birthdate}
-        mode="date"
-        maximumDate={new Date()}
-        onChange={(_, d) => d && updateBabySettings({ birthdate: d })}
-      />
+      <Text style={[labelStyle, { marginTop: 6 }]}>{t('settings.babySection')}</Text>
+      <View style={rowStyle}>
+        <Text style={rowLabelText}>{t('setup.babyName')}</Text>
+        <TextInput
+          defaultValue={baby.name}
+          onEndEditing={(e) => {
+            const name = e.nativeEvent.text.trim();
+            if (name) updateBabySettings({ name });
+          }}
+          style={{ fontSize: 15, color: colors.muted, textAlign: 'right', flex: 1, marginLeft: 12 }}
+        />
+      </View>
+      <View style={rowStyle}>
+        <Text style={rowLabelText}>{t('setup.birthdate')}</Text>
+        <DateTimePicker
+          locale="ko-KR"
+          value={baby.birthdate}
+          mode="date"
+          maximumDate={new Date()}
+          onChange={(_, d) => d && updateBabySettings({ birthdate: d })}
+        />
+      </View>
 
-      <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text }}>{t('settings.window')}</Text>
-      <View style={{ flexDirection: 'row', gap: 8 }}>
+      <Text style={labelStyle}>{t('settings.window')}</Text>
+      <View style={{ flexDirection: 'row', gap: 6, paddingVertical: 12, borderBottomWidth: 1, borderColor: colors.hairline }}>
         {[2, 3, 4, 5, 6, 7].map((d) => {
           const on = baby.defaultWindowDays === d;
           return (
-            <Pressable key={d} onPress={() => updateBabySettings({ defaultWindowDays: d })}
-              style={{ flex: 1, paddingVertical: 10, borderRadius: 10, alignItems: 'center', borderWidth: 1,
-                borderColor: on ? colors.accent : colors.border,
-                backgroundColor: on ? colors.accent : colors.bg }}>
-              <Text style={{ color: on ? colors.bg : colors.text }}>{d}</Text>
+            <Pressable
+              key={d}
+              accessibilityRole="button"
+              onPress={() => updateBabySettings({ defaultWindowDays: d })}
+              style={{
+                flex: 1, alignItems: 'center', paddingVertical: 8, borderRadius: 10, borderWidth: 1.5,
+                borderColor: on ? colors.ink : colors.hairline,
+                backgroundColor: on ? colors.ink : 'transparent',
+              }}
+            >
+              <Text style={{ color: on ? colors.paper : colors.ink, fontSize: 13, fontWeight: '700' }}>{d}</Text>
             </Pressable>
           );
         })}
       </View>
 
-      <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text }}>{t('settings.exportSection')}</Text>
-      <Button label={t('settings.exportPdf')} onPress={exportPdf} />
-      <Button label={t('settings.exportJson')} variant="secondary" onPress={exportJson} />
+      <Text style={labelStyle}>{t('settings.exportSection')}</Text>
+      <View style={{ gap: 10, marginTop: 10 }}>
+        <Button label={t('settings.exportPdf')} onPress={exportPdf} />
+        <Button label={t('settings.exportJson')} variant="secondary" onPress={exportJson} />
+      </View>
 
-      <Text style={{ fontSize: 12, color: colors.textMuted }}>{t('settings.privacy')}</Text>
-      <Text style={{ fontSize: 12, color: colors.textMuted }}>{t('settings.disclaimer')}</Text>
+      <Text style={{ fontSize: 11.5, color: colors.muted, lineHeight: 17, marginTop: 18 }}>
+        {t('settings.privacy')}{'\n'}{t('settings.disclaimer')}
+      </Text>
     </ScrollView>
   );
 }
