@@ -1,7 +1,11 @@
-# MammaCare v2 — Ground-Up Rebuild Design
+# Allergy Tracker — Ground-Up Rebuild Design
 
 **Date:** 2026-07-16
 **Status:** Approved by owner (brainstorming session)
+**Naming:** product **Allergy Tracker** (formerly MammaCare); iOS home-screen
+label **"Allergies"** (15-char names truncate under the icon); repo renamed
+`mhju0/mammacare-ios` → **`mhju0/allergy-tracker`** (GitHub auto-redirects);
+slug `allergy-tracker`.
 **Supersedes:** the entire v1 app (React/Vite/Capacitor + FastAPI/Postgres), archived at tag `archive/v1-capacitor`.
 
 ## 1. Purpose & positioning
@@ -27,7 +31,7 @@ list becomes a traffic light they can trust.
 | Not in v1 | Multiple babies, reaction photos, cloud sync, import/restore, dark mode. |
 | Food catalog | **Curated seed + free-text**: big-9 allergens + ~40 common first foods shipped in-app; parents can add any custom food. |
 | Language | **i18n from day one** (i18next + expo-localization): English default, Korean locale. |
-| Repo | **Same repo (`mhju0/mammacare-ios`), wiped.** v1 archived as a tag; v2 scaffolded at the root. Name stays **MammaCare**. |
+| Repo | **Same repo, wiped and renamed to `mhju0/allergy-tracker`.** v1 archived as a tag; v2 scaffolded at the root. Product name **Allergy Tracker**. Local working folder can be renamed at the owner's convenience (nothing depends on it). |
 
 ## 3. Screens — no tabs, Home is the hub
 
