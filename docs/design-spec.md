@@ -166,13 +166,13 @@ Shipped as a JSON asset, inserted on first launch:
 2. Remove all v1 files from `main` (backend/, frontend/, requirements.txt,
    ROADMAP.md, SETUP.md, DESIGN_SYSTEM.md, docs/screenshots/). Keep: LICENSE,
    `.gitignore` (rewritten), this spec.
-3. Delete untracked local junk: `venv/`, `.serena/`, `.tokensave/`,
-   `pre_uq_drop_backup.dump` (PII — must not survive in the working tree).
-4. Scaffold the Expo app at the repo root; rewrite `README.md` and the local
-   `CLAUDE.md` (gitignored) for v2; new minimal `DESIGN_SYSTEM` notes live in
+3. Delete untracked local junk: `venv/`, tool caches, and local database
+   backup dumps (must not survive in the working tree).
+4. Scaffold the Expo app at the repo root; rewrite `README.md` and local
+   dev notes for v2; new minimal `DESIGN_SYSTEM` notes live in
    the README until there's enough to warrant a file.
-5. Local Postgres database `mammacare_db` is left alone (harmless), noted as
-   deletable in the new CLAUDE.md.
+5. Local Postgres database `mammacare_db` is left alone (harmless), noted
+   locally as deletable.
 
 ## 11. Explicitly out of scope (do not resurrect)
 

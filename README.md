@@ -27,6 +27,9 @@ that means remembering what was fed when, what happened, and what is still
 untested, across months of weaning. This app is that memory: a private,
 offline tracker that turns the food list into a traffic light.
 
+The full design document — data model, status derivation rules, edge cases,
+and scope decisions — lives at [docs/design-spec.md](docs/design-spec.md).
+
 ## Screenshots
 
 <table align="center">
