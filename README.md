@@ -20,9 +20,13 @@ Native iOS · Korean-only UI · 100% on-device — no account, no server, no net
 
 ---
 
-| Home | Foods | Food detail | Calendar | Log a reaction |
-|:---:|:---:|:---:|:---:|:---:|
-| ![Home — active trial dashboard](docs/screenshots/home.png) | ![Foods — searchable catalog with statuses](docs/screenshots/foods.png) | ![Food detail — reaction history timeline](docs/screenshots/detail.png) | ![Calendar — tinted trial windows and event dots](docs/screenshots/calendar.png) | ![Reaction logging — symptoms and severity](docs/screenshots/reaction.png) |
+<p align="center">
+  <img src="docs/screenshots/home.png" alt="Home — active trial dashboard" width="168">
+  <img src="docs/screenshots/foods.png" alt="Foods — searchable catalog with statuses" width="168">
+  <img src="docs/screenshots/detail.png" alt="Food detail — reaction history timeline" width="168">
+  <img src="docs/screenshots/calendar.png" alt="Calendar — tinted trial windows and event dots" width="168">
+  <img src="docs/screenshots/reaction.png" alt="Reaction logging — symptoms and severity" width="168">
+</p>
 
 ## Why
 
@@ -114,13 +118,6 @@ installs are unaffected.
 All data lives in a local SQLite file on the phone. There is no network
 code in the app — nothing is collected, synced, or sent anywhere. Export
 is explicit: a PDF or JSON file handed to the iOS share sheet.
-
-## History
-
-v1 (MammaCare — Capacitor + FastAPI + Postgres) is archived at tag
-[`archive/v1-capacitor`](../../tree/archive/v1-capacitor). v2 is a
-ground-up rebuild; the design spec and build plan live in
-[`docs/superpowers/`](docs/superpowers/).
 
 ## License
 
