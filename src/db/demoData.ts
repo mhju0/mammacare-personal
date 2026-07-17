@@ -38,15 +38,15 @@ const PLAN: Spec[] = [
   { foodId: 'pear', start: 19, outcome: 'safe', checkins: [18] },
   { foodId: 'banana', start: 16, outcome: 'safe', checkins: [15, 14] },
   {
-    foodId: 'milk', start: 13, outcome: 'reacted',
-    reaction: { daysAgo: 12, symptoms: ['diarrhea'], severity: 'mild', note: '묽은 변 두 번, 수유량 줄임' },
+    foodId: 'wheat', start: 13, outcome: 'reacted',
+    reaction: { daysAgo: 12, symptoms: ['diarrhea'], severity: 'mild', note: '묽은 변 두 번, 이틀 뒤 회복' },
   },
   { foodId: 'beef', start: 11, outcome: 'safe', checkins: [10, 9] },
   {
     foodId: 'egg', start: 8, outcome: 'reacted', checkins: [8],
     reaction: { daysAgo: 7, symptoms: ['hives', 'swelling'], severity: 'moderate', note: '볼과 목에 두드러기, 1시간 후 가라앉음' },
   },
-  { foodId: 'mackerel', start: 6, outcome: 'cancelled' },
+  { foodId: 'whitefish', start: 6, outcome: 'cancelled' },
   { foodId: 'chicken', start: 5, outcome: 'safe', checkins: [4, 3] },
   { foodId: 'tofu', start: 1, outcome: null, checkins: [1] },
 ];
@@ -89,7 +89,7 @@ export function buildDemoHistory(now: Date): {
 
   return {
     babyRow: { id: 'demo-baby', name: '하율', birthdate: at(240, 0), defaultWindowDays: WINDOW },
-    foods: [{ id: 'demo-food-abalone', name: '전복', isCustom: true, allergenGroup: null }],
+    foods: [{ id: 'demo-food-quinoa', name: '퀴노아', isCustom: true, allergenGroup: null }],
     trials, reactions, checkins,
   };
 }
