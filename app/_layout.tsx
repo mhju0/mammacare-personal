@@ -5,7 +5,7 @@ import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import migrations from '../drizzle/migrations';
 import '../src/i18n';
 import { db } from '../src/db/client';
-import { seedIfEmpty } from '../src/db/seed';
+import { seedDemoIfEmpty, seedIfEmpty } from '../src/db/seed';
 import { initNotificationHandler } from '../src/services/notify';
 import { colors } from '../src/ui/tokens';
 
@@ -17,7 +17,12 @@ export default function RootLayout() {
   const [seedError, setSeedError] = useState<Error | null>(null);
 
   useEffect(() => {
-    if (success) seedIfEmpty().then(() => setSeeded(true)).catch((e) => setSeedError(e instanceof Error ? e : new Error(String(e))));
+    if (success) {
+      seedIfEmpty()
+        .then(() => (process.env.EXPO_PUBLIC_DEMO === '1' ? seedDemoIfEmpty(new Date()) : undefined))
+        .then(() => setSeeded(true))
+        .catch((e) => setSeedError(e instanceof Error ? e : new Error(String(e))));
+    }
   }, [success]);
 
   if (error || seedError) {
