@@ -91,7 +91,7 @@ export async function saveBaby(data: { name: string; birthdate: Date }): Promise
 }
 
 export async function updateBabySettings(
-  patch: Partial<{ name: string; birthdate: Date; defaultWindowDays: number }>,
+  patch: Partial<{ name: string; birthdate: Date }>,
 ): Promise<void> {
   const rows = await db.select().from(baby);
   if (rows[0]) await db.update(baby).set(patch).where(eq(baby.id, rows[0].id));

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Alert, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, ScrollView, Text, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Print from 'expo-print';
@@ -113,27 +113,6 @@ export default function Settings() {
           maximumDate={new Date()}
           onChange={(_, d) => d && updateBabySettings({ birthdate: d })}
         />
-      </View>
-
-      <Text style={labelStyle}>{t('settings.window')}</Text>
-      <View style={{ flexDirection: 'row', gap: 6, paddingVertical: 12, borderBottomWidth: 1, borderColor: colors.hairline }}>
-        {[2, 3, 4, 5, 6, 7].map((d) => {
-          const on = baby.defaultWindowDays === d;
-          return (
-            <Pressable
-              key={d}
-              accessibilityRole="button"
-              onPress={() => updateBabySettings({ defaultWindowDays: d })}
-              style={{
-                flex: 1, alignItems: 'center', paddingVertical: 8, borderRadius: 10, borderWidth: 1.5,
-                borderColor: on ? colors.ink : colors.hairline,
-                backgroundColor: on ? colors.ink : 'transparent',
-              }}
-            >
-              <Text style={{ color: on ? colors.paper : colors.ink, fontSize: 13, fontWeight: '700' }}>{d}</Text>
-            </Pressable>
-          );
-        })}
       </View>
 
       <Text style={labelStyle}>{t('settings.exportSection')}</Text>

@@ -29,7 +29,7 @@ export default function LogReaction() {
   const saving = useRef(false);
 
   if (!entry) return null;
-  const showEmergency = severity === 'severe' || symptoms.includes('breathing');
+  const showEmergency = severity === 'severe' || symptoms.includes('breathing') || symptoms.includes('swelling');
 
   const toggle = (s: string) =>
     setSymptoms((cur) => (cur.includes(s) ? cur.filter((x) => x !== s) : [...cur, s]));
