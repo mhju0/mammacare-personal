@@ -9,7 +9,7 @@ import { foodLabel } from '../src/i18n';
 import { Button } from '../src/ui/Button';
 import { colors } from '../src/ui/tokens';
 
-const SYMPTOMS = ['hives', 'rash', 'vomiting', 'diarrhea', 'swelling', 'breathing', 'other'] as const;
+const SYMPTOMS = ['hives', 'rash', 'vomiting', 'diarrhea', 'swelling', 'cough', 'breathing', 'other'] as const;
 const SEVERITIES = ['mild', 'moderate', 'severe'] as const;
 const labelStyle = { fontSize: 11, fontWeight: '800' as const, letterSpacing: 1.5, color: colors.muted, marginTop: 18, marginBottom: 8 };
 const underlineBorder = { borderBottomWidth: 2, borderColor: colors.hairline, paddingVertical: 10 };

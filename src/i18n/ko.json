@@ -50,7 +50,7 @@
     "emergency": "호흡 곤란이나 심한 부종이 있다면 지금 바로 119에 연락하세요.",
     "symptom": {
       "hives": "두드러기", "rash": "발진", "vomiting": "구토", "diarrhea": "설사",
-      "swelling": "얼굴 부종", "breathing": "호흡 곤란", "other": "기타"
+      "swelling": "얼굴 부종", "cough": "기침·쌕쌕거림", "breathing": "호흡 곤란", "other": "기타"
     },
     "severityLevel": { "mild": "가벼움", "moderate": "중간", "severe": "심각" }
   },
