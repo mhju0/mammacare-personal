@@ -1,6 +1,6 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, FlatList, Pressable, Text, TextInput, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFoodsWithStatus, type FoodWithStatus } from '../src/data/queries';
@@ -27,17 +27,21 @@ function SearchIcon() {
 }
 
 const ORDER: Record<FoodStatus, number> = { testing: 0, untried: 1, safe: 2, reacted: 3 };
+const ROW_H = 44; // fixed row height (matches the previous content-sized height) — required for getItemLayout/scrollToIndex
 const eyebrowStyle = { fontSize: 10, fontWeight: '700' as const, letterSpacing: 2.2, color: colors.muted, paddingBottom: 12 };
 
 export default function Foods() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
+  const { focus } = useLocalSearchParams<{ focus?: string }>();
   const insets = useSafeAreaInsets();
   const foods = useFoodsWithStatus();
   const [query, setQuery] = useState('');
   const [newName, setNewName] = useState('');
   const [addOpen, setAddOpen] = useState(false);
   const submitting = useRef(false);
+  const listRef = useRef<FlatList<FoodWithStatus>>(null);
+  const focusApplied = useRef(false);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -46,6 +50,18 @@ export default function Foods() {
       .sort((a, b) =>
         ORDER[a.status] - ORDER[b.status] || foodLabel(a.food).localeCompare(foodLabel(b.food)));
   }, [foods, query, i18n.language]);
+
+  // Home's count rows land here with ?focus=<status>: jump once (no animation)
+  // to that status's section. foods and trials arrive from two independent live
+  // queries, so statuses can render as all-untried for a frame — only latch once
+  // the target status actually exists in the list (a 0-count focus stays at top).
+  useEffect(() => {
+    if (focusApplied.current || !focus || visible.length === 0) return;
+    const index = visible.findIndex((f) => f.status === focus);
+    if (index === -1) return;
+    focusApplied.current = true;
+    if (index > 0) listRef.current?.scrollToIndex({ index, animated: false });
+  }, [visible, focus]);
 
   const submitNew = async () => {
     const name = newName.trim();
@@ -128,8 +144,10 @@ export default function Foods() {
       )}
 
       <FlatList
+        ref={listRef}
         data={visible}
         keyExtractor={(f) => f.food.id}
+        getItemLayout={(_, index) => ({ length: ROW_H, offset: ROW_H * index, index })}
         renderItem={({ item }) => <FoodRow item={item} />}
         ListEmptyComponent={
           <Text style={{ color: colors.muted, fontSize: 14, textAlign: 'center', paddingVertical: 24 }}>
@@ -150,12 +168,12 @@ function FoodRow({ item }: { item: FoodWithStatus }) {
       accessibilityRole="button"
       onPress={() => router.push({ pathname: '/food/[id]', params: { id: item.food.id } })}
       style={{
-        flexDirection: 'row', alignItems: 'center', paddingVertical: 11.5,
+        flexDirection: 'row', alignItems: 'center', height: ROW_H,
         paddingHorizontal: layout.rowInset,
         borderBottomWidth: 1, borderColor: colors.hairline, gap: 7,
       }}
     >
-      <Text style={{ flex: 1, fontSize: 15, fontWeight: bold ? '800' : '600', color: colors.ink }}>
+      <Text numberOfLines={1} style={{ flex: 1, fontSize: 15, fontWeight: bold ? '800' : '600', color: colors.ink }}>
         {foodLabel(item.food)}
       </Text>
       {item.food.allergenGroup && (

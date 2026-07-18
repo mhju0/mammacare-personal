@@ -119,8 +119,11 @@ function Dashboard() {
 
       <View style={{ borderTopWidth: 1, borderColor: colors.hairline, marginTop: 20 }}>
         {(['safe', 'testing', 'reacted', 'untried'] as const).map((s) => (
-          <View
+          <Pressable
             key={s}
+            accessibilityRole="button"
+            accessibilityLabel={`${t(`status.${s}`)} ${counts[s]}`}
+            onPress={() => router.push({ pathname: '/foods', params: { focus: s } })}
             style={{
               flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline',
               paddingVertical: 12, paddingHorizontal: layout.rowInset,
@@ -131,7 +134,7 @@ function Dashboard() {
             <Text style={{ fontSize: 17, fontWeight: '900', color: colors.status[s].fg, fontVariant: ['tabular-nums'] }}>
               {counts[s]}
             </Text>
-          </View>
+          </Pressable>
         ))}
       </View>
 
