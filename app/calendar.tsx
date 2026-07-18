@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCheckins, useFoodsWithStatus, useReactions } from '../src/data/queries';
-import { dayMark, monthMatrix, sameLocalDay } from '../src/domain/calendar';
+import { dayMark, monthMatrix, sameLocalDay, sortDayEvents } from '../src/domain/calendar';
 import { foodLabel } from '../src/i18n';
 import type { Food } from '../src/db/schema';
 import { colors, layout } from '../src/ui/tokens';
@@ -86,7 +86,7 @@ export default function Calendar() {
       const label = foodByTrialId.has(c.trialId) ? foodLabel(foodByTrialId.get(c.trialId)!) : '';
       rows.push({ key: `checkin-${c.id}`, at: c.occurredAt, color: colors.green, outline: false, text: `${label} — ${t('food.checkinClear')}` });
     }
-    return rows.sort((a, b) => a.at.getTime() - b.at.getTime());
+    return sortDayEvents(rows);
   }, [foods, reactions, checkins, foodByTrialId, selectedDate, t]);
 
   return (

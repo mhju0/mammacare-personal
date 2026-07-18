@@ -1,4 +1,4 @@
-import { monthMatrix, sameLocalDay, dayMark, type DayCell } from './calendar';
+import { monthMatrix, sameLocalDay, dayMark, sortDayEvents, type DayCell } from './calendar';
 import type { TrialLike } from './status';
 
 const D = (s: string) => new Date(s);
@@ -84,6 +84,28 @@ describe('dayMark', () => {
   test('checkin day outside any window still surfaces a green dot with no tint', () => {
     const mark = dayMark(D('2026-08-01T12:00:00'), [trial], [], [D('2026-08-01T08:00:00')]);
     expect(mark).toEqual({ tint: null, dot: 'green' });
+  });
+});
+
+describe('sortDayEvents', () => {
+  test('same instant: a trial close (안전 확인) lists before the next trial start (테스트 시작), then later events follow', () => {
+    const at9 = D('2026-07-10T09:00:00'); // 소고기 window closes safe, 달걀 trial starts — same morning
+    const at19 = D('2026-07-10T19:00:00'); // 달걀 check-in that evening
+    // Insertion order mirrors the component (start pushed before end when 달걀 precedes 소고기 in the food list).
+    const rows = [
+      { key: 'start-egg', at: at9 },
+      { key: 'end-beef', at: at9 },
+      { key: 'checkin-egg', at: at19 },
+    ];
+    expect(sortDayEvents(rows).map((r) => r.key)).toEqual(['end-beef', 'start-egg', 'checkin-egg']);
+  });
+
+  test('does not reorder events at distinct times', () => {
+    const rows = [
+      { key: 'checkin-egg', at: D('2026-07-10T19:00:00') },
+      { key: 'start-egg', at: D('2026-07-10T09:00:00') },
+    ];
+    expect(sortDayEvents(rows).map((r) => r.key)).toEqual(['start-egg', 'checkin-egg']);
   });
 });
 

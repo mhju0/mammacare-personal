@@ -23,6 +23,15 @@ function isInTrialWindow(date: Date, t: TrialLike): boolean {
   return day >= localDayStart(t.startedAt) && day <= localDayStart(windowEnd(t));
 }
 
+// Order a single day's calendar events chronologically. At the same instant a
+// trial's start must list AFTER every other event, so the autoclose→next-start
+// handoff reads close-then-open (e.g. 소고기 안전 확인 before 달걀 테스트 시작 at
+// 09:00) instead of interleaving the two foods. Event keys are kind-prefixed.
+export function sortDayEvents<T extends { at: Date; key: string }>(rows: T[]): T[] {
+  const startsLast = (key: string) => (key.startsWith('start-') ? 1 : 0);
+  return [...rows].sort((a, b) => a.at.getTime() - b.at.getTime() || startsLast(a.key) - startsLast(b.key));
+}
+
 export type DayMark = { tint: 'amber' | 'green' | 'red' | null; dot: 'red' | 'green' | null };
 
 export function dayMark(date: Date, trials: TrialLike[], reactionDays: Date[], checkinDays: Date[]): DayMark {
