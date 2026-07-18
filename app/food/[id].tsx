@@ -42,7 +42,39 @@ export default function FoodDetail() {
     try {
       await ensurePermission(); // contextual ask; denial degrades gracefully
       const res = await startTrial(food.id, foodLabel(food), windowDays, new Date());
-      if (!res.ok) Alert.alert(t('food.trialBlocked'));
+      if (!res.ok) {
+        const active = foods.find((f) => f.status === 'testing');
+        const activeTrialId = active?.latest?.id;
+        if (!active || !activeTrialId) {
+          Alert.alert(t('food.trialBlocked'));
+          return;
+        }
+        const activeName = foodLabel(active.food);
+        Alert.alert(t('food.blockedTitle', { food: activeName }), t('food.blockedBody'), [
+          {
+            text: t('food.blockedCancelStart', { food: activeName }),
+            style: 'destructive',
+            onPress: async () => {
+              if (starting.current) return;
+              starting.current = true;
+              try {
+                // The window may have elapsed while the alert sat open — try starting
+                // first so implicit-safe autoclose wins over cancelling a clean trial.
+                const first = await startTrial(food.id, foodLabel(food), windowDays, new Date());
+                if (first.ok) return;
+                await cancelTrial(activeTrialId, new Date());
+                const retry = await startTrial(food.id, foodLabel(food), windowDays, new Date());
+                if (!retry.ok) Alert.alert(t('food.trialBlocked'));
+              } catch {
+                Alert.alert(t('errors.generic'));
+              } finally {
+                starting.current = false;
+              }
+            },
+          },
+          { text: t('food.close'), style: 'cancel' },
+        ]);
+      }
     } catch {
       Alert.alert(t('errors.generic'));
     } finally {
@@ -112,7 +144,14 @@ export default function FoodDetail() {
           />
           <CheckinPill foodId={food.id} trialId={activeHere.id} />
           <Button label={t('food.cancelTrial')} variant="danger"
-            onPress={() => cancelTrial(activeHere.id, new Date())} />
+            onPress={() => Alert.alert(
+              t('food.cancelConfirmTitle', { food: foodLabel(food) }),
+              t('food.cancelConfirmBody'),
+              [
+                { text: t('food.cancelTrial'), style: 'destructive', onPress: () => cancelTrial(activeHere.id, new Date()) },
+                { text: t('food.close'), style: 'cancel' },
+              ],
+            )} />
         </View>
       ) : (
         <View style={{ gap: 10 }}>
