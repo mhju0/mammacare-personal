@@ -151,9 +151,10 @@ export default function Calendar() {
                   {mark.dot && (
                     <View
                       style={{
-                        // bottom tuned to sit the dot midway between the centered
-                        // date and the cell floor at current cell sizes (~46pt).
-                        position: 'absolute', bottom: 6, width: 4, height: 4, borderRadius: 999,
+                        // Dot sits in the lower gap, centered between the digit's
+                        // bottom and the cell floor. Positioned as a share of cell
+                        // height (cells are aspectRatio 1) so it holds at any size.
+                        position: 'absolute', bottom: '18%', width: 4, height: 4, borderRadius: 999,
                         backgroundColor: mark.dot === 'red' ? colors.red : colors.green,
                       }}
                     />
