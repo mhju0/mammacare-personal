@@ -12,7 +12,13 @@ export async function seedIfEmpty(): Promise<void> {
   if (babyRow.length === 0) {
     await db.insert(baby).values({ id: newId(), name: null, birthdate: null, defaultWindowDays: 3 });
   }
-  const existing = await db.select({ id: food.id }).from(food).limit(1);
+  // Check for SEEDED foods specifically — a custom food (e.g. the demo's
+  // 퀴노아, inserted before this runs) must not suppress catalog seeding.
+  const existing = await db
+    .select({ id: food.id })
+    .from(food)
+    .where(eq(food.isCustom, false))
+    .limit(1);
   if (existing.length > 0) {
     // Reconcile installs seeded by an older catalog: drop seeded foods that
     // were since removed (they'd render as raw i18n keys), but never ones the
