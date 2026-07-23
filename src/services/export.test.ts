@@ -37,6 +37,11 @@ describe('buildReportHtml', () => {
   test('empty reactions render the none label', () => {
     expect(buildReportHtml({ ...view, reactionRows: [] })).toContain('None');
   });
+  test('empty babyLine drops the line, not just its text', () => {
+    const html = buildReportHtml({ ...view, babyLine: '' });
+    expect(html).not.toContain('<br>'); // no orphan break before generatedLine
+    expect(html).toContain('Generated 2026-07-16');
+  });
 });
 
 describe('buildBackup', () => {

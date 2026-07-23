@@ -29,7 +29,7 @@ export function buildReportHtml(v: ReportView): string {
     ul { font-size: 13px; }
   </style></head><body>
     <h1>${e(v.title)}</h1>
-    <p class="meta">${e(v.babyLine)}<br>${e(v.generatedLine)}</p>
+    <p class="meta">${v.babyLine ? `${e(v.babyLine)}<br>` : ''}${e(v.generatedLine)}</p>
     <h2>${e(v.foodsHeading)}</h2>
     <table><tr><th>${e(v.cols.food)}</th><th>${e(v.cols.status)}</th><th>${e(v.cols.lastTried)}</th></tr>${rows}</table>
     <h2>${e(v.reactionsHeading)}</h2>

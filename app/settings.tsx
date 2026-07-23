@@ -36,7 +36,11 @@ export default function Settings() {
       const tried = foods.filter((f) => f.trials.some((tr) => tr.outcome !== 'cancelled'));
       const html = buildReportHtml({
         title: t('report.title'),
-        babyLine: t('report.babyLine', { name: baby.name, birthdate: baby.birthdate.toLocaleDateString('ko-KR') }),
+        // Optional fields: whatever is set, joined; empty string drops the line.
+        babyLine: [
+          baby.name,
+          baby.birthdate ? t('report.born', { date: baby.birthdate.toLocaleDateString('ko-KR') }) : null,
+        ].filter(Boolean).join(' · '),
         generatedLine: t('report.generated', { date: new Date().toLocaleDateString('ko-KR') }),
         foodsHeading: t('report.foodsTried'),
         reactionsHeading: t('report.reactionsSection'),
@@ -96,11 +100,10 @@ export default function Settings() {
       <View style={rowStyle}>
         <Text style={rowLabelText}>{t('setup.babyName')}</Text>
         <TextInput
-          defaultValue={baby.name}
-          onEndEditing={(e) => {
-            const name = e.nativeEvent.text.trim();
-            if (name) updateBabySettings({ name });
-          }}
+          defaultValue={baby.name ?? ''}
+          placeholder={t('settings.optional')}
+          placeholderTextColor={colors.muted}
+          onEndEditing={(e) => updateBabySettings({ name: e.nativeEvent.text.trim() || null })}
           style={{ fontSize: 15, color: colors.muted, textAlign: 'right', flex: 1, marginLeft: 12 }}
         />
       </View>
@@ -108,7 +111,9 @@ export default function Settings() {
         <Text style={rowLabelText}>{t('setup.birthdate')}</Text>
         <DateTimePicker
           locale="ko-KR"
-          value={baby.birthdate}
+          // ponytail: unset birthdate displays as today until first picked —
+          // add an explicit "not set" affordance if that ever confuses anyone.
+          value={baby.birthdate ?? new Date()}
           mode="date"
           maximumDate={new Date()}
           onChange={(_, d) => d && updateBabySettings({ birthdate: d })}

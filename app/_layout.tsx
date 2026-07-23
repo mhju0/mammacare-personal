@@ -18,8 +18,10 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (success) {
-      seedIfEmpty()
-        .then(() => (process.env.EXPO_PUBLIC_DEMO === '1' ? seedDemoIfEmpty(new Date()) : undefined))
+      // Demo seed must run first: it triggers on "no baby row yet", and
+      // seedIfEmpty creates that row.
+      (process.env.EXPO_PUBLIC_DEMO === '1' ? seedDemoIfEmpty(new Date()) : Promise.resolve())
+        .then(() => seedIfEmpty())
         .then(() => setSeeded(true))
         .catch((e) => setSeedError(e instanceof Error ? e : new Error(String(e))));
     }

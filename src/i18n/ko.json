@@ -12,12 +12,8 @@
     "calendar": "캘린더"
   },
   "setup": {
-    "title": "환영해요",
-    "intro": "재료를 하나씩 시도하며 알레르기 반응을 빠르게 발견하세요.",
     "babyName": "아기 이름",
-    "birthdate": "생년월일",
-    "start": "시작하기",
-    "disclaimer": "이 앱은 기록 보조 도구이며 의학적 조언이 아닙니다. 알레르기는 반드시 소아과 의사와 상의하세요."
+    "birthdate": "생년월일"
   },
   "foods": {
     "title": "재료",
@@ -62,7 +58,8 @@
   },
   "settings": {
     "title": "설정",
-    "babySection": "아기",
+    "babySection": "아기 (선택 사항 — 진료용 리포트에만 표시)",
+    "optional": "미입력",
     "exportSection": "내보내기",
     "exportPdf": "진료용 리포트 (PDF)",
     "exportJson": "데이터 백업 (JSON)",
@@ -78,7 +75,7 @@
   "report": {
     "title": "이유식 알레르기 기록",
     "generated": "생성일 {{date}}",
-    "babyLine": "{{name}} · {{birthdate}} 출생",
+    "born": "{{date}} 출생",
     "foodsTried": "시도한 재료",
     "reactionsSection": "반응 기록",
     "none": "없음",

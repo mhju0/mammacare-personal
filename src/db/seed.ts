@@ -3,8 +3,15 @@ import { db } from './client';
 import { baby, checkin, food, reaction, trial } from './schema';
 import { CATALOG } from './catalog';
 import { buildDemoHistory } from './demoData';
+import { newId } from '../data/ids';
 
 export async function seedIfEmpty(): Promise<void> {
+  // The single settings row (window days; optional name/birthdate for the
+  // doctor report) is created here — there is no setup screen.
+  const babyRow = await db.select({ id: baby.id }).from(baby).limit(1);
+  if (babyRow.length === 0) {
+    await db.insert(baby).values({ id: newId(), name: null, birthdate: null, defaultWindowDays: 3 });
+  }
   const existing = await db.select({ id: food.id }).from(food).limit(1);
   if (existing.length > 0) {
     // Reconcile installs seeded by an older catalog: drop seeded foods that

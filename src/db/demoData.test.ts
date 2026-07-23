@@ -38,7 +38,7 @@ describe('buildDemoHistory', () => {
 
   it('places every event in the past', () => {
     const dates = [
-      d.babyRow.birthdate,
+      d.babyRow.birthdate!, // demo data always sets one; only the schema is nullable now
       ...d.trials.map((t) => t.startedAt),
       ...d.reactions.map((r) => r.occurredAt),
       ...d.checkins.map((c) => c.occurredAt),
