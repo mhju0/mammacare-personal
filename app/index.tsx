@@ -26,7 +26,7 @@ function WelcomeCard() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 22, paddingTop: insets.top + 4, backgroundColor: colors.paper }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 22, paddingTop: insets.top + 4, paddingBottom: insets.top + 22, backgroundColor: colors.paper }}>
       <Text style={eyebrowStyle}>{t('home.title')}</Text>
       <Text style={{ fontSize: 44, fontWeight: '900', color: colors.ink, letterSpacing: -0.5 }}>{t('welcome.title')}</Text>
       <Text style={{ fontSize: 14, color: colors.muted, lineHeight: 20, marginTop: 10, paddingLeft: layout.rowInset }}>

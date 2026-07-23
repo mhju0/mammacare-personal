@@ -44,6 +44,12 @@ export default function LogReaction() {
         new Date(),
       );
       if (navigation.isFocused()) router.back();
+      // The food vanishes from the home hero the moment its trial flips to
+      // reacted — say where it went so the jump isn't confusing.
+      Alert.alert(
+        t('reaction.savedTitle', { food: foodLabel(entry.food) }),
+        t('reaction.savedBody'),
+      );
     } catch {
       Alert.alert(t('errors.generic'));
     } finally {
@@ -84,7 +90,9 @@ export default function LogReaction() {
       </View>
 
       <Text style={labelStyle}>{t('reaction.severity')}</Text>
-      <View style={{ flexDirection: 'row', borderWidth: 1.5, borderColor: colors.ink, borderRadius: 999, overflow: 'hidden' }}>
+      {/* Selected segment is its own pill inside a padded track — clipping a
+          square fill against the track's rounded corner leaves slivers on iOS. */}
+      <View style={{ flexDirection: 'row', borderWidth: 1.5, borderColor: colors.ink, borderRadius: 999, padding: 3 }}>
         {SEVERITIES.map((s) => {
           const on = severity === s;
           return (
@@ -93,7 +101,7 @@ export default function LogReaction() {
               accessibilityRole="button"
               onPress={() => setSeverity(s)}
               style={{
-                flex: 1, alignItems: 'center', paddingVertical: 10,
+                flex: 1, alignItems: 'center', paddingVertical: 8, borderRadius: 999,
                 backgroundColor: on ? colors.ink : 'transparent',
               }}
             >

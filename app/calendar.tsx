@@ -15,7 +15,7 @@ const eyebrowStyle = { fontSize: 10, fontWeight: '700' as const, letterSpacing: 
 const navBtnStyle = { minWidth: 44, minHeight: 44, alignItems: 'flex-end' as const, justifyContent: 'center' as const };
 const weekdayKeys = ['w0', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6'] as const;
 
-type EventRow = { key: string; at: Date; color: string; outline: boolean; text: string };
+type EventRow = { key: string; at: Date; color: string; text: string };
 
 export default function Calendar() {
   const { t } = useTranslation();
@@ -44,8 +44,17 @@ export default function Calendar() {
   }, [cells]);
 
   const allTrials = useMemo(() => foods.flatMap((f) => f.trials), [foods]);
+  // Cancelled trials are invisible on the calendar (owner decision 2026-07-23):
+  // no rows, no dots. Their full history stays on the food detail page.
+  const cancelledIds = useMemo(
+    () => new Set(allTrials.filter((tr) => tr.outcome === 'cancelled').map((tr) => tr.id)),
+    [allTrials],
+  );
   const reactionDays = useMemo(() => reactions.map((r) => r.occurredAt), [reactions]);
-  const checkinDays = useMemo(() => checkins.map((c) => c.occurredAt), [checkins]);
+  const checkinDays = useMemo(
+    () => checkins.filter((c) => !cancelledIds.has(c.trialId)).map((c) => c.occurredAt),
+    [checkins, cancelledIds],
+  );
   const foodByTrialId = useMemo(() => {
     const m = new Map<string, Food>();
     for (const { food, trials } of foods) for (const tr of trials) m.set(tr.id, food);
@@ -57,18 +66,13 @@ export default function Calendar() {
     for (const { food, trials } of foods) {
       const label = foodLabel(food);
       for (const tr of trials) {
+        if (tr.outcome === 'cancelled') continue;
         if (sameLocalDay(tr.startedAt, selectedDate)) {
-          rows.push({ key: `start-${tr.id}`, at: tr.startedAt, color: colors.amber, outline: false, text: `${label} — ${t('calendar.trialStart')}` });
+          rows.push({ key: `start-${tr.id}`, at: tr.startedAt, color: colors.amber, text: `${label} — ${t('calendar.trialStart')}` });
         }
         // outcome 'reacted' is skipped here — the matching reaction row below already covers that moment.
-        if (tr.outcome && tr.outcome !== 'reacted' && tr.endedAt && sameLocalDay(tr.endedAt, selectedDate)) {
-          rows.push({
-            key: `end-${tr.id}`,
-            at: tr.endedAt,
-            color: tr.outcome === 'safe' ? colors.green : colors.muted,
-            outline: tr.outcome === 'cancelled',
-            text: `${label} — ${t(`food.outcome.${tr.outcome}`)}`,
-          });
+        if (tr.outcome === 'safe' && tr.endedAt && sameLocalDay(tr.endedAt, selectedDate)) {
+          rows.push({ key: `end-${tr.id}`, at: tr.endedAt, color: colors.green, text: `${label} — ${t('food.outcome.safe')}` });
         }
       }
     }
@@ -77,17 +81,17 @@ export default function Calendar() {
       const label = foodByTrialId.has(r.trialId) ? foodLabel(foodByTrialId.get(r.trialId)!) : '';
       const symptoms = r.symptoms.map((s) => t(`reaction.symptom.${s}`)).join(', ');
       rows.push({
-        key: `reaction-${r.id}`, at: r.occurredAt, color: colors.red, outline: false,
+        key: `reaction-${r.id}`, at: r.occurredAt, color: colors.red,
         text: `${label} — ${t(`reaction.severityLevel.${r.severity}`)} · ${symptoms}`,
       });
     }
     for (const c of checkins) {
-      if (!sameLocalDay(c.occurredAt, selectedDate)) continue;
+      if (cancelledIds.has(c.trialId) || !sameLocalDay(c.occurredAt, selectedDate)) continue;
       const label = foodByTrialId.has(c.trialId) ? foodLabel(foodByTrialId.get(c.trialId)!) : '';
-      rows.push({ key: `checkin-${c.id}`, at: c.occurredAt, color: colors.green, outline: false, text: `${label} — ${t('food.checkinClear')}` });
+      rows.push({ key: `checkin-${c.id}`, at: c.occurredAt, color: colors.green, text: `${label} — ${t('food.checkinClear')}` });
     }
     return sortDayEvents(rows);
-  }, [foods, reactions, checkins, foodByTrialId, selectedDate, t]);
+  }, [foods, reactions, checkins, foodByTrialId, cancelledIds, selectedDate, t]);
 
   return (
     <ScrollView contentContainerStyle={{ padding: 22, paddingTop: insets.top + 4, backgroundColor: colors.paper }}>
@@ -177,13 +181,7 @@ export default function Calendar() {
             key={ev.key}
             style={{ flexDirection: 'row', alignItems: 'baseline', gap: 8, paddingVertical: 9, paddingHorizontal: layout.rowInset, borderBottomWidth: 1, borderColor: colors.hairline }}
           >
-            <View
-              style={
-                ev.outline
-                  ? { width: 5, height: 5, borderRadius: 999, borderWidth: 1.5, borderColor: colors.muted }
-                  : { width: 7, height: 7, borderRadius: 999, backgroundColor: ev.color }
-              }
-            />
+            <View style={{ width: 7, height: 7, borderRadius: 999, backgroundColor: ev.color }} />
             <Text style={{ fontSize: 13.5, fontWeight: '600', color: ev.color, flexShrink: 1 }}>{ev.text}</Text>
             <Text style={{ fontSize: 12, color: colors.muted, marginLeft: 'auto' }}>
               {ev.at.toLocaleTimeString('ko-KR', { hour: 'numeric', minute: '2-digit' })}
