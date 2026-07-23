@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "알레르기",
+    "name": "Allergy Tracker",
     "slug": "allergy-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,10 @@
     "userInterfaceStyle": "light",
     "ios": {
       "bundleIdentifier": "com.mhju.allergytracker",
-      "supportsTablet": false
+      "supportsTablet": false,
+      "infoPlist": {
+        "CFBundleDisplayName": "알레르기"
+      }
     },
     "android": {
       "adaptiveIcon": {
