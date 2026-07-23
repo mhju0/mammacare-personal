@@ -3,8 +3,9 @@ import { Alert, FlatList, Pressable, Text, TextInput, View } from 'react-native'
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useFoodsWithStatus, type FoodWithStatus } from '../src/data/queries';
+import { useBaby, useFoodsWithStatus, type FoodWithStatus } from '../src/data/queries';
 import { addCustomFood } from '../src/data/mutations';
+import { useStartTrialFlow } from '../src/data/useStartTrialFlow';
 import { foodLabel } from '../src/i18n';
 import type { FoodStatus } from '../src/domain/status';
 import { StatusChip } from '../src/ui/StatusChip';
@@ -33,9 +34,13 @@ const eyebrowStyle = { fontSize: 10, fontWeight: '700' as const, letterSpacing: 
 export default function Foods() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
-  const { focus } = useLocalSearchParams<{ focus?: string }>();
+  // pick=1 (home's 새 재료 시작하기): tapping a row starts its trial right away
+  // and returns home, instead of opening the food detail page.
+  const { focus, pick } = useLocalSearchParams<{ focus?: string; pick?: string }>();
   const insets = useSafeAreaInsets();
   const foods = useFoodsWithStatus();
+  const baby = useBaby();
+  const startFlow = useStartTrialFlow(foods, baby?.defaultWindowDays ?? 3);
   const [query, setQuery] = useState('');
   const [newName, setNewName] = useState('');
   const [addOpen, setAddOpen] = useState(false);
@@ -148,7 +153,16 @@ export default function Foods() {
         data={visible}
         keyExtractor={(f) => f.food.id}
         getItemLayout={(_, index) => ({ length: ROW_H, offset: ROW_H * index, index })}
-        renderItem={({ item }) => <FoodRow item={item} />}
+        renderItem={({ item }) => (
+          <FoodRow
+            item={item}
+            onPress={
+              pick === '1'
+                ? () => startFlow(item.food, () => router.back())
+                : () => router.push({ pathname: '/food/[id]', params: { id: item.food.id } })
+            }
+          />
+        )}
         ListEmptyComponent={
           <Text style={{ color: colors.muted, fontSize: 14, textAlign: 'center', paddingVertical: 24 }}>
             {t('foods.empty')}
@@ -159,14 +173,13 @@ export default function Foods() {
   );
 }
 
-function FoodRow({ item }: { item: FoodWithStatus }) {
+function FoodRow({ item, onPress }: { item: FoodWithStatus; onPress: () => void }) {
   const { t } = useTranslation();
-  const router = useRouter();
   const bold = item.status === 'testing';
   return (
     <Pressable
       accessibilityRole="button"
-      onPress={() => router.push({ pathname: '/food/[id]', params: { id: item.food.id } })}
+      onPress={onPress}
       style={{
         flexDirection: 'row', alignItems: 'center', height: ROW_H,
         paddingHorizontal: layout.rowInset,

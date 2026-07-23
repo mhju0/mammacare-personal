@@ -1,11 +1,11 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Alert, Pressable, ScrollView, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useBaby, useCheckins, useFoodsWithStatus, useReactions } from '../../src/data/queries';
-import { cancelTrial, confirmSafe, startTrial } from '../../src/data/mutations';
-import { ensurePermission } from '../../src/services/notify';
+import { cancelTrial, confirmSafe } from '../../src/data/mutations';
+import { useStartTrialFlow } from '../../src/data/useStartTrialFlow';
 import { foodLabel } from '../../src/i18n';
 import { isWindowElapsed, MS_PER_DAY } from '../../src/domain/status';
 import { Button } from '../../src/ui/Button';
@@ -23,11 +23,11 @@ export default function FoodDetail() {
   const foods = useFoodsWithStatus();
   const reactions = useReactions();
   const checkins = useCheckins();
-  const starting = useRef(false);
   const [, setTick] = useState(0);
   useFocusEffect(useCallback(() => setTick((x) => x + 1), []));
 
   const entry = foods.find((f) => f.food.id === id);
+  const startFlow = useStartTrialFlow(foods, baby?.defaultWindowDays ?? 3);
   if (!entry || !baby) return null;
 
   const { food, trials, status, latest } = entry;
@@ -36,51 +36,7 @@ export default function FoodDetail() {
   const activeHere = latest && latest.outcome === null ? latest : undefined;
   const fg = colors.status[status].fg;
 
-  const onStart = async () => {
-    if (starting.current) return;
-    starting.current = true;
-    try {
-      await ensurePermission(); // contextual ask; denial degrades gracefully
-      const res = await startTrial(food.id, foodLabel(food), windowDays, new Date());
-      if (!res.ok) {
-        const active = foods.find((f) => f.status === 'testing');
-        const activeTrialId = active?.latest?.id;
-        if (!active || !activeTrialId) {
-          Alert.alert(t('food.trialBlocked'));
-          return;
-        }
-        const activeName = foodLabel(active.food);
-        Alert.alert(t('food.blockedTitle', { food: activeName }), t('food.blockedBody'), [
-          {
-            text: t('food.blockedCancelStart', { food: activeName }),
-            style: 'destructive',
-            onPress: async () => {
-              if (starting.current) return;
-              starting.current = true;
-              try {
-                // The window may have elapsed while the alert sat open — try starting
-                // first so implicit-safe autoclose wins over cancelling a clean trial.
-                const first = await startTrial(food.id, foodLabel(food), windowDays, new Date());
-                if (first.ok) return;
-                await cancelTrial(activeTrialId, new Date());
-                const retry = await startTrial(food.id, foodLabel(food), windowDays, new Date());
-                if (!retry.ok) Alert.alert(t('food.trialBlocked'));
-              } catch {
-                Alert.alert(t('errors.generic'));
-              } finally {
-                starting.current = false;
-              }
-            },
-          },
-          { text: t('food.close'), style: 'cancel' },
-        ]);
-      }
-    } catch {
-      Alert.alert(t('errors.generic'));
-    } finally {
-      starting.current = false;
-    }
-  };
+  const onStart = () => startFlow(food);
 
   const testingElapsed = latest && status === 'testing' ? isWindowElapsed(latest, now) : false;
   const testingDay = latest && status === 'testing'

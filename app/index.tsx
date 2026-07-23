@@ -115,7 +115,7 @@ function Dashboard() {
         <Text style={{ fontSize: 14, color: colors.muted, marginBottom: 20 }}>{t('home.empty')}</Text>
       ) : null}
 
-      <Button label={t('home.tryNewFood')} onPress={() => router.push('/foods')} />
+      <Button label={t('home.tryNewFood')} onPress={() => router.push({ pathname: '/foods', params: { pick: '1' } })} />
 
       <View style={{ borderTopWidth: 1, borderColor: colors.hairline, marginTop: 20 }}>
         {(['safe', 'testing', 'reacted', 'untried'] as const).map((s) => (
