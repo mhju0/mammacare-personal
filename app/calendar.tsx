@@ -170,6 +170,21 @@ export default function Calendar() {
         ))}
       </View>
 
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14, marginTop: 10, paddingLeft: layout.rowInset }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+          <View style={{ width: 12, height: 12, borderRadius: 4, backgroundColor: colors.amberTint }} />
+          <Text style={{ fontSize: 11, color: colors.muted }}>{t('calendar.legendWindow')}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+          <View style={{ width: 12, height: 12, borderRadius: 4, backgroundColor: colors.redTint }} />
+          <Text style={{ fontSize: 11, color: colors.muted }}>{t('calendar.legendReaction')}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+          <View style={{ width: 5, height: 5, borderRadius: 999, backgroundColor: colors.green }} />
+          <Text style={{ fontSize: 11, color: colors.muted }}>{t('calendar.legendRecord')}</Text>
+        </View>
+      </View>
+
       <Text style={{ fontSize: 11, fontWeight: '800', letterSpacing: 1.5, color: colors.muted, marginTop: 18, marginBottom: 4, paddingLeft: layout.rowInset }}>
         {selectedDate.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'long' })}
       </Text>

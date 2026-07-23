@@ -95,6 +95,9 @@
     "title": "캘린더",
     "monthTitle": "{{year}}년 {{month}}월",
     "trialStart": "테스트 시작",
+    "legendWindow": "테스트 기간",
+    "legendReaction": "반응",
+    "legendRecord": "기록",
     "noEvents": "기록이 없어요",
     "weekday": { "w0": "일", "w1": "월", "w2": "화", "w3": "수", "w4": "목", "w5": "금", "w6": "토" }
   },
