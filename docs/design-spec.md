@@ -8,6 +8,30 @@ label **"Allergies"** (15-char names truncate under the icon); repo renamed
 slug `allergy-tracker`.
 **Supersedes:** the entire v1 app (React/Vite/Capacitor + FastAPI/Postgres), archived at tag `archive/v1-capacitor`.
 
+> **As shipped (2026-07)** — this spec is the approved rebuild design, kept
+> as the decision record. The shipped app deviates in a few owner-approved
+> ways:
+>
+> - **Korean-only.** The EN-default i18n plan (and the settings language
+>   picker) was dropped on 2026-07-17; the UI and dates are pinned to
+>   `ko-KR`.
+> - **A sixth surface: 캘린더** — a month-view history screen (tinted trial
+>   windows, reaction/check-in dots, per-day event list).
+> - **Check-ins.** A `checkin` table records one-tap "이상 없음"
+>   observations (once per day) during a trial; they never change status.
+> - **No setup screen.** First launch shows a one-time welcome card instead;
+>   baby name/birthdate are optional, report-only fields in Settings.
+> - **The watch window is fixed at 3 days** — the settings control described
+>   in §3.5 was never shipped.
+> - **Symptom list** gained 기침/쌕쌕거림; 얼굴 부종 triggers the emergency
+>   advisory at any severity.
+> - **Catalog** shipped as a TypeScript module (not a JSON asset) with 55
+>   foods — the big-9 allergen groups plus Korean staples (e.g. 메밀)
+>   flagged high-risk.
+> - `deriveStatus(trials)` needs neither `now` nor the reactions list — an
+>   active trial never has reactions attached, so trial history alone
+>   determines status.
+
 ## 1. Purpose & positioning
 
 A **baby food-allergy tracker** — that is the whole product. Parents introduce
@@ -159,20 +183,12 @@ Shipped as a JSON asset, inserted on first launch:
   scheduling computation extracted from the expo-notifications calls).
 - No E2E suite in v1. Manual smoke on the iOS simulator before tagging.
 
-## 10. Teardown & migration plan
+## 10. Teardown & migration (completed)
 
-1. Tag current `main` as `archive/v1-capacitor`, push the tag. Everything is
-   recoverable; nothing else needs preserving.
-2. Remove all v1 files from `main` (backend/, frontend/, requirements.txt,
-   ROADMAP.md, SETUP.md, DESIGN_SYSTEM.md, docs/screenshots/). Keep: LICENSE,
-   `.gitignore` (rewritten), this spec.
-3. Delete untracked local junk: `venv/`, tool caches, and local database
-   backup dumps (must not survive in the working tree).
-4. Scaffold the Expo app at the repo root; rewrite `README.md` and local
-   dev notes for v2; new minimal `DESIGN_SYSTEM` notes live in
-   the README until there's enough to warrant a file.
-5. Local Postgres database `mammacare_db` is left alone (harmless), noted
-   locally as deletable.
+v1 was archived at tag `archive/v1-capacitor` and every v1 file removed
+from `main`; the Expo app was then scaffolded at the repo root with a
+rewritten `README.md`. Only LICENSE, a rewritten `.gitignore`, and this
+spec carried over.
 
 ## 11. Explicitly out of scope (do not resurrect)
 
