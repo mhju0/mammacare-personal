@@ -123,10 +123,10 @@ export default function Calendar() {
           </Text>
         </Pressable>
         <View style={{ flexDirection: 'row' }}>
-          <Pressable accessibilityRole="button" onPress={() => goMonth(-1)} style={navBtnStyle}>
+          <Pressable accessibilityRole="button" accessibilityLabel={t('calendar.prevMonth')} onPress={() => goMonth(-1)} style={navBtnStyle}>
             <Text style={{ fontSize: 18, color: colors.muted }}>‹</Text>
           </Pressable>
-          <Pressable accessibilityRole="button" onPress={() => goMonth(1)} style={navBtnStyle}>
+          <Pressable accessibilityRole="button" accessibilityLabel={t('calendar.nextMonth')} onPress={() => goMonth(1)} style={navBtnStyle}>
             <Text style={{ fontSize: 18, color: colors.muted }}>›</Text>
           </Pressable>
         </View>
@@ -155,6 +155,8 @@ export default function Calendar() {
                 <Pressable
                   key={cell.date.toISOString()}
                   accessibilityRole="button"
+                  accessibilityLabel={cell.date.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })}
+                  accessibilityState={{ selected: isSelected }}
                   onPress={() => setSelectedDate(cell.date)}
                   style={{
                     flex: 1, aspectRatio: 1, margin: 1.5, borderRadius: 9,

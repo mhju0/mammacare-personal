@@ -3,7 +3,6 @@
   "home": {
     "title": "알레르기 트래커",
     "tryNewFood": "새 재료 시작하기",
-    "activeTrial": "테스트 중인 재료",
     "dayOf": "{{total}}일 중 {{day}}일째",
     "readyToConfirm": "3일 관찰이 끝났어요 — 반응이 없었다면 안전으로 표시하세요",
     "markSafe": "안전으로 표시",
@@ -106,10 +105,15 @@
     "legendReaction": "반응",
     "legendRecord": "기록",
     "today": "오늘로 이동",
+    "prevMonth": "이전 달",
+    "nextMonth": "다음 달",
     "noEvents": "기록이 없어요",
     "weekday": { "w0": "일", "w1": "월", "w2": "화", "w3": "수", "w4": "목", "w5": "금", "w6": "토" }
   },
-  "errors": { "generic": "문제가 발생했어요. 잠시 후 다시 시도해 주세요." },
+  "errors": {
+    "generic": "문제가 발생했어요. 잠시 후 다시 시도해 주세요.",
+    "dbInit": "데이터베이스 초기화에 실패했어요: {{message}}"
+  },
   "foodName": {
     "egg": "달걀", "milk": "우유", "wheat": "밀", "peanut": "땅콩", "soy": "대두",
     "sesame": "참깨", "shrimp": "새우", "crab": "게", "whitefish": "흰살 생선",

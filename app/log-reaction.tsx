@@ -46,11 +46,16 @@ export default function LogReaction() {
     if (saving.current) return;
     saving.current = true;
     try {
-      await logReaction(
+      const res = await logReaction(
         entry.food.id,
         { symptoms, severity, occurredAt, note: note.trim() || null },
         new Date(),
       );
+      if (!res.ok) {
+        // stale deep link onto a never-tried food — don't claim it was saved
+        Alert.alert(t('errors.generic'));
+        return;
+      }
       if (navigation.isFocused()) router.back();
       // The food vanishes from the home hero the moment its trial flips to
       // reacted — say where it went so the jump isn't confusing.
@@ -94,6 +99,7 @@ export default function LogReaction() {
             <Pressable
               key={s}
               accessibilityRole="button"
+              accessibilityState={{ selected: on }}
               onPress={() => toggle(s)}
               style={{
                 paddingHorizontal: 13, paddingVertical: 8, borderRadius: 999, borderWidth: 1.5,
@@ -119,6 +125,7 @@ export default function LogReaction() {
             <Pressable
               key={s}
               accessibilityRole="button"
+              accessibilityState={{ selected: on }}
               onPress={() => setSeverity(s)}
               style={{
                 flex: 1, alignItems: 'center', paddingVertical: 8, borderRadius: 999,

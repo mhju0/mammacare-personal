@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Stack } from 'expo-router';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import migrations from '../drizzle/migrations';
-import '../src/i18n';
+import i18n from '../src/i18n';
 import { db } from '../src/db/client';
 import { seedDemoIfEmpty, seedIfEmpty } from '../src/db/seed';
 import { initNotificationHandler } from '../src/services/notify';
@@ -30,7 +30,7 @@ export default function RootLayout() {
   if (error || seedError) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', padding: 24 }}>
-        <Text style={{ color: colors.danger }}>DB init failed: {(error ?? seedError)!.message}</Text>
+        <Text style={{ color: colors.red }}>{i18n.t('errors.dbInit', { message: (error ?? seedError)!.message })}</Text>
       </View>
     );
   }
